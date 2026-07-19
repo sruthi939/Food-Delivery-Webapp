@@ -9,15 +9,11 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 z-50 bg-[#0B0B0B]/90 backdrop-blur-lg border-b border-[#2A2116]">
-            <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
+            <div className="w-4/5 mx-auto flex items-center justify-between py-5">
 
                 {/* Logo */}
                 <Link to="/" onClick={() => setMenu("home")}>
-                    <img
-                        src={assets.logo}
-                        alt='logo'
-                        className='w-36 cursor-pointer object-contain'
-                    />
+                    <img src={assets.logo} alt='logo' className='w-36 cursor-pointer object-contain' />
                 </Link>
 
                 {/* Navigation */}

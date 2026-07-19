@@ -21,3 +21,13 @@ a {
     width: 80%;
     margin: auto;
 }
+
+/* Explicit overrides to guarantee centering and layout constraint */
+.w-4\/5 {
+    width: 80% !important;
+}
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
