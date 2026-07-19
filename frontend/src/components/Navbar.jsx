@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { assets } from '../assets/assets'
 import { Search, ShoppingCart, User } from "lucide-react";
 
 const Navbar = () => {
+
+    const [menu, setMenu] = useState("home");
+    const navItems = ["home", "menu", "restaurant", "offers", "contact"]
+
     return (
         <nav className="sticky top-0 z-50 bg-[#0B0B0B]/90 backdrop-blur-lg border-b border-[#2A2116]">
             <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
@@ -15,16 +19,58 @@ const Navbar = () => {
                 />
 
                 {/* Navigation */}
-                <ul className="hidden lg:flex items-center gap-10 text-[#E6D3A3] font-medium">
-                    <li className="cursor-pointer hover:text-[#D89A2B] transition duration-300 border-b-2 border-[#D89A2B] pb-1">Home</li>
-                    <li className="cursor-pointer hover:text-[#D89A2B] transition duration-300">Menu</li>
-                    <li className="cursor-pointer hover:text-[#D89A2B] transition duration-300">Restuarant</li>
-                    <li className="cursor-pointer hover:text-[#D89A2B] transition duration-300">Offers</li>
-                    <li className="cursor-pointer hover:text-[#D89A2B] transition duration-300">Contact</li>
-                </ul>
+                <ul className="hidden lg:flex flex-1 justify-center items-center gap-10 text-[#E6D3A3] font-medium">
+                    <li
+                        onClick={() => setMenu("home")}
+                        className={`cursor-pointer transition duration-300 ${menu === "home"
+                            ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1"
+                            : "hover:text-[#D89A2B]"
+                            }`}
+                    >
+                        Home
+                    </li>
+                    <li
+                        onClick={() => setMenu("menu")}
+                        className={`cursor-pointer transition duration-300 ${menu === "menu"
+                            ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1"
+                            : "hover:text-[#D89A2B]"
+                            }`}
+                    >
+                        Menu
+                    </li>
+                    <li
+                        onClick={() => setMenu("restaurant")}
+                        className={`cursor-pointer transition duration-300 ${menu === "restaurant"
+                            ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1"
+                            : "hover:text-[#D89A2B]"
+                            }`}
+                    >
+                        Restaurant
+                    </li>
+
+                    <li
+                        onClick={() => setMenu("offers")}
+                        className={`cursor-pointer transition duration-300 ${menu === "offers"
+                            ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1"
+                            : "hover:text-[#D89A2B]"
+                            }`}
+                    >
+                        Offers
+                    </li>
+
+                    <li
+                        onClick={() => setMenu("contact")}
+                        className={`cursor-pointer transition duration-300 ${menu === "contact"
+                            ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1"
+                            : "hover:text-[#D89A2B]"
+                            }`}
+                    >
+                        Contact
+                    </li>
+                </ul >
 
                 {/* Rights Side */}
-                <div className="flex items-center gap-4">
+                < div className="flex items-center gap-4" >
                     <button className="w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition">
                         <Search className="w-5 h-5 text-[#E6D3A3]" />
                     </button>
@@ -37,12 +83,12 @@ const Navbar = () => {
                     <button className='w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition'>
                         <User className='w-5 h-5 text-[#E6D3A3]' />
                     </button>
-                    <button className="ml-2 px-6 py-2 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20">
+                    <button className="ml-2 w-20 h-10 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20">
                         Sign In
                     </button>
-                </div>
-            </div>
-        </nav>
+                </div >
+            </div >
+        </nav >
     );
 };
 
