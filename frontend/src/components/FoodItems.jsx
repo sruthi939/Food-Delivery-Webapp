@@ -1,5 +1,5 @@
 import React from "react";
-import { Star, Plus } from "lucide-react";
+import { Star } from "lucide-react";
 
 const FoodItems = ({ name, price, description, image, index }) => {
     return (
@@ -18,24 +18,21 @@ const FoodItems = ({ name, price, description, image, index }) => {
 
             {/* Content */}
             <div className="p-5 flex flex-col flex-1">
-                {/* Title and Rating Info */}
-                <div className="mb-3">
-                    <h3 className="text-white text-xl font-semibold tracking-tight leading-snug line-clamp-1">
-                        {name}
-                    </h3>
-                    <div className="flex gap-0.5 mt-1.5">
-                        {[...Array(5)].map((_, i) => (
+                <div className="flex items-center justify-between">
+                    <h3 className="text-white font-bold text-xl">{name}</h3>
+
+                    <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, index) => (
                             <Star
-                                key={i}
-                                size={14}
-                                className="fill-[#D89A2B] text-[#D89A2B]"
+                                key={index}
+                                className="w-4 h-4 fill-[#D89A2B] text-[#D89A2B]"
                             />
                         ))}
                     </div>
                 </div>
 
-                <p className="text-[#a3a3a3] text-sm leading-relaxed flex-1 font-light">{description}</p>
-                <p className="text-[#D89A2B] text-3xl font-bold mt-4">${price}</p>
+                <p className="text-[#a3a3a3] text-l leading-relaxed flex-1 font-light">{description}</p>
+                <p className="text-[#D89A2B] text-2xl font-bold mt-4">${price}</p>
             </div>
         </div>
     );

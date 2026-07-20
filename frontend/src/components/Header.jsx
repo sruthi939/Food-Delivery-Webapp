@@ -1,5 +1,6 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { ArrowRight } from "lucide-react";
 
 const Header = () => {
     return (
@@ -12,21 +13,28 @@ const Header = () => {
 
             {/* Content Wrapper aligned with the w-4/5 site grid */}
             <div className="w-4/5 mx-auto h-full relative z-10 flex flex-col justify-center items-start px-4 sm:px-6 md:px-8">
-                <div className="flex flex-col items-start gap-4 max-w-full sm:max-w-[85%] md:max-w-[75%] lg:max-w-[55%]">
-                    <h2 className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[3.8vw] leading-[1.15] animate-fade-in-up delay-100">
-                        Order your <span className="text-[#D89A2B]">favourite food</span> here
-                    </h2>
-                    <p className="text-gray-200 text-sm md:text-base lg:text-[1.05vw] leading-relaxed max-w-[500px] font-light mt-2 animate-fade-in-up delay-200">
+                <div className="max-w-xl space-y-6 animate-fade-in-up">
+                    <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-white">
+                        Order your {" "}
+
+                        <span className="text-[#D89A2B]">favourite food</span>
+
+                        <div className="flex items-center gap-4 mt-4">
+                            <span>here</span>
+
+                            <button className="w-14 h-14 rounded-full bg-[#D89A2B] flex items-center justify-center hover:scale-110 transition-all duration-300 shadow-lg shadow-[#D89A2B]/30 cursor-pointer">
+                                <ArrowRight className="w-7 h-7 text-black" />
+                            </button>
+                        </div>
+                    </h1>
+                    <p className="text-gray-300 text-lg leading-8">
                         Choose from a diverse menu featuring a delectable array of dishes
                         crafted with the finest ingredients and culinary expertise. Our
                         mission is to satisfy your cravings.
                     </p>
-                    <button className="inline-block !px-10 !py-4 bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black text-sm md:text-base font-bold rounded-full shadow-lg shadow-[#D89A2B]/30 hover:scale-105 hover:shadow-xl hover:shadow-[#D89A2B]/40 active:scale-95 transition-all duration-300 cursor-pointer border-none outline-none animate-fade-in-up delay-300 mt-2">
-                        View Menu
-                    </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

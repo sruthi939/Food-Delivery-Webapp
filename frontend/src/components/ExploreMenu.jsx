@@ -1,44 +1,68 @@
-import React from 'react';
-import { menu_list } from '../assets/assets';
+import React from "react";
+import { menu_list } from "../assets/assets";
 
-const ExploreMenu = ({ category = "All", setCategory = () => { } }) => {
+const ExploreMenu = ({ category, setCategory }) => {
     return (
-        <div className="w-4/5 mx-auto mt-36 md:mt-48 pt-12 pb-16 md:pt-16 md:pb-20 px-4 sm:px-6 md:px-8 flex flex-col gap-8" id="explore-menu">
-            <h1 className="text-white font-bold text-3xl md:text-4xl lg:text-5xl text-center tracking-tight pb-3 animate-fade-in-up">
-                Explore our menu
+        <section
+            id="explore-menu"
+            className="w-4/5 mx-auto py-24 flex flex-col items-center"
+        >
+            {/* Heading */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center animate-fade-in-up">
+                Explore our{" "}
+                <span className="text-[#D89A2B]">Menu</span>
             </h1>
-            <p className="text-[#a3a3a3] text-xs sm:text-sm md:text-base max-w-[650px] mx-auto text-center leading-relaxed font-light animate-fade-in-up delay-100 mb-6">
-                Explore our carefully curated menu featuring a wide variety of delicious dishes,
-                from mouthwatering appetizers to irresistible desserts. Every meal is prepared
-                with fresh, high-quality ingredients to deliver exceptional taste and satisfy every craving.
+
+            {/* Description */}
+            <p className="text-center text-gray-400 text-base md:text-lg leading-8 max-w-3xl mt-8 animate-fade-in-up delay-100">
+                Explore our carefully curated menu featuring a wide variety of
+                delicious dishes, from mouthwatering appetizers to irresistible
+                desserts. Every meal is prepared with fresh, high-quality
+                ingredients to deliver exceptional taste and satisfy every
+                craving.
             </p>
-            <div className="flex items-center gap-8 md:gap-12 overflow-x-auto py-8 pl-1 scrollbar-none justify-start">
+
+            {/* Menu Categories */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-8 mt-20 w-full">
                 {menu_list.map((item, index) => {
                     const isActive = category === item.menu_name;
+
                     return (
                         <div
                             key={index}
-                            onClick={() => setCategory(prev => prev === item.menu_name ? "All" : item.menu_name)}
-                            className="flex flex-col items-center gap-4 cursor-pointer min-w-[100px] sm:min-w-[120px] md:min-w-[140px] transition-all duration-300 hover:scale-105 active:scale-95 group flex-shrink-0 animate-fade-in-up"
-                            style={{ animationDelay: `${index * 60 + 200}ms` }}
+                            onClick={() =>
+                                setCategory(
+                                    isActive ? "All" : item.menu_name
+                                )
+                            }
+                            className="flex flex-col items-center cursor-pointer group transition-all duration-300 hover:scale-105"
                         >
-                            <img
-                                src={item.menu_image}
-                                alt={item.menu_name}
-                                className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full object-cover transition-all duration-500 border-2 ${isActive
-                                    ? "border-[#D89A2B] p-1 bg-[#1A1A1A] shadow-lg shadow-[#D89A2B]/25 scale-105"
-                                    : "border-transparent hover:border-[#D89A2B]/40"
+                            <div
+                                className={`w-28 h-28 rounded-full overflow-hidden border-2 transition-all duration-300 ${isActive
+                                        ? "border-[#D89A2B] shadow-lg shadow-[#D89A2B]/40"
+                                        : "border-transparent hover:border-[#D89A2B]/50"
                                     }`}
-                            />
-                            <p className={`text-xs sm:text-sm md:text-base font-semibold transition-colors duration-300 mt-2 ${isActive ? "text-[#D89A2B]" : "text-[#E6D3A3] group-hover:text-white"
-                                }`}>
+                            >
+                                <img
+                                    src={item.menu_image}
+                                    alt={item.menu_name}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+
+                            <p
+                                className={`mt-5 text-lg font-semibold transition-colors ${isActive
+                                        ? "text-[#D89A2B]"
+                                        : "text-[#E6D3A3] group-hover:text-white"
+                                    }`}
+                            >
                                 {item.menu_name}
                             </p>
                         </div>
-                    )
+                    );
                 })}
             </div>
-        </div>
+        </section>
     );
 };
 
