@@ -19,9 +19,22 @@ const App = () => {
         const timer = setTimeout(() => {
             setLoading(false);
         }, 2000);
-        
+
         return () => clearTimeout(timer);
     }, [location.pathname]);
+
+    // Force scroll to top on every navigation
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+
+    // Disable browser scroll-restoration on refresh
+    useEffect(() => {
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden'>

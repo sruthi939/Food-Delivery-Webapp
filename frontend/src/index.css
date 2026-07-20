@@ -34,8 +34,13 @@ a {
 
 /* Animation Keyframes */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInUp {
@@ -43,6 +48,7 @@ a {
         opacity: 0;
         transform: translateY(24px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -54,6 +60,7 @@ a {
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -65,6 +72,7 @@ a {
         opacity: 0;
         transform: translateY(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -72,10 +80,13 @@ a {
 }
 
 @keyframes pulseGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         filter: drop-shadow(0 0 10px rgba(216, 154, 43, 0.2));
     }
+
     50% {
         transform: scale(1.08);
         filter: drop-shadow(0 0 25px rgba(216, 154, 43, 0.6));
@@ -108,18 +119,22 @@ a {
     animation-delay: 100ms;
     animation-fill-mode: both;
 }
+
 .delay-200 {
     animation-delay: 200ms;
     animation-fill-mode: both;
 }
+
 .delay-300 {
     animation-delay: 300ms;
     animation-fill-mode: both;
 }
+
 .delay-400 {
     animation-delay: 400ms;
     animation-fill-mode: both;
 }
+
 .delay-500 {
     animation-delay: 500ms;
     animation-fill-mode: both;
@@ -129,7 +144,10 @@ a {
 .scrollbar-none::-webkit-scrollbar {
     display: none;
 }
+
 .scrollbar-none {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
