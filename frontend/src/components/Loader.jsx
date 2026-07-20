@@ -3,7 +3,7 @@ import { assets } from '../assets/assets';
 
 const Loader = () => {
     return (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-lg z-[99999] flex flex-col items-center justify-center transition-opacity duration-300">
+        <div className="fixed inset-0 bg-[#070707] z-[99999] flex flex-col items-center justify-center transition-opacity duration-300">
             {/* Logo Container with Concentric Counter-Rotating Rings */}
             <div className="relative flex items-center justify-center w-72 h-72">
                 

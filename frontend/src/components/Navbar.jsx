@@ -8,8 +8,8 @@ const Navbar = () => {
     const [menu, setMenu] = useState("home");
 
     return (
-        <nav className="sticky top-0 z-50 bg-[#0B0B0B]/90 backdrop-blur-lg border-b border-[#2A2116] animate-slide-down">
-            <div className="w-4/5 mx-auto flex items-center justify-between py-5">
+        <nav className="fixed top-0 left-0 w-full z-50 h-[90px] bg-[#0B0B0B]/90 backdrop-blur-lg border-b border-[#2A2116] flex items-center">
+            <div className="w-4/5 mx-auto flex items-center justify-between px-4 sm:px-6 md:px-8">
 
                 {/* Logo */}
                 <Link to="/" onClick={() => setMenu("home")} className="animate-fade-in delay-100">
