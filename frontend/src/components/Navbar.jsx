@@ -8,16 +8,16 @@ const Navbar = () => {
     const [menu, setMenu] = useState("home");
 
     return (
-        <nav className="sticky top-0 z-50 bg-[#0B0B0B]/90 backdrop-blur-lg border-b border-[#2A2116]">
+        <nav className="sticky top-0 z-50 bg-[#0B0B0B]/90 backdrop-blur-lg border-b border-[#2A2116] animate-slide-down">
             <div className="w-4/5 mx-auto flex items-center justify-between py-5">
 
                 {/* Logo */}
-                <Link to="/" onClick={() => setMenu("home")}>
+                <Link to="/" onClick={() => setMenu("home")} className="animate-fade-in delay-100">
                     <img src={assets.logo} alt='logo' className='w-36 cursor-pointer object-contain' />
                 </Link>
 
                 {/* Navigation */}
-                <ul className="hidden lg:flex flex-1 justify-center items-center gap-10 text-[#E6D3A3] font-medium">
+                <ul className="hidden lg:flex flex-1 justify-center items-center gap-10 text-[#E6D3A3] font-medium animate-fade-in delay-200">
                     <Link
                         to="/"
                         onClick={() => setMenu("home")}
@@ -71,7 +71,7 @@ const Navbar = () => {
                 </ul>
 
                 {/* Rights Side */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 animate-fade-in delay-300">
                     <button className="w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition cursor-pointer">
                         <Search className="w-5 h-5 text-[#E6D3A3]" />
                     </button>

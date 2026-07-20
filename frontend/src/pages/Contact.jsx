@@ -2,7 +2,7 @@ import React from 'react'
 
 const Contact = () => {
     return (
-        <div className="w-4/5 mx-auto mt-10">
+        <div className="w-4/5 mx-auto mt-10 animate-fade-in-up">
             <h2>Contact</h2>
         </div>
     )
