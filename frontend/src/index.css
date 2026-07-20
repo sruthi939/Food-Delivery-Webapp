@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.app {
+    width: 80%;
+    margin: auto;
+}
+
+/* Explicit overrides to guarantee centering and layout constraint */
+.w-4\/5 {
+    width: 80% !important;
+}
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(216, 154, 43, 0.2));
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 25px rgba(216, 154, 43, 0.6));
+    }
+}
+
+/* Tailwind v4 Utility Class Definitions */
+@utility animate-fade-in {
+    animation: fadeIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-scale-in {
+    animation: scaleIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-slide-down {
+    animation: slideDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-pulse-glow {
+    animation: pulseGlow 1.8s ease-in-out infinite;
+}
+
+/* Delay classes to stagger animations */
+.delay-100 {
+    animation-delay: 100ms;
+    animation-fill-mode: both;
+}
+.delay-200 {
+    animation-delay: 200ms;
+    animation-fill-mode: both;
+}
+.delay-300 {
+    animation-delay: 300ms;
+    animation-fill-mode: both;
+}
+.delay-400 {
+    animation-delay: 400ms;
+    animation-fill-mode: both;
+}
+.delay-500 {
+    animation-delay: 500ms;
+    animation-fill-mode: both;
+}
+
+/* Hide scrollbars for horizontal categories scroll */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-none {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
