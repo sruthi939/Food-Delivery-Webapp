@@ -39,8 +39,8 @@ const ExploreMenu = ({ category, setCategory }) => {
                         >
                             <div
                                 className={`w-28 h-28 rounded-full overflow-hidden border-2 transition-all duration-300 ${isActive
-                                        ? "border-[#D89A2B] shadow-lg shadow-[#D89A2B]/40"
-                                        : "border-transparent hover:border-[#D89A2B]/50"
+                                    ? "border-[#D89A2B] shadow-lg shadow-[#D89A2B]/40"
+                                    : "border-transparent hover:border-[#D89A2B]/50"
                                     }`}
                             >
                                 <img
@@ -52,8 +52,8 @@ const ExploreMenu = ({ category, setCategory }) => {
 
                             <p
                                 className={`mt-5 text-lg font-semibold transition-colors ${isActive
-                                        ? "text-[#D89A2B]"
-                                        : "text-[#E6D3A3] group-hover:text-white"
+                                    ? "text-[#D89A2B]"
+                                    : "text-[#E6D3A3] group-hover:text-white"
                                     }`}
                             >
                                 {item.menu_name}
