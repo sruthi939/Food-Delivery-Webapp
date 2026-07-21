@@ -35,25 +35,23 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     {itemCount === 0 ? (
                         <button
                             onClick={() => setItemCount(1)}
-                            className="flex items-center gap-1.5 px-5 py-3 rounded-full bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-xs sm:text-sm shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+                            className="flex items-center gap-2 px-7 py-3 rounded-full bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-xs sm:text-sm shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                         >
                             <Plus size={16} className="stroke-[3]" />
                             <span>Add</span>
                         </button>
                     ) : (
-                        <div className="flex items-center gap-2 bg-[#111111]/90 border border-[#D89A2B] px-2.5 py-1 rounded-full shadow-lg backdrop-blur-sm">
-                            <button
-                                onClick={() => setItemCount(prev => Math.max(0, prev - 1))}
-                                className="w-6 h-6 rounded-full bg-[#262626] flex items-center justify-center text-[#D89A2B] hover:bg-[#D89A2B] hover:text-black transition cursor-pointer"
-                            >
-                                <Minus size={13} className="stroke-[3]" />
+                        <div className="flex items-center gap-3 bg-[#111111]/90 border border-[#D89A2B] px-4 py-2 rounded-full shadow-lg backdrop-blur-sm">
+                            <button className="w-8 h-8 rounded-full bg-[#262626] flex items-center justify-center">
+                                <Minus size={16} />
                             </button>
-                            <span className="text-white font-bold text-xs min-w-[16px] text-center">{itemCount}</span>
-                            <button
-                                onClick={() => setItemCount(prev => prev + 1)}
-                                className="w-6 h-6 rounded-full bg-[#D89A2B] flex items-center justify-center text-black hover:bg-[#c48922] transition cursor-pointer"
-                            >
-                                <Plus size={13} className="stroke-[3]" />
+
+                            <span className="text-white font-bold text-base min-w-[24px] text-center">
+                                {itemCount}
+                            </span>
+
+                            <button className="w-8 h-8 rounded-full bg-[#D89A2B] flex items-center justify-center">
+                                <Plus size={16} />
                             </button>
                         </div>
                     )}
