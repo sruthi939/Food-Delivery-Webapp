@@ -35,7 +35,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     {itemCount === 0 ? (
                         <button
                             onClick={() => setItemCount(1)}
-                            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-xs sm:text-sm shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+                            className="flex items-center gap-1.5 px-5 py-3 rounded-full bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-xs sm:text-sm shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
                         >
                             <Plus size={16} className="stroke-[3]" />
                             <span>Add</span>
