@@ -9,7 +9,9 @@ const Home = () => {
     return (
         <div>
             <Header />
-            <ExploreMenu category={category} setCategory={setCategory} />
+            <div className='mt-8'>
+                <ExploreMenu category={category} setCategory={setCategory} />
+            </div>
             <FoodDisplay category={category} />
         </div>
     )
