@@ -36,31 +36,29 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     <hr className="border-t border-[#D89A2B]/30" />
                 </div>
                 <div className="!mt-3 flex items-center justify-center">
-                    <span className="text-[#FFC107] text-3xl font-semibold hover:scale-105 transition duration-300">
+                    <span className="text-[#FFC107] text-2xl font-semibold hover:scale-105 transition duration-300">
                         ${price}
                     </span>
 
                     {itemCount === 0 ? (
                         <button
                             onClick={() => setItemCount(1)}
-                            className="ml-2 w-20 h-10 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer"
+                            className="ml-2 w-20 h-8 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] w-[120px] text-black font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer"
                         >
-                            <Plus size={30} className="inline mr-2" />
+                            <Plus size={20} className="inline mr-2" />
                             Add
                         </button>
                     ) : (
                         <div className="flex items-center gap-5 bg-[#F39C12] px-5 py-3 rounded-2xl">
 
-                            <button onClick={() => setItemCount(Math.max(0, itemCount - 1))} className="text-white">
-                                <Minus size={24} />
+                            <button onClick={() => setItemCount(Math.max(0, itemCount - 1))} className="text-black">
+                                <Minus size={18} strokeWidth={2.5} />
                             </button>
-
-                            <span className="text-white text-2xl font-bold">
+                            <span className="text-black text-2xl font-bold">
                                 {itemCount}
                             </span>
-
-                            <button onClick={() => setItemCount(itemCount + 1)} className="text-white">
-                                <Plus size={20} />
+                            <button onClick={() => setItemCount(itemCount + 1)} className="text-black">
+                                <Plus size={18} strokeWidth={2.5} />
                             </button>
 
                         </div>
