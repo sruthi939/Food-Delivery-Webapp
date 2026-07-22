@@ -9,6 +9,7 @@ import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import PlaceOrder from './pages/PlaceOrder'
 import Loader from './components/Loader'
+import Footer from './components/Footer'
 
 const App = () => {
     const [loading, setLoading] = useState(true);
@@ -37,19 +38,22 @@ const App = () => {
     }, []);
 
     return (
-        <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden'>
-            {loading && <Loader />}
-            <Navbar />
-            <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/menu' element={<Menu />} />
-                <Route path='/offers' element={<Offers />} />
-                <Route path='/restuarant' element={<Restuarant />} />
-                <Route path='/contact' element={<Contact />} />
-                <Route path='/cart' element={<Cart />} />
-                <Route path='/order' element={<PlaceOrder />} />
-            </Routes>
-        </div>
+        <>
+            <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden'>
+                {loading && <Loader />}
+                <Navbar />
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/menu' element={<Menu />} />
+                    <Route path='/offers' element={<Offers />} />
+                    <Route path='/restuarant' element={<Restuarant />} />
+                    <Route path='/contact' element={<Contact />} />
+                    <Route path='/cart' element={<Cart />} />
+                    <Route path='/order' element={<PlaceOrder />} />
+                </Routes>
+            </div>
+            <Footer />
+        </>
     )
 }
 
