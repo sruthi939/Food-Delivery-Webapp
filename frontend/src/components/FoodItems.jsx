@@ -24,7 +24,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
 
             {/* Content Section with Side Padding */}
             <div className="bg-[#171717] px-6 py-6 flex flex-col flex-1">
-                <h5 className="text-white text-2xl font-bold text-center line-clamp-1">
+                <h5 className="text-white text-xl font-bold text-center line-clamp-1">
                     {name}
                 </h5>
                 <p className="text-gray-300 text-sm text-center mt-2 line-clamp-1">
@@ -34,7 +34,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     {[...Array(5)].map((_, i) => (
                         <Star
                             key={i}
-                            size={20}
+                            size={15}
                             className="fill-[#FFC107] text-[#FFC107]"
                         />
                     ))}
