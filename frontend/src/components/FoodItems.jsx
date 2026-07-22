@@ -4,8 +4,8 @@ import { StoreContext } from "../context/StoreContext";
 
 const FoodItems = ({ id, name, price, description, image, index }) => {
     const [isLiked, setIsLiked] = useState(false);
-    const [itemCount, setItemCount] = useState(0);
-    const { cartItems, addToCart, removeFromCart } = useContext(StoreContext)
+    const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
+
     return (
         <div
             className="group bg-[#111111] rounded-3xl overflow-hidden border border-[#222222] hover:border-[#D89A2B]/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D89A2B]/10 flex flex-col"
@@ -45,7 +45,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 </p>
 
                 {/* Star Rating */}
-                <div className="flex justify-center gap-1">
+                <div className="flex justify-center gap-1 mt-1">
                     {[...Array(5)].map((_, i) => (
                         <Star
                             key={i}
@@ -61,14 +61,14 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 </div>
 
                 {/* Price & Add to Cart Row */}
-                <div className="flex items-center justify-center !mt-auto">
+                <div className="flex items-center justify-between mt-auto !px-7">
                     <span className="text-[#D89A2B] text-2xl font-bold">
                         ${price}
                     </span>
 
-                    {itemCount === 0 ? (
+                    {!cartItems[id] ? (
                         <button
-                            onClick={() => setItemCount(1)}
+                            onClick={() => addToCart(id)}
                             className="!px-9 !py-2 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition duration-300 cursor-pointer"
                         >
                             + Add
@@ -76,14 +76,14 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     ) : (
                         <div className="flex items-center gap-2.5 bg-[#1C1A17] border border-[#D89A2B]/40 px-2.5 py-1.5 rounded-xl shadow-inner">
                             <button
-                                onClick={() => setItemCount(prev => Math.max(0, prev - 1))}
+                                onClick={() => removeFromCart(id)}
                                 className="w-6 h-6 rounded-full bg-[#2A241C] flex items-center justify-center text-[#D89A2B] hover:bg-[#D89A2B] hover:text-black transition cursor-pointer"
                             >
                                 <Minus size={13} className="stroke-[3]" />
                             </button>
-                            <span className="text-white font-bold text-xs min-w-[14px] text-center">{itemCount}</span>
+                            <span className="text-white font-bold text-xs min-w-[14px] text-center">{cartItems[id]}</span>
                             <button
-                                onClick={() => setItemCount(prev => prev + 1)}
+                                onClick={() => addToCart(id)}
                                 className="w-6 h-6 rounded-full bg-[#D89A2B] flex items-center justify-center text-black hover:bg-[#c48922] transition cursor-pointer"
                             >
                                 <Plus size={13} className="stroke-[3]" />
