@@ -15,10 +15,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 <img src={image} alt={name} className="w-70 h-50 object-cover transition-transform duration-500 group-hover:scale-105" />
 
                 <button onClick={() => setIsLiked(!isLiked)} className="absolute top-4 right-4 w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                    <Heart
-                        size={24}
-                        className={isLiked ? "fill-[#D89A2B] text-[#D89A2B]" : "text-white"}
-                    />
+                    <Heart size={24} className={isLiked ? "fill-[#D89A2B] text-[#D89A2B]" : "text-white"} />
                 </button>
             </div>
 
@@ -32,11 +29,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 </p>
                 <div className="flex justify-center mt-4 mb-5">
                     {[...Array(5)].map((_, i) => (
-                        <Star
-                            key={i}
-                            size={15}
-                            className="fill-[#FFC107] text-[#FFC107]"
-                        />
+                        <Star key={i} size={15} className="fill-[#FFC107] text-[#FFC107]" />
                     ))}
                 </div>
                 <div className="!mt-3 w-full">
@@ -58,10 +51,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     ) : (
                         <div className="flex items-center gap-5 bg-[#F39C12] px-5 py-3 rounded-2xl">
 
-                            <button
-                                onClick={() => setItemCount(Math.max(0, itemCount - 1))}
-                                className="text-white"
-                            >
+                            <button onClick={() => setItemCount(Math.max(0, itemCount - 1))} className="text-white">
                                 <Minus size={24} />
                             </button>
 
@@ -69,10 +59,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                                 {itemCount}
                             </span>
 
-                            <button
-                                onClick={() => setItemCount(itemCount + 1)}
-                                className="text-white"
-                            >
+                            <button onClick={() => setItemCount(itemCount + 1)} className="text-white">
                                 <Plus size={24} />
                             </button>
 
