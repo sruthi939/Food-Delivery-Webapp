@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Star, Heart, Plus, Minus } from "lucide-react";
+import { StoreContext } from "../context/StoreContext";
 
 const FoodItems = ({ id, name, price, description, image, index }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [itemCount, setItemCount] = useState(0);
-
+    const { cartItems, addToCart, removeFromCart } = useContext(StoreContext)
     return (
         <div
             className="group bg-[#111111] rounded-3xl overflow-hidden border border-[#222222] hover:border-[#D89A2B]/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D89A2B]/10 flex flex-col"
@@ -32,7 +33,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
             </div>
 
             {/* Content Section */}
-            <div className="p-5 flex flex-col flex-1 gap-2 bg-[#111111]">
+            <div className="px-6 pt-5 pb-6 flex flex-col flex-1 gap-2 bg-[#111111]">
                 {/* Title */}
                 <h3 className="text-white font-bold text-xl text-center line-clamp-1">
                     {name}
@@ -60,7 +61,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 </div>
 
                 {/* Price & Add to Cart Row */}
-                <div className="flex items-center justify-between mt-auto">
+                <div className="flex items-center justify-center !mt-auto">
                     <span className="text-[#D89A2B] text-2xl font-bold">
                         ${price}
                     </span>
@@ -68,7 +69,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     {itemCount === 0 ? (
                         <button
                             onClick={() => setItemCount(1)}
-                            className="px-5 py-2 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition duration-300 cursor-pointer"
+                            className="!px-9 !py-2 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition duration-300 cursor-pointer"
                         >
                             + Add
                         </button>
