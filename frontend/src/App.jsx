@@ -38,10 +38,10 @@ const App = () => {
     }, []);
 
     return (
-        <>
-            <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden'>
-                {loading && <Loader />}
-                <Navbar />
+        <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden flex flex-col justify-between'>
+            {loading && <Loader />}
+            <Navbar />
+            <div className="flex-1">
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/menu' element={<Menu />} />
@@ -53,7 +53,7 @@ const App = () => {
                 </Routes>
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 
