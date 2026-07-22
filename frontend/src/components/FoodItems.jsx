@@ -60,7 +60,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                             </span>
 
                             <button onClick={() => setItemCount(itemCount + 1)} className="text-white">
-                                <Plus size={24} />
+                                <Plus size={20} />
                             </button>
 
                         </div>
