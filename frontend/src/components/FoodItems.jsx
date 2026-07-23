@@ -45,7 +45,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 </p>
 
                 {/* Star Rating */}
-                <div className="flex justify-center gap-1 mt-1">
+                <div className="flex justify-center gap-1">
                     {[...Array(5)].map((_, i) => (
                         <Star
                             key={i}
@@ -69,7 +69,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                     {!cartItems[id] ? (
                         <button
                             onClick={() => addToCart(id)}
-                            className="!px-9 !py-2 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition duration-300 cursor-pointer"
+                            className="!px-9 !py-1 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition duration-300 cursor-pointer"
                         >
                             + Add
                         </button>
