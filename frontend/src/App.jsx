@@ -41,7 +41,7 @@ const App = () => {
 
     return (
         <>
-            {showLogin ? <Login /> : <></>}
+            {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
             <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden flex flex-col justify-between'>
                 {loading && <Loader />}
                 <Navbar setShowLogin={setShowLogin} />
