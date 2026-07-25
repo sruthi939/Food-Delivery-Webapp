@@ -8,3 +8,5 @@ export const connectDB = async () => {
         console.warn(`[DB Warning] MongoDB Connection Error (${error.message}). Running server with in-memory storage fallbacks.`);
     }
 };
+
+export default connectDB;
