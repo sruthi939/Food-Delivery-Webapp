@@ -3,29 +3,27 @@ import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
-import Offers from './pages/Offers'
-import Restuarant from './pages/Restuarant'
-import Contact from './pages/Contact'
 import Cart from './pages/Cart'
+import Wishlist from './pages/Wishlist'
 import PlaceOrder from './pages/PlaceOrder'
-import Loader from './components/Loader'
 import Footer from './components/Footer'
 import Login from './pages/Login'
-import Wishlist from './pages/Wishlist'
+import Restuarant from './pages/Restuarant'
+import Offers from './pages/Offers'
+import Contact from './pages/Contact'
+import Loader from './components/Loader'
 
 const App = () => {
+    const [showLogin, setShowLogin] = useState(false);
     const [loading, setLoading] = useState(true);
     const location = useLocation();
-    const [showLogin, setShowLogin] = useState(false)
 
     useEffect(() => {
-        setLoading(true);
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 2000);
-
+        }, 1000);
         return () => clearTimeout(timer);
-    }, [location.pathname]);
+    }, []);
 
     // Force scroll to top on every navigation
     useEffect(() => {
@@ -40,18 +38,20 @@ const App = () => {
         window.scrollTo(0, 0);
     }, []);
 
+    const isLoginPage = location.pathname === '/login';
+
     return (
         <>
             {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
             <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden flex flex-col justify-between'>
                 {loading && <Loader />}
-                <Navbar setShowLogin={setShowLogin} />
+                {!isLoginPage && <Navbar setShowLogin={setShowLogin} />}
                 <div className="flex-1">
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/menu' element={<Menu />} />
                         <Route path='/offers' element={<Offers />} />
-                        <Route path='/restuarant' element={<Restuarant />} />
+                        <Route path='/restaurant' element={<Restuarant />} />
                         <Route path='/contact' element={<Contact />} />
                         <Route path='/cart' element={<Cart />} />
                         <Route path='/wishlist' element={<Wishlist />} />
@@ -59,7 +59,7 @@ const App = () => {
                         <Route path='/login' element={<Login />} />
                     </Routes>
                 </div>
-                <Footer />
+                {!isLoginPage && <Footer />}
             </div>
         </>
     )

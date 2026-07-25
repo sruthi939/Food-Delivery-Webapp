@@ -1,100 +1,96 @@
-import React, { useContext } from "react";
-import { Plus, Minus, Heart } from "lucide-react";
+import React, { useContext, useState } from "react";
+import { Star, Heart, Plus, Minus } from "lucide-react";
 import { StoreContext } from "../context/StoreContext";
 
-const FoodItems = ({ id, name, price, description, image, isVeg = true, index }) => {
+const FoodItems = ({ id, name, price, description, image, index }) => {
     const { cartItems, addToCart, removeFromCart, wishlist, toggleWishlist } = useContext(StoreContext);
     const isLiked = !!(wishlist && wishlist[id]);
-    const quantity = cartItems[id] || 0;
 
     return (
         <div
-            className="group bg-[#0D0D0D] border border-[#222222] hover:border-[#D89A2B]/40 rounded-2xl !p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#D89A2B]/10 flex items-center gap-4 relative overflow-hidden"
-            style={{ animationDelay: `${index * 50}ms` }}
+            className="group bg-[#111111] rounded-3xl overflow-hidden border border-[#222222] hover:border-[#D89A2B]/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#D89A2B]/10 flex flex-col"
+            style={{ animationDelay: `${index * 60}ms` }}
         >
-            {/* Image Thumbnail */}
-            <div className="relative shrink-0 overflow-hidden rounded-xl border border-[#222222]">
+            {/* Image Container */}
+            <div className="relative overflow-hidden">
                 <img
                     src={image}
                     alt={name}
-                    className="w-28 h-28 sm:w-32 sm:h-32 object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
-                {/* Wishlist Heart Icon */}
+                {/* Like Button */}
                 <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        toggleWishlist(id);
-                    }}
-                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:scale-110 active:scale-95 transition cursor-pointer z-10"
-                    aria-label="Wishlist"
+                    onClick={() => toggleWishlist(id)}
+                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer shadow-md z-10"
+                    aria-label="Like item"
                 >
                     <Heart
-                        size={14}
-                        className={`transition-colors ${isLiked ? "fill-[#D89A2B] text-[#D89A2B]" : "text-white/80 hover:text-white"}`}
+                        size={20}
+                        className={`transition-colors duration-300 ${isLiked ? "fill-[#D89A2B] text-[#D89A2B]" : "text-white/80 hover:text-white"}`}
                     />
                 </button>
             </div>
 
             {/* Content Section */}
-            <div className="flex flex-col justify-between flex-1 min-w-0 h-full !py-0.5">
+            <div className="!px-6 !pt-3 !pb-3 flex flex-col flex-1 gap-2 bg-[#111111]">
+                {/* Title */}
+                <h3 className="text-white font-bold text-xl text-center line-clamp-1">
+                    {name}
+                </h3>
 
-                {/* Title & Veg/Non-Veg Badge Row */}
-                <div>
-                    <div className="flex items-start justify-between gap-2">
-                        <h3 className="font-bold text-white text-base sm:text-lg line-clamp-1 group-hover:text-[#D89A2B] transition-colors">
-                            {name}
-                        </h3>
+                {/* Description */}
+                <p className="text-[#a3a3a3] text-sm text-center leading-relaxed font-light line-clamp-2">
+                    {description}
+                </p>
 
-                        {/* Veg / Non-Veg Indicator Dot */}
-                        <div
-                            className={`w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 !mt-1 ${isVeg ? "border-emerald-500" : "border-red-500"
-                                }`}
-                            title={isVeg ? "Vegetarian" : "Non-Vegetarian"}
-                        >
-                            <div className={`w-2 h-2 rounded-full ${isVeg ? "bg-emerald-500" : "bg-red-500"}`} />
-                        </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-xs text-gray-400 line-clamp-2 !mt-1 leading-relaxed font-light">
-                        {description}
-                    </p>
+                {/* Star Rating */}
+                <div className="flex justify-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                        <Star
+                            key={i}
+                            size={15}
+                            className="fill-[#D89A2B] text-[#D89A2B]"
+                        />
+                    ))}
                 </div>
 
-                {/* Price & Add Button Row */}
-                <div className="flex items-center justify-between !mt-3 !pt-2 border-t border-[#1C1C1C]">
-                    <span className="text-[#D89A2B] font-bold text-base sm:text-lg">
-                        ${typeof price === 'number' ? price.toFixed(2) : price}
+                {/* Divider Line */}
+                <div className="w-full !my-2">
+                    <hr className="border-t border-[#262626]" />
+                </div>
+
+                {/* Price & Add to Cart Row */}
+                <div className="flex items-center justify-between !mt-1 !px-5">
+                    <span className="text-[#D89A2B] text-2xl font-bold">
+                        ${price}
                     </span>
 
-                    {quantity === 0 ? (
+                    {!cartItems[id] ? (
                         <button
                             onClick={() => addToCart(id)}
-                            className="w-8 h-8 rounded-full bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold flex items-center justify-center cursor-pointer shadow-md hover:scale-110 active:scale-95 transition-all duration-200"
-                            aria-label="Add to cart"
+                            className="!px-9 !py-1 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition duration-300 cursor-pointer"
                         >
-                            <Plus size={16} className="stroke-[3]" />
+                            + Add
                         </button>
                     ) : (
-                        <div className="flex items-center gap-2 bg-[#1C1A17] border border-[#D89A2B]/40 !px-2 !py-1 rounded-xl shadow-inner">
+                        <div className="flex items-center gap-2.5 bg-[#1C1A17] border border-[#D89A2B]/40 !px-2.5 !py-1.5 rounded-xl shadow-inner">
                             <button
                                 onClick={() => removeFromCart(id)}
-                                className="w-5 h-5 rounded-full bg-[#2A241C] flex items-center justify-center text-[#D89A2B] hover:bg-[#D89A2B] hover:text-black transition cursor-pointer"
+                                className="w-6 h-6 rounded-full bg-[#2A241C] flex items-center justify-center text-[#D89A2B] hover:bg-[#D89A2B] hover:text-black transition cursor-pointer"
                             >
-                                <Minus size={11} className="stroke-[3]" />
+                                <Minus size={13} className="stroke-[3]" />
                             </button>
-                            <span className="text-white font-bold text-xs min-w-[14px] text-center">{quantity}</span>
+                            <span className="text-white font-bold text-xs min-w-[14px] text-center">{cartItems[id]}</span>
                             <button
                                 onClick={() => addToCart(id)}
-                                className="w-5 h-5 rounded-full bg-[#D89A2B] flex items-center justify-center text-black hover:bg-[#c48922] transition cursor-pointer"
+                                className="w-6 h-6 rounded-full bg-[#D89A2B] flex items-center justify-center text-black hover:bg-[#c48922] transition cursor-pointer"
                             >
-                                <Plus size={11} className="stroke-[3]" />
+                                <Plus size={13} className="stroke-[3]" />
                             </button>
                         </div>
                     )}
                 </div>
-
             </div>
         </div>
     );
