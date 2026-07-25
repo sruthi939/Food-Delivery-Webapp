@@ -10,7 +10,7 @@ import Cart from './pages/Cart'
 import PlaceOrder from './pages/PlaceOrder'
 import Loader from './components/Loader'
 import Footer from './components/Footer'
-import Login from './components/Login'
+import Login from './pages/Login'
 
 const App = () => {
     const [loading, setLoading] = useState(true);
@@ -54,10 +54,11 @@ const App = () => {
                         <Route path='/contact' element={<Contact />} />
                         <Route path='/cart' element={<Cart />} />
                         <Route path='/order' element={<PlaceOrder />} />
+                        <Route path='/login' element={<Login />} />
                     </Routes>
                 </div>
                 <Footer />
-            </div >
+            </div>
         </>
     )
 }
