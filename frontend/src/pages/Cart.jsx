@@ -1,113 +1,84 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StoreContext } from "../context/StoreContext";
-import { X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import CartItems from "../components/CartItems";
+import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-    const { cartItems, food_list, removeFromCart, getTotalCartAmount } =
-        useContext(StoreContext);
+    const { cartItems } = useContext(StoreContext);
+    const navigate = useNavigate();
+    const [promoCode, setPromoCode] = useState("");
+    const [promoApplied, setPromoApplied] = useState(false);
+
+    const hasItems = Object.values(cartItems).some((count) => count > 0);
 
     return (
-        <>
-            <div className="max-w-7xl mx-auto mt-28 px-4">
-
-                {/* Heading */}
-                <div className="grid grid-cols-6 items-center border-b border-gray-300 pb-4 text-gray-500 font-semibold text-sm md:text-base">
-                    <p>Items</p>
-                    <p>Title</p>
-                    <p>Price</p>
-                    <p>Quantity</p>
-                    <p>Total</p>
-                    <p className="text-center">Remove</p>
+        <div className="w-4/5 mx-auto pt-32 pb-24 text-white min-h-[75vh]">
+            {/* Header */}
+            <div className="mb-10 text-center sm:text-left border-b border-[#222222] pb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Your <span className="text-[#D89A2B]">Cart</span>
+                    </h1>
+                    <p className="text-gray-400 text-sm mt-1">
+                        Review your selected items before proceeding to checkout
+                    </p>
                 </div>
-
-                {/* Cart Items */}
-                {food_list.map((item) => {
-                    if (cartItems[item._id] > 0) {
-                        return (
-                            <div key={item._id}>
-                                <div className="grid grid-cols-6 items-center gap-4 py-5 border-b border-gray-200">
-
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        className="h-16 w-16 rounded-xl object-cover"
-                                    />
-
-                                    <p className="font-medium text-gray-800">
-                                        {item.name}
-                                    </p>
-
-                                    <p>${item.price}</p>
-
-                                    <p>{cartItems[item._id]}</p>
-
-                                    <p className="font-semibold text-[#D89A2B]">
-                                        ${item.price * cartItems[item._id]}
-                                    </p>
-
-                                    <div className="flex justify-center">
-                                        <button
-                                            onClick={() => removeFromCart(item._id)}
-                                            className="rounded-full p-2 transition hover:bg-red-100"
-                                        >
-                                            <X
-                                                size={20}
-                                                className="text-gray-500 hover:text-red-500"
-                                            />
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        );
-                    }
-                    return null;
-                })}
-
+                {hasItems && (
+                    <button
+                        onClick={() => navigate('/menu')}
+                        className="text-[#D89A2B] hover:text-[#c48922] text-sm font-semibold flex items-center gap-1 transition cursor-pointer"
+                    >
+                        + Add More Items
+                    </button>
+                )}
             </div>
 
-            {/* Cart Bottom */}
-            <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-8 px-4 lg:flex-row lg:justify-between">
+            {/* Cart Items List Component */}
+            <CartItems />
 
-                {/* Cart Totals */}
-                <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
-
-                    <h2 className="mb-6 text-2xl font-bold text-gray-800">
-                        Cart Totals
-                    </h2>
-
-                    <div className="space-y-4">
-
-                        <div className="flex justify-between border-b pb-3">
-                            <p>Subtotal</p>
-                            <p>${getTotalCartAmount()}</p>
-                        </div>
-
-                        <div className="flex justify-between border-b pb-3">
-                            <p>Delivery Fee</p>
-                            <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
-                        </div>
-
-                        <div className="flex justify-between text-lg font-semibold">
-                            <p>Total</p>
-                            <p>
-                                $
-                                {getTotalCartAmount() === 0
-                                    ? 0
-                                    : getTotalCartAmount() + 2}
-                            </p>
-                        </div>
-
+            {/* Bottom Section: Cart Total & Promo Code */}
+            {hasItems && (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-14 items-start">
+                    {/* Cart Totals Component (7 cols) */}
+                    <div className="lg:col-span-7">
+                        <CartTotal />
                     </div>
 
-                    <button className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] py-3 font-semibold text-black transition hover:scale-[1.02]">
-                        Proceed to Checkout
-                    </button>
+                    {/* Promo Code Card (5 cols) */}
+                    <div className="lg:col-span-5 bg-[#111111] border border-[#222222] rounded-3xl p-6 sm:p-8 shadow-2xl">
+                        <h3 className="text-lg font-bold text-white mb-2">
+                            Promo Code
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                            If you have a promo code, enter it below to redeem your exclusive discount.
+                        </p>
 
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <input
+                                type="text"
+                                placeholder="Enter promo code"
+                                value={promoCode}
+                                onChange={(e) => setPromoCode(e.target.value)}
+                                className="flex-1 bg-[#1A1A1A] border border-[#333] rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            />
+                            <button
+                                onClick={() => setPromoApplied(true)}
+                                className="px-6 py-3 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-bold text-sm transition cursor-pointer shrink-0"
+                            >
+                                Apply
+                            </button>
+                        </div>
+
+                        {promoApplied && (
+                            <p className="text-emerald-400 text-xs mt-3 font-medium flex items-center gap-1">
+                                ✓ Promo code applied successfully!
+                            </p>
+                        )}
+                    </div>
                 </div>
-
-            </div>
-        </>
+            )}
+        </div>
     );
 };
 
