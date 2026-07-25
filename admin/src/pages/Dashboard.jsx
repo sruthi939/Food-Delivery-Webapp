@@ -8,12 +8,12 @@ import { formatDate } from '../utils/dateFormatter';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    const { foodList, orders } = useContext(AdminContext);
+    const { foodList, orders, usersList } = useContext(AdminContext);
     const navigate = useNavigate();
 
-    // Compute metrics
+    // Compute real metrics from database state
     const totalRevenue = orders.reduce((acc, order) => acc + (order.amount || 0), 0);
-    const activeOrders = orders.filter(o => o.status !== 'Delivered').length;
+    const activeOrders = orders.filter(o => o.status !== 'Delivered' && o.status !== 'Cancelled').length;
 
     return (
         <div className="space-y-8 animate-fade-in">
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 <DashboardCard
                     title="Total Revenue"
                     value={formatPrice(totalRevenue)}
-                    change="+18% this month"
+                    change={`${orders.length} total transactions`}
                     icon={DollarSign}
                 />
                 <DashboardCard
@@ -60,8 +60,8 @@ const Dashboard = () => {
                 />
                 <DashboardCard
                     title="Registered Users"
-                    value="128"
-                    change="+12 new"
+                    value={usersList.length || 0}
+                    change="Real customer accounts"
                     icon={Users}
                 />
             </div>
@@ -81,31 +81,39 @@ const Dashboard = () => {
                 </div>
 
                 <Table headers={['Order ID', 'Items', 'Amount', 'Status', 'Date']}>
-                    {orders.slice(0, 5).map((order) => (
-                        <tr key={order._id} className="hover:bg-[#141414] transition">
-                            <td className="px-6 py-4 font-mono text-[#D89A2B] font-bold">
-                                #{order._id?.substring(0, 8)}
-                            </td>
-                            <td className="px-6 py-4">
-                                {order.items?.map(i => i.name).join(', ') || 'Food items'}
-                            </td>
-                            <td className="px-6 py-4 font-bold text-white">
-                                {formatPrice(order.amount)}
-                            </td>
-                            <td className="px-6 py-4">
-                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
-                                    order.status === 'Delivered'
-                                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                                        : 'bg-[#D89A2B]/10 text-[#D89A2B] border border-[#D89A2B]/30'
-                                }`}>
-                                    {order.status}
-                                </span>
-                            </td>
-                            <td className="px-6 py-4 text-gray-400">
-                                {formatDate(order.date)}
+                    {orders.length === 0 ? (
+                        <tr>
+                            <td colSpan={5} className="px-6 py-8 text-center text-gray-500 font-light">
+                                No customer orders recorded yet.
                             </td>
                         </tr>
-                    ))}
+                    ) : (
+                        orders.slice(0, 5).map((order) => (
+                            <tr key={order._id} className="hover:bg-[#141414] transition">
+                                <td className="px-6 py-4 font-mono text-[#D89A2B] font-bold">
+                                    #{order._id?.substring(0, 8)}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {order.items?.map(i => i.name).join(', ') || 'Food items'}
+                                </td>
+                                <td className="px-6 py-4 font-bold text-white">
+                                    {formatPrice(order.amount)}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
+                                        order.status === 'Delivered'
+                                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                                            : 'bg-[#D89A2B]/10 text-[#D89A2B] border border-[#D89A2B]/30'
+                                    }`}>
+                                        {order.status}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 text-gray-400">
+                                    {formatDate(order.date)}
+                                </td>
+                            </tr>
+                        ))
+                    )}
                 </Table>
             </div>
         </div>

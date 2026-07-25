@@ -1,38 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Table from '../components/Table';
-import { FolderKanban, Plus, CheckCircle2 } from 'lucide-react';
-
-const initialCategories = [
-    { id: 1, name: 'Salad', itemCount: 4, icon: '🥗' },
-    { id: 2, name: 'Rolls', itemCount: 4, icon: '🌯' },
-    { id: 3, name: 'Deserts', itemCount: 4, icon: '🧁' },
-    { id: 4, name: 'Sandwich', itemCount: 4, icon: '🥪' },
-    { id: 5, name: 'Cake', itemCount: 4, icon: '🍰' },
-    { id: 6, name: 'Pure Veg', itemCount: 4, icon: '🥦' },
-    { id: 7, name: 'Pasta', itemCount: 4, icon: '🍝' },
-    { id: 8, name: 'Noodles', itemCount: 4, icon: '🍜' },
-    { id: 9, name: 'Pizza', itemCount: 2, icon: '🍕' },
-    { id: 10, name: 'Burger', itemCount: 2, icon: '🍔' },
-    { id: 11, name: 'Drinks', itemCount: 2, icon: '🥤' },
-    { id: 12, name: 'Sides', itemCount: 2, icon: '🍟' },
-];
+import Loader from '../components/Loader';
+import { Plus, CheckCircle2 } from 'lucide-react';
+import axios from 'axios';
+import { AdminContext } from '../context/AdminContext';
 
 const Categories = () => {
-    const [categories, setCategories] = useState(initialCategories);
+    const { url, foodList } = useContext(AdminContext);
+    const [categories, setCategories] = useState([]);
     const [newCatName, setNewCatName] = useState('');
+    const [loading, setLoading] = useState(true);
     const [feedback, setFeedback] = useState('');
 
-    const handleAddCategory = (e) => {
+    const fetchCategories = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get(`${url}/api/category/list`);
+            if (response.data.success) {
+                setCategories(response.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const handleAddCategory = async (e) => {
         e.preventDefault();
         if (newCatName.trim()) {
-            setCategories(prev => [
-                ...prev,
-                { id: Date.now(), name: newCatName.trim(), itemCount: 0, icon: '🍽️' }
-            ]);
-            setNewCatName('');
-            setFeedback('New category added successfully!');
-            setTimeout(() => setFeedback(''), 3000);
+            try {
+                const response = await axios.post(`${url}/api/category/add`, { name: newCatName.trim() });
+                if (response.data.success) {
+                    setFeedback('New category created in database!');
+                    setNewCatName('');
+                    fetchCategories();
+                    setTimeout(() => setFeedback(''), 3000);
+                }
+            } catch (error) {
+                alert('Failed to add category to backend database');
+            }
         }
+    };
+
+    // Calculate real item count for each category from live foodList
+    const getItemCount = (categoryName) => {
+        return foodList.filter(f => f.category?.toLowerCase() === categoryName?.toLowerCase()).length;
     };
 
     return (
@@ -74,26 +91,30 @@ const Categories = () => {
             )}
 
             {/* Table */}
-            <Table headers={['Icon', 'Category Name', 'Item Count', 'Status']}>
-                {categories.map((cat) => (
-                    <tr key={cat.id} className="hover:bg-[#141414] transition">
-                        <td className="px-6 py-4 text-xl">
-                            {cat.icon}
-                        </td>
-                        <td className="px-6 py-4 font-bold text-white text-xs">
-                            {cat.name}
-                        </td>
-                        <td className="px-6 py-4 text-gray-300 font-bold text-xs">
-                            {cat.itemCount} Items
-                        </td>
-                        <td className="px-6 py-4">
-                            <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-                ))}
-            </Table>
+            {loading ? (
+                <Loader />
+            ) : (
+                <Table headers={['Icon', 'Category Name', 'Live Dishes Count', 'Status']}>
+                    {categories.map((cat, idx) => (
+                        <tr key={cat._id || idx} className="hover:bg-[#141414] transition">
+                            <td className="px-6 py-4 text-xl">
+                                {cat.icon || '🍽️'}
+                            </td>
+                            <td className="px-6 py-4 font-bold text-white text-xs">
+                                {cat.name || cat.menu_name}
+                            </td>
+                            <td className="px-6 py-4 text-gray-300 font-bold text-xs">
+                                {getItemCount(cat.name || cat.menu_name)} Dishes
+                            </td>
+                            <td className="px-6 py-4">
+                                <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                                    Active
+                                </span>
+                            </td>
+                        </tr>
+                    ))}
+                </Table>
+            )}
         </div>
     );
 };
