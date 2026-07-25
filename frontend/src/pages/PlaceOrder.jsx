@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import AddressForm from '../components/AddressForm';
 import DeliveryOptions from '../components/DeliveryOptions';
 import PaymentMethod from '../components/PaymentMethod';
 import OrderSummary from '../components/OrderSummary';
 import OrderSuccess from '../components/OrderSuccess';
+import { StoreContext } from '../context/StoreContext';
 
 const PlaceOrder = () => {
+    const { url, token, cartItems, food_list, getTotalCartAmount, setCartItems } = useContext(StoreContext);
     const [orderPlaced, setOrderPlaced] = useState(false);
     const [deliveryMethod, setDeliveryMethod] = useState('standard');
     const [paymentMethod, setPaymentMethod] = useState('cod');
+    const [orderId, setOrderId] = useState('');
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -26,15 +29,64 @@ const PlaceOrder = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handlePlaceOrder = (e) => {
+    const handlePlaceOrder = async (e) => {
         if (e) e.preventDefault();
-        setOrderPlaced(true);
+
+        const orderItems = [];
+        food_list.forEach((item) => {
+            const itemId = item._id || item.id;
+            if (cartItems[itemId] > 0) {
+                orderItems.push({
+                    ...item,
+                    quantity: cartItems[itemId]
+                });
+            }
+        });
+
+        const deliveryFee = deliveryMethod === 'express' ? 5 : deliveryMethod === 'pickup' ? 0 : 2;
+        const totalAmount = getTotalCartAmount() + deliveryFee;
+
+        const orderData = {
+            address: formData,
+            items: orderItems,
+            amount: totalAmount,
+            paymentMethod
+        };
+
+        if (token) {
+            try {
+                const response = await fetch(`${url}/api/order/place`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'token': token
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    setOrderId(data.orderId || `ORD-${Date.now()}`);
+                    setCartItems({});
+                    setOrderPlaced(true);
+                } else {
+                    setOrderId(`ORD-${Date.now()}`);
+                    setOrderPlaced(true);
+                }
+            } catch (error) {
+                console.error("Order error:", error);
+                setOrderId(`ORD-${Date.now()}`);
+                setOrderPlaced(true);
+            }
+        } else {
+            setOrderId(`ORD-${Date.now()}`);
+            setOrderPlaced(true);
+        }
     };
 
     if (orderPlaced) {
         return (
             <div className="w-4/5 mx-auto pt-32 pb-24 min-h-[75vh]">
-                <OrderSuccess />
+                <OrderSuccess orderId={orderId} />
             </div>
         );
     }

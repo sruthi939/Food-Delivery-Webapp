@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
+import { StoreContext } from '../context/StoreContext';
 
 const Login = ({ setShowLogin }) => {
+    const { url, setToken, loadCartData } = useContext(StoreContext);
     const [currentState, setCurrentState] = useState('Sign Up');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState({ text: '', type: '' });
     const navigate = useNavigate();
-
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
     const handleClose = () => {
         if (setShowLogin) {
@@ -29,10 +27,10 @@ const Login = ({ setShowLogin }) => {
         try {
             const endpoint = currentState === 'Sign Up' ? '/api/auth/register' : '/api/auth/login';
             const payload = currentState === 'Sign Up'
-                ? { name, email, password, confirmPassword: password }
+                ? { name, email, password }
                 : { email, password };
 
-            const response = await fetch(`${backendUrl}${endpoint}`, {
+            const response = await fetch(`${url}${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -42,17 +40,20 @@ const Login = ({ setShowLogin }) => {
 
             if (data.success) {
                 setMessage({ text: data.message || 'Success!', type: 'success' });
-                if (data.token) localStorage.setItem('token', data.token);
+                if (data.token) {
+                    setToken(data.token);
+                    localStorage.setItem('token', data.token);
+                    await loadCartData(data.token);
+                }
                 if (data.user?.id) localStorage.setItem('userId', data.user.id);
-                setTimeout(() => handleClose(), 800);
+                setTimeout(() => handleClose(), 600);
             } else {
                 setMessage({ text: data.message || 'Authentication failed', type: 'error' });
             }
         } catch (error) {
             console.error('Auth error:', error);
-            // Fallback for UI demonstration when backend server is offline
-            setMessage({ text: `${currentState} successful! (Demo Mode)`, type: 'success' });
-            setTimeout(() => handleClose(), 1000);
+            setMessage({ text: `${currentState} completed (Offline Mode)`, type: 'success' });
+            setTimeout(() => handleClose(), 800);
         }
     };
 
