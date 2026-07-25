@@ -3,8 +3,8 @@ import { User, Mail, MapPin, Phone, Building, Globe } from 'lucide-react';
 
 const AddressForm = ({ formData, onChange }) => {
     return (
-        <div className="bg-[#111111] border border-[#222222] rounded-3xl p-6 sm:p-8 shadow-2xl text-white">
-            <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-[#222222] pb-4 mb-6 tracking-tight flex items-center gap-2">
+        <div className="bg-[#111111] border border-[#222222] rounded-3xl !p-6 sm:!p-8 shadow-2xl text-white">
+            <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-[#222222] !pb-4 !mb-6 tracking-tight flex items-center gap-2">
                 <MapPin className="text-[#D89A2B]" size={24} />
                 Delivery <span className="text-[#D89A2B]">Information</span>
             </h2>
@@ -21,7 +21,7 @@ const AddressForm = ({ formData, onChange }) => {
                             placeholder="First Name"
                             value={formData?.firstName || ''}
                             onChange={onChange}
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                         />
                     </div>
                     <div className="relative">
@@ -33,7 +33,7 @@ const AddressForm = ({ formData, onChange }) => {
                             placeholder="Last Name"
                             value={formData?.lastName || ''}
                             onChange={onChange}
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                         />
                     </div>
                 </div>
@@ -48,7 +48,7 @@ const AddressForm = ({ formData, onChange }) => {
                         placeholder="Email Address"
                         value={formData?.email || ''}
                         onChange={onChange}
-                        className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                        className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                     />
                 </div>
 
@@ -62,7 +62,7 @@ const AddressForm = ({ formData, onChange }) => {
                         placeholder="Street Address"
                         value={formData?.street || ''}
                         onChange={onChange}
-                        className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                        className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                     />
                 </div>
 
@@ -77,7 +77,7 @@ const AddressForm = ({ formData, onChange }) => {
                             placeholder="City"
                             value={formData?.city || ''}
                             onChange={onChange}
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                         />
                     </div>
                     <div className="relative">
@@ -89,7 +89,7 @@ const AddressForm = ({ formData, onChange }) => {
                             placeholder="State / Province"
                             value={formData?.state || ''}
                             onChange={onChange}
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                         />
                     </div>
                 </div>
@@ -105,7 +105,7 @@ const AddressForm = ({ formData, onChange }) => {
                             placeholder="Zip / Postal Code"
                             value={formData?.zipCode || ''}
                             onChange={onChange}
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                         />
                     </div>
                     <div className="relative">
@@ -117,7 +117,7 @@ const AddressForm = ({ formData, onChange }) => {
                             placeholder="Country"
                             value={formData?.country || ''}
                             onChange={onChange}
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                         />
                     </div>
                 </div>
@@ -132,7 +132,7 @@ const AddressForm = ({ formData, onChange }) => {
                         placeholder="Phone Number"
                         value={formData?.phone || ''}
                         onChange={onChange}
-                        className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
+                        className="w-full bg-[#1A1A1A] border border-[#333] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] text-sm transition"
                     />
                 </div>
             </form>

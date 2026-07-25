@@ -30,8 +30,8 @@ const DeliveryOptions = ({ selectedOption, onSelect }) => {
     ];
 
     return (
-        <div className="bg-[#111111] border border-[#222222] rounded-3xl p-6 sm:p-8 shadow-2xl text-white">
-            <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-[#222222] pb-4 mb-6 tracking-tight flex items-center gap-2">
+        <div className="bg-[#111111] border border-[#222222] rounded-3xl !p-6 sm:p-8 shadow-2xl text-white">
+            <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-[#222222] !pb-4 !mb-6 tracking-tight flex items-center gap-2">
                 <Truck className="text-[#D89A2B]" size={24} />
                 Delivery <span className="text-[#D89A2B]">Method</span>
             </h2>
@@ -45,9 +45,9 @@ const DeliveryOptions = ({ selectedOption, onSelect }) => {
                         <div
                             key={opt.id}
                             onClick={() => onSelect && onSelect(opt.id)}
-                            className={`flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${isSelected
-                                    ? 'bg-[#1C1A17] border-[#D89A2B] shadow-md shadow-[#D89A2B]/10'
-                                    : 'bg-[#1A1A1A] border-[#2A2A2A] hover:border-[#444]'
+                            className={`flex items-center justify-between !p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${isSelected
+                                ? 'bg-[#1C1A17] border-[#D89A2B] shadow-md shadow-[#D89A2B]/10'
+                                : 'bg-[#1A1A1A] border-[#2A2A2A] hover:border-[#444]'
                                 }`}
                         >
                             <div className="flex items-center gap-4">
@@ -59,7 +59,7 @@ const DeliveryOptions = ({ selectedOption, onSelect }) => {
                                     <h4 className="font-bold text-white text-sm sm:text-base">
                                         {opt.title}
                                     </h4>
-                                    <p className="text-gray-400 text-xs mt-0.5">
+                                    <p className="text-gray-400 text-xs !mt-0.5">
                                         {opt.desc} • <span className="text-[#D89A2B]">{opt.time}</span>
                                     </p>
                                 </div>

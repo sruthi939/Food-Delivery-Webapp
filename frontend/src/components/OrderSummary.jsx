@@ -11,21 +11,21 @@ const OrderSummary = () => {
     const grandTotal = subtotal + deliveryFee + tax;
 
     return (
-        <div className="bg-[#111111] border border-[#222222] rounded-3xl p-6 sm:p-8 shadow-2xl text-white">
-            <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-[#222222] pb-4 mb-6 tracking-tight flex items-center gap-2">
+        <div className="bg-[#111111] border border-[#222222] rounded-3xl !p-6 sm:p-8 shadow-2xl text-white">
+            <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-[#222222] !pb-4 !mb-6 tracking-tight flex items-center gap-2">
                 <ShoppingBag className="text-[#D89A2B]" size={24} />
                 Order <span className="text-[#D89A2B]">Summary</span>
             </h2>
 
             {/* Selected Items Thumbnail List */}
-            <div className="max-h-60 overflow-y-auto divide-y divide-[#1F1F1F] pr-2 mb-6 scrollbar-thin scrollbar-thumb-[#333]">
+            <div className="max-h-60 overflow-y-auto divide-y divide-[#1F1F1F] !pr-2 !mb-6 scrollbar-thin scrollbar-thumb-[#333]">
                 {food_list.map((item) => {
                     if (cartItems[item._id] > 0) {
                         const quantity = cartItems[item._id];
                         const itemTotal = item.price * quantity;
 
                         return (
-                            <div key={item._id} className="py-3 flex items-center justify-between gap-3">
+                            <div key={item._id} className="!py-3 flex items-center justify-between gap-3">
                                 <div className="flex items-center gap-3">
                                     <img
                                         src={item.image}
@@ -52,7 +52,7 @@ const OrderSummary = () => {
             </div>
 
             {/* Price Breakdown */}
-            <div className="space-y-3 text-sm border-t border-[#222222] pt-4">
+            <div className="space-y-3 text-sm border-t border-[#222222] !pt-2">
                 <div className="flex justify-between text-gray-300">
                     <span>Subtotal</span>
                     <span className="font-semibold text-white">${subtotal.toFixed(2)}</span>
@@ -67,7 +67,7 @@ const OrderSummary = () => {
                     <span>Tax (5%)</span>
                     <span className="font-semibold text-white">${tax.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between pt-3 border-t border-[#222222] text-lg font-extrabold">
+                <div className="flex justify-between !pt-3 border-t border-[#222222] text-lg font-extrabold">
                     <span>Total Amount</span>
                     <span className="text-[#D89A2B]">${grandTotal.toFixed(2)}</span>
                 </div>

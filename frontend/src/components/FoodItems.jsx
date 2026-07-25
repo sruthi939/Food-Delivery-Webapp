@@ -33,7 +33,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
             </div>
 
             {/* Content Section */}
-            <div className="px-6 pt-5 pb-6 flex flex-col flex-1 gap-2 bg-[#111111]">
+            <div className="px-6 pt-5 !pb-3 flex flex-col flex-1 gap-2 bg-[#111111]">
                 {/* Title */}
                 <h3 className="text-white font-bold text-xl text-center line-clamp-1">
                     {name}
