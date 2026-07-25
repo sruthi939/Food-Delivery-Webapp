@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
-import { X, Plus, Minus, ShoppingBag } from "lucide-react";
+import { X, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CartItems = () => {
@@ -23,24 +23,24 @@ const CartItems = () => {
                 </p>
                 <button
                     onClick={() => navigate('/')}
-                    className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-bold text-sm hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer"
+                    className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-bold text-sm hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer flex items-center gap-2"
                 >
-                    Browse Menu
+                    Browse Menu <ArrowRight size={18} />
                 </button>
             </div>
         );
     }
 
     return (
-        <div className="w-full">
+        <div className="bg-[#111111] border border-[#222222] rounded-3xl p-4 sm:p-8 shadow-2xl mb-8">
             {/* Table Header (Desktop) */}
-            <div className="hidden sm:grid grid-cols-6 items-center border-b border-[#262626] pb-4 px-4 text-[#D89A2B] font-bold text-sm tracking-wider uppercase">
-                <p>Items</p>
-                <p>Title</p>
-                <p>Price</p>
-                <p className="text-center">Quantity</p>
-                <p>Total</p>
-                <p className="text-center">Remove</p>
+            <div className="hidden sm:grid grid-cols-12 items-center border-b border-[#262626] pb-4 px-2 text-[#D89A2B] font-bold text-xs lg:text-sm tracking-wider uppercase">
+                <p className="col-span-2">Item</p>
+                <p className="col-span-3">Title</p>
+                <p className="col-span-2 text-center">Price</p>
+                <p className="col-span-2 text-center">Quantity</p>
+                <p className="col-span-2 text-center">Total</p>
+                <p className="col-span-1 text-right">Remove</p>
             </div>
 
             {/* Cart Items List */}
@@ -53,14 +53,14 @@ const CartItems = () => {
                         return (
                             <div
                                 key={item._id}
-                                className="grid grid-cols-2 sm:grid-cols-6 items-center gap-4 py-5 px-4 hover:bg-[#141414]/60 transition-all duration-200 rounded-2xl"
+                                className="grid grid-cols-2 sm:grid-cols-12 items-center gap-4 py-4 px-2 hover:bg-[#161616] transition-all duration-200 rounded-xl"
                             >
                                 {/* Image & Mobile Title */}
-                                <div className="flex items-center gap-3 col-span-2 sm:col-span-1">
+                                <div className="flex items-center gap-3 col-span-2 sm:col-span-2">
                                     <img
                                         src={item.image}
                                         alt={item.name}
-                                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-[#2A2116] shadow-md shrink-0"
+                                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border border-[#2A2116] shadow-md shrink-0"
                                     />
                                     <span className="sm:hidden font-bold text-white text-base">
                                         {item.name}
@@ -68,24 +68,24 @@ const CartItems = () => {
                                 </div>
 
                                 {/* Title (Desktop) */}
-                                <p className="hidden sm:block font-bold text-white text-base lg:text-lg">
+                                <p className="hidden sm:block col-span-3 font-bold text-white text-base lg:text-lg">
                                     {item.name}
                                 </p>
 
                                 {/* Price */}
-                                <p className="text-gray-300 font-medium text-sm sm:text-base">
+                                <p className="col-span-1 sm:col-span-2 text-center text-gray-300 font-medium text-sm sm:text-base">
                                     ${item.price}
                                 </p>
 
                                 {/* Quantity Controls */}
-                                <div className="flex justify-center">
-                                    <div className="flex items-center gap-2.5 bg-[#1C1A17] border border-[#D89A2B]/40 px-3 py-1.5 rounded-xl shadow-inner">
+                                <div className="col-span-1 sm:col-span-2 flex justify-center">
+                                    <div className="flex items-center gap-2 bg-[#1C1A17] border border-[#D89A2B]/40 px-2.5 py-1.5 rounded-xl shadow-inner">
                                         <button
                                             onClick={() => removeFromCart(item._id)}
                                             className="w-6 h-6 rounded-full bg-[#2A241C] flex items-center justify-center text-[#D89A2B] hover:bg-[#D89A2B] hover:text-black transition cursor-pointer"
                                             aria-label="Decrease quantity"
                                         >
-                                            <Minus size={13} className="stroke-[3]" />
+                                            <Minus size={12} className="stroke-[3]" />
                                         </button>
                                         <span className="text-white font-bold text-xs min-w-[16px] text-center">
                                             {quantity}
@@ -95,24 +95,24 @@ const CartItems = () => {
                                             className="w-6 h-6 rounded-full bg-[#D89A2B] flex items-center justify-center text-black hover:bg-[#c48922] transition cursor-pointer"
                                             aria-label="Increase quantity"
                                         >
-                                            <Plus size={13} className="stroke-[3]" />
+                                            <Plus size={12} className="stroke-[3]" />
                                         </button>
                                     </div>
                                 </div>
 
                                 {/* Total */}
-                                <p className="font-extrabold text-[#D89A2B] text-base sm:text-lg">
+                                <p className="col-span-1 sm:col-span-2 text-center font-extrabold text-[#D89A2B] text-base sm:text-lg">
                                     ${total}
                                 </p>
 
                                 {/* Remove Button */}
-                                <div className="flex justify-center">
+                                <div className="col-span-1 sm:col-span-1 flex justify-end">
                                     <button
                                         onClick={() => removeFromCart(item._id)}
-                                        className="w-9 h-9 rounded-full bg-[#1A1A1A] border border-[#2A2116] flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-all duration-300 cursor-pointer"
+                                        className="w-8 h-8 rounded-full bg-[#1A1A1A] border border-[#2A2116] flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-all duration-300 cursor-pointer"
                                         aria-label="Remove item"
                                     >
-                                        <X size={18} />
+                                        <X size={16} />
                                     </button>
                                 </div>
                             </div>
