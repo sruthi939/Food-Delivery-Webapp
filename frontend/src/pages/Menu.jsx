@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react';
+import ExploreMenu from '../components/ExploreMenu';
+import FoodDisplay from '../components/FoodDisplay';
 
 const Menu = () => {
-    return (
-        <div className="w-4/5 mx-auto mt-10 animate-fade-in-up">
-            <h2>Menu</h2>
-        </div>
-    )
-}
+    const [category, setCategory] = useState("All");
 
-export default Menu
+    return (
+        <div className="w-full min-h-screen bg-black text-white !pt-28 !pb-16 animate-fade-in">
+            <ExploreMenu category={category} setCategory={setCategory} />
+            <FoodDisplay category={category} />
+        </div>
+    );
+};
+
+export default Menu;
