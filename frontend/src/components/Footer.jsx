@@ -15,7 +15,7 @@ const Footer = () => {
             <div className="w-4/5 mx-auto pt-12 pb-8 px-4 sm:px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 items-start">
 
                 {/* Left Column - Brand & Socials (md:col-span-5) */}
-                <div className="md:col-span-5 flex flex-col items-start gap-4">
+                <div className="md:col-span-5 flex flex-col items-start gap-1">
                     <img
                         src={assets.logo}
                         alt="GoldFork Logo"
@@ -28,7 +28,7 @@ const Footer = () => {
                         every culinary craving.
                     </p>
 
-                    <div className="flex items-center gap-3 pt-2">
+                    <div className="flex items-center gap-3 !pt-4">
                         <a
                             href="#"
                             aria-label="Facebook"
@@ -61,12 +61,12 @@ const Footer = () => {
                 </div>
 
                 {/* Center Column - Links (md:col-span-3) */}
-                <div className="md:col-span-3 flex flex-col items-start">
+                <div className="md:col-span-3 flex flex-col items-start !mt-8">
                     <h2 className="text-[#D89A2B] text-base md:text-lg font-bold tracking-wider uppercase mb-4">
                         COMPANY
                     </h2>
 
-                    <ul className="space-y-2.5 text-gray-300 text-sm font-medium">
+                    <ul className="flex flex-col gap-2 text-gray-300 text-medium font-medium !mt-4">
                         <li className="hover:text-[#D89A2B] hover:translate-x-1.5 cursor-pointer transition-all duration-300 flex items-center gap-1.5 group">
                             <span className="text-[#D89A2B] opacity-0 group-hover:opacity-100 transition-opacity">›</span>
                             <span>Home</span>
@@ -87,17 +87,17 @@ const Footer = () => {
                 </div>
 
                 {/* Right Column - Contact (md:col-span-4) */}
-                <div className="md:col-span-4 flex flex-col items-start">
-                    <h2 className="text-[#D89A2B] text-base md:text-lg font-bold tracking-wider uppercase mb-4">
+                <div className="md:col-span-4 flex flex-col items-start !mt-8">
+                    <h2 className="text-[#D89A2B] text-base md:text-lg font-bold tracking-wider uppercase !mb-4">
                         GET IN TOUCH
                     </h2>
 
-                    <ul className="space-y-3.5 text-gray-300 text-sm font-light">
+                    <ul className="flex flex-col gap-2 text-gray-300 text-sm font-light">
                         <li className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-[#141414] border border-[#2A2116] flex items-center justify-center shrink-0 text-[#D89A2B]">
                                 <Phone className="w-3.5 h-3.5" />
                             </div>
-                            <span>+91 471 827 364</span>
+                            <span>0471-2267552</span>
                         </li>
                         <li className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-[#141414] border border-[#2A2116] flex items-center justify-center shrink-0 text-[#D89A2B]">
@@ -117,7 +117,7 @@ const Footer = () => {
             </div>
 
             {/* Copyright Section */}
-            <div className="border-t border-white/5 py-5 mt-6">
+            <div className="border-t border-white/5 py-5 !mt-6">
                 <p className="text-center text-[#888888] text-xs sm:text-sm font-light">
                     © 2026 <span className="text-[#D89A2B] font-semibold">GoldFork</span>. All Rights Reserved.
                 </p>

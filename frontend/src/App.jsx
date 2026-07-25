@@ -11,6 +11,7 @@ import PlaceOrder from './pages/PlaceOrder'
 import Loader from './components/Loader'
 import Footer from './components/Footer'
 import Login from './pages/Login'
+import Wishlist from './pages/Wishlist'
 
 const App = () => {
     const [loading, setLoading] = useState(true);
@@ -53,6 +54,7 @@ const App = () => {
                         <Route path='/restuarant' element={<Restuarant />} />
                         <Route path='/contact' element={<Contact />} />
                         <Route path='/cart' element={<Cart />} />
+                        <Route path='/wishlist' element={<Wishlist />} />
                         <Route path='/order' element={<PlaceOrder />} />
                         <Route path='/login' element={<Login />} />
                     </Routes>

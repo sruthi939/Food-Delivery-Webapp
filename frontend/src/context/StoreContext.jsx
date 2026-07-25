@@ -9,6 +9,16 @@ const StoreContextProvider = (props) => {
     const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [food_list, setFoodList] = useState(initialFoodList);
 
+    // Wishlist state initialized from localStorage
+    const [wishlist, setWishlist] = useState(() => {
+        try {
+            const saved = localStorage.getItem("wishlist");
+            return saved ? JSON.parse(saved) : {};
+        } catch (e) {
+            return {};
+        }
+    });
+
     const addToCart = async (itemId) => {
         setCartItems((prev) => ({
             ...prev,
@@ -57,11 +67,43 @@ const StoreContextProvider = (props) => {
         }
     };
 
+    const toggleWishlist = async (itemId) => {
+        setWishlist((prev) => {
+            const updated = { ...prev };
+            if (updated[itemId]) {
+                delete updated[itemId];
+            } else {
+                updated[itemId] = true;
+            }
+            localStorage.setItem("wishlist", JSON.stringify(updated));
+            return updated;
+        });
+
+        if (token) {
+            try {
+                await fetch(`${url}/api/wishlist/toggle`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "token": token
+                    },
+                    body: JSON.stringify({ itemId })
+                });
+            } catch (error) {
+                console.error("Error toggling remote wishlist:", error);
+            }
+        }
+    };
+
+    const getWishlistCount = () => {
+        return Object.keys(wishlist).filter((id) => wishlist[id]).length;
+    };
+
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
-                const itemInfo = food_list.find((product) => product._id === item || product.id === item);
+                const itemInfo = food_list.find((product) => (product._id || product.id) === item);
                 if (itemInfo) {
                     totalAmount += itemInfo.price * cartItems[item];
                 }
@@ -101,11 +143,33 @@ const StoreContextProvider = (props) => {
         }
     };
 
+    const loadWishlistData = async (userToken) => {
+        try {
+            const response = await fetch(`${url}/api/wishlist/get`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "token": userToken
+                },
+                body: JSON.stringify({})
+            });
+            const data = await response.json();
+            if (data.success && data.wishlistData) {
+                setWishlist(data.wishlistData);
+                localStorage.setItem("wishlist", JSON.stringify(data.wishlistData));
+            }
+        } catch (error) {
+            console.error("Error loading remote wishlist data:", error);
+        }
+    };
+
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
+        localStorage.removeItem("wishlist");
         setToken("");
         setCartItems({});
+        setWishlist({});
     };
 
     useEffect(() => {
@@ -115,6 +179,7 @@ const StoreContextProvider = (props) => {
                 const savedToken = localStorage.getItem("token");
                 setToken(savedToken);
                 await loadCartData(savedToken);
+                await loadWishlistData(savedToken);
             }
         }
         loadData();
@@ -128,6 +193,10 @@ const StoreContextProvider = (props) => {
         addToCart,
         removeFromCart,
         getTotalCartAmount,
+        wishlist,
+        setWishlist,
+        toggleWishlist,
+        getWishlistCount,
         token,
         setToken,
         logout,

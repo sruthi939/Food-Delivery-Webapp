@@ -4,15 +4,15 @@ import { assets } from '../assets/assets'
 const AppDownload = () => {
     return (
         <div
-            className="mx-auto mt-24 text-center font-semibold text-[max(3vw,20px)]"
+            className="mx-auto !mt-24 text-center font-semibold text-[max(3vw,20px)]"
             id="app-download"
         >
             <p>
                 For Better Experience Download <br />
-                GoldFork App
+                <span className='text-[#D89A2B]'>GoldFork App</span>
             </p>
 
-            <div className="flex justify-center gap-[max(2vw,10px)] mt-10">
+            <div className="flex justify-center gap-[max(2vw,10px)] !mt-10">
                 <img
                     src={assets.play_store}
                     alt="Google Play"

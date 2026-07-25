@@ -3,8 +3,8 @@ import { Star, Heart, Plus, Minus } from "lucide-react";
 import { StoreContext } from "../context/StoreContext";
 
 const FoodItems = ({ id, name, price, description, image, index }) => {
-    const [isLiked, setIsLiked] = useState(false);
-    const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
+    const { cartItems, addToCart, removeFromCart, wishlist, toggleWishlist } = useContext(StoreContext);
+    const isLiked = !!(wishlist && wishlist[id]);
 
     return (
         <div
@@ -21,19 +21,19 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
 
                 {/* Like Button */}
                 <button
-                    onClick={() => setIsLiked(!isLiked)}
-                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer shadow-md z-10"
+                    onClick={() => toggleWishlist(id)}
+                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer shadow-md z-10"
                     aria-label="Like item"
                 >
                     <Heart
                         size={20}
-                        className={`transition-colors duration-300 ${isLiked ? "fill-red-500 text-red-500" : "text-white/80 hover:text-white"}`}
+                        className={`transition-colors duration-300 ${isLiked ? "fill-[#D89A2B] text-[#D89A2B]" : "text-white/80 hover:text-white"}`}
                     />
                 </button>
             </div>
 
             {/* Content Section */}
-            <div className="px-6 pt-5 pb-6 flex flex-col flex-1 gap-2 bg-[#111111]">
+            <div className="!px-6 !pt-5 !pb-3 flex flex-col flex-1 gap-2 bg-[#111111]">
                 {/* Title */}
                 <h3 className="text-white font-bold text-xl text-center line-clamp-1">
                     {name}

@@ -32,15 +32,15 @@ const CartItems = () => {
     }
 
     return (
-        <div className="bg-[#111111] border border-[#222222] rounded-3xl p-4 sm:p-8 shadow-2xl mb-8">
+        <div className="bg-[#111111] border border-[#222222] rounded-3xl p-4 sm:p-8 shadow-2xl !mb-8">
             {/* Table Header (Desktop) */}
-            <div className="hidden sm:grid grid-cols-12 items-center border-b border-[#262626] pb-4 px-2 text-[#D89A2B] font-bold text-xs lg:text-sm tracking-wider uppercase">
+            <div className="hidden sm:grid grid-cols-12 items-center border-b border-[#262626] !pt-5 !pb-5 !px-4 text-[#D89A2B] font-bold text-xs lg:text-sm tracking-wider uppercase">
                 <p className="col-span-2">Item</p>
                 <p className="col-span-3">Title</p>
-                <p className="col-span-2 text-center">Price</p>
-                <p className="col-span-2 text-center">Quantity</p>
-                <p className="col-span-2 text-center">Total</p>
-                <p className="col-span-1 text-right">Remove</p>
+                <p className="col-span-2">Price</p>
+                <p className="col-span-2">Quantity</p>
+                <p className="col-span-2">Total</p>
+                <p className="col-span-1">Remove</p>
             </div>
 
             {/* Cart Items List */}
@@ -53,7 +53,7 @@ const CartItems = () => {
                         return (
                             <div
                                 key={item._id}
-                                className="grid grid-cols-2 sm:grid-cols-12 items-center gap-4 py-4 px-2 hover:bg-[#161616] transition-all duration-200 rounded-xl"
+                                className="grid grid-cols-2 sm:grid-cols-12 items-center gap-4 !py-4 !px-2 hover:bg-[#161616] transition-all duration-200 rounded-xl"
                             >
                                 {/* Image & Mobile Title */}
                                 <div className="flex items-center gap-3 col-span-2 sm:col-span-2">
@@ -73,12 +73,12 @@ const CartItems = () => {
                                 </p>
 
                                 {/* Price */}
-                                <p className="col-span-1 sm:col-span-2 text-center text-gray-300 font-medium text-sm sm:text-base">
+                                <p className="col-span-1 sm:col-span-2 text-left text-gray-300 font-medium text-sm sm:text-base">
                                     ${item.price}
                                 </p>
 
                                 {/* Quantity Controls */}
-                                <div className="col-span-1 sm:col-span-2 flex justify-center">
+                                <div className="col-span-1 sm:col-span-2 flex justify-start">
                                     <div className="flex items-center gap-2 bg-[#1C1A17] border border-[#D89A2B]/40 px-2.5 py-1.5 rounded-xl shadow-inner">
                                         <button
                                             onClick={() => removeFromCart(item._id)}
@@ -101,12 +101,12 @@ const CartItems = () => {
                                 </div>
 
                                 {/* Total */}
-                                <p className="col-span-1 sm:col-span-2 text-center font-extrabold text-[#D89A2B] text-base sm:text-lg">
+                                <p className="col-span-1 sm:col-span-2 text-left font-extrabold text-[#D89A2B] text-base sm:text-lg">
                                     ${total}
                                 </p>
 
                                 {/* Remove Button */}
-                                <div className="col-span-1 sm:col-span-1 flex justify-end">
+                                <div className="col-span-1 sm:col-span-1 flex justify-left">
                                     <button
                                         onClick={() => removeFromCart(item._id)}
                                         className="w-8 h-8 rounded-full bg-[#1A1A1A] border border-[#2A2116] flex items-center justify-center text-gray-400 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/30 transition-all duration-300 cursor-pointer"

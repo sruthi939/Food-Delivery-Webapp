@@ -59,14 +59,14 @@ const Login = ({ setShowLogin }) => {
 
     const containerStyle = setShowLogin
         ? 'fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4 animate-fade-in'
-        : 'min-h-screen w-full flex items-center justify-center bg-black px-4 py-12 pt-32 relative overflow-hidden text-white';
+        : 'min-h-screen w-full flex items-center justify-center bg-black !px-4 !py-12 !pt-32 relative overflow-hidden text-white';
 
     return (
         <div className={containerStyle}>
             {/* Subtle Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D89A2B]/10 blur-[130px] rounded-full pointer-events-none"></div>
 
-            <div className="w-full max-w-md bg-[#111111] border border-[#222222] rounded-3xl p-8 sm:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative z-10 text-white">
+            <div className="w-full max-w-md bg-[#111111] border border-[#222222] rounded-3xl !p-8 sm:!p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative z-10 text-white">
 
                 {/* Close Button */}
                 <button
@@ -78,8 +78,8 @@ const Login = ({ setShowLogin }) => {
                 </button>
 
                 {/* Title */}
-                <div className="text-center mb-8 pr-6">
-                    <h1 className="text-3xl font-extrabold text-white mb-2 tracking-tight">
+                <div className="text-center !mb-8 !pr-6">
+                    <h1 className="text-3xl font-extrabold text-white !mb-2 tracking-tight">
                         {currentState === 'Login' ? (
                             <>Welcome <span className="text-[#D89A2B]">Back</span></>
                         ) : (
@@ -95,9 +95,9 @@ const Login = ({ setShowLogin }) => {
 
                 {/* Feedback Message */}
                 {message.text && (
-                    <div className={`mb-4 p-3 rounded-xl text-xs text-center font-semibold border ${message.type === 'success'
-                            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                            : 'bg-red-500/10 border-red-500/30 text-red-400'
+                    <div className={`!mb-4 !p-3 rounded-xl text-xs text-center font-semibold border ${message.type === 'success'
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                        : 'bg-red-500/10 border-red-500/30 text-red-400'
                         }`}>
                         {message.text}
                     </div>
@@ -107,32 +107,32 @@ const Login = ({ setShowLogin }) => {
                 <form onSubmit={onSubmitHandler} className="space-y-4">
                     {currentState !== 'Login' && (
                         <div>
-                            <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Full Name</label>
+                            <label className="block text-xs font-medium text-gray-400 !mb-4 !ml-1">Full Name</label>
                             <input
                                 onChange={(e) => setName(e.target.value)}
                                 value={name}
                                 type="text"
                                 placeholder="Enter your full name"
-                                className="w-full bg-[#1A1A1A] border border-[#333] rounded-2xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition-all text-sm"
+                                className="w-full bg-[#1A1A1A] border border-[#333] rounded-2xl !px-4 !py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition-all text-sm !mb-4"
                                 required
                             />
                         </div>
                     )}
 
                     <div>
-                        <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Email Address</label>
+                        <label className="block text-xs font-medium text-gray-400 !mb-4 !ml-1">Email Address</label>
                         <input
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
                             type="email"
                             placeholder="Enter your email"
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-2xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition-all text-sm"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-2xl !px-4 !py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition-all text-sm !mb-4"
                             required
                         />
                     </div>
 
                     <div>
-                        <div className="flex justify-between items-center mb-1.5 px-1">
+                        <div className="flex justify-between items-center !mb-4 !px-1">
                             <label className="text-xs font-medium text-gray-400">Password</label>
                             {currentState === 'Login' && (
                                 <span
@@ -148,15 +148,15 @@ const Login = ({ setShowLogin }) => {
                             value={password}
                             type="password"
                             placeholder="Enter your password"
-                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-2xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition-all text-sm"
+                            className="w-full bg-[#1A1A1A] border border-[#333] rounded-2xl !px-4 !py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition-all text-sm"
                             required
                         />
                     </div>
 
-                    <div className="pt-3">
+                    <div className="!pt-3">
                         <button
                             type="submit"
-                            className="w-full rounded-2xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] py-4 text-black font-extrabold text-sm hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer"
+                            className="w-full rounded-2xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] !py-4 text-black font-extrabold text-sm hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer !mt-4"
                         >
                             {currentState === 'Login' ? 'Sign In' : 'Create Account'}
                         </button>
@@ -164,14 +164,14 @@ const Login = ({ setShowLogin }) => {
                 </form>
 
                 {/* Toggle */}
-                <div className="text-center mt-6 pt-4 border-t border-[#222222] text-xs sm:text-sm text-gray-400">
+                <div className="text-center !mt-6 !pt-2 border-t border-[#222222] text-xs sm:text-sm text-gray-400 gap-2">
                     {currentState === 'Login' ? "Don't have an account?" : "Already have an account?"}
                     <button
                         onClick={() => {
                             setCurrentState(currentState === 'Login' ? 'Sign Up' : 'Login');
                             setMessage({ text: '', type: '' });
                         }}
-                        className="text-[#D89A2B] font-bold hover:underline transition-colors ml-1.5 cursor-pointer"
+                        className="text-[#D89A2B] font-bold hover:underline transition-colors !ml-1.5 cursor-pointer"
                     >
                         {currentState === 'Login' ? 'Sign Up' : 'Sign In'}
                     </button>
