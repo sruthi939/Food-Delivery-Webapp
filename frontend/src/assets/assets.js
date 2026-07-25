@@ -49,109 +49,70 @@ import play_store from './play_store.png'
 export const assets = {
     logo,
     header_img,
+    menu_header,
     app_store,
     play_store,
-    menu_header
+    food_1, food_2, food_3,
+    food_4, food_5, food_6,
+    food_7, food_8, food_9,
+    food_10, food_11, food_12,
+    food_13, food_14, food_15,
+    food_16, food_17, food_18,
+    food_19, food_20, food_21,
+    food_22, food_23, food_24,
+    food_25, food_26, food_27,
+    food_28, food_29, food_30,
+    food_31, food_32
 }
 
 export const menu_list = [
-    { menu_name: "All", menu_image: menu_1, icon: "✨" },
-    { menu_name: "Pizza", menu_image: menu_7, icon: "🍕" },
-    { menu_name: "Burger", menu_image: menu_4, icon: "🍔" },
-    { menu_name: "Pasta", menu_image: menu_8, icon: "🍝" },
-    { menu_name: "Dessert", menu_image: menu_3, icon: "🧁" },
-    { menu_name: "Drinks", menu_image: menu_6, icon: "🥤" },
-    { menu_name: "Salad", menu_image: menu_1, icon: "🥗" },
-    { menu_name: "Sides", menu_image: menu_2, icon: "🍟" }
-]
+    {
+        menu_name: "Salad",
+        menu_image: menu_1
+    },
+    {
+        menu_name: "Rolls",
+        menu_image: menu_2
+    },
+    {
+        menu_name: "Deserts",
+        menu_image: menu_3
+    },
+    {
+        menu_name: "Sandwich",
+        menu_image: menu_4
+    },
+    {
+        menu_name: "Cake",
+        menu_image: menu_5
+    },
+    {
+        menu_name: "Pure Veg",
+        menu_image: menu_6
+    },
+    {
+        menu_name: "Pasta",
+        menu_image: menu_7
+    },
+    {
+        menu_name: "Noodles",
+        menu_image: menu_8
+    }]
 
 export const food_list = [
-    {
-        _id: "101",
-        name: "Margherita Pizza",
-        image: food_9,
-        price: 12.99,
-        description: "Classic delight with fresh tomato, mozzarella & basil.",
-        category: "Pizza",
-        isVeg: true
-    },
-    {
-        _id: "102",
-        name: "Cheese Burger",
-        image: food_17,
-        price: 9.99,
-        description: "Juicy grilled patty with cheese, lettuce, tomato & special sauce.",
-        category: "Burger",
-        isVeg: false
-    },
-    {
-        _id: "103",
-        name: "Creamy Alfredo Pasta",
-        image: food_25,
-        price: 11.99,
-        description: "Rich and creamy Alfredo sauce with grilled chicken & herbs.",
-        category: "Pasta",
-        isVeg: false
-    },
-    {
-        _id: "104",
-        name: "Chocolate Cake",
-        image: food_20,
-        price: 6.99,
-        description: "Moist chocolate cake with rich ganache frosting.",
-        category: "Dessert",
-        isVeg: true
-    },
-    {
-        _id: "105",
-        name: "Mint Mojito",
-        image: food_31,
-        price: 3.99,
-        description: "Refreshing mint with lime, ice & soda.",
-        category: "Drinks",
-        isVeg: true
-    },
-    {
-        _id: "106",
-        name: "Caesar Salad",
-        image: food_1,
-        price: 7.99,
-        description: "Crisp romaine lettuce with chicken, croutons & Caesar dressing.",
-        category: "Salad",
-        isVeg: false
-    },
-    {
-        _id: "107",
-        name: "French Fries",
-        image: food_8,
-        price: 2.99,
-        description: "Crispy golden fries served with ketchup.",
-        category: "Sides",
-        isVeg: true
-    },
-    {
-        _id: "108",
-        name: "Garlic Bread",
-        image: food_14,
-        price: 3.49,
-        description: "Toasted bread with garlic butter & herbs.",
-        category: "Sides",
-        isVeg: true
-    },
     {
         _id: "1",
         name: "Greek salad",
         image: food_1,
-        price: 12.00,
+        price: 12,
         description: "Fresh veggies, olives & feta cheese.",
-        category: "Salad",
-        isVeg: true
+        category: "Salad"
     },
     {
         _id: "2",
         name: "Veg salad",
         image: food_2,
-        price: 18.00,
+        price: 18,
         description: "Fresh vegetables with herb dressing.",
         category: "Salad"
     },
@@ -175,7 +136,7 @@ export const food_list = [
         _id: "5",
         name: "Lasagna Rolls",
         image: food_5,
-        price: 14.00,
+        price: 14,
         description: "Cheesy rolls with tomato sauce.",
         category: "Rolls"
     },
