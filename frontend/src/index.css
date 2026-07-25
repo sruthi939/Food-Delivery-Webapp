@@ -10,6 +10,7 @@
 body {
     font-family: 'Outfit', sans-serif;
     min-height: 100vh;
+    background-color: #000000;
 }
 
 a {
@@ -150,4 +151,15 @@ a {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+}
+
+/* Chrome / Safari / Edge Autofill Dark Theme Override */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1A1A1A inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
 }

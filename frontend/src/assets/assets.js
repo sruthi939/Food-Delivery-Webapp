@@ -92,7 +92,7 @@ export const food_list = [
         name: "Greek salad",
         image: food_1,
         price: 12,
-        description: "Fresh cucumber, olives, feta cheese & crisp vegetables.",
+        description: "Fresh veggies, olives & feta cheese.",
         category: "Salad"
     },
     {
@@ -100,77 +100,87 @@ export const food_list = [
         name: "Veg salad",
         image: food_2,
         price: 18,
-        description: "Garden-fresh vegetables tossed with a light herb dressing.",
+        description: "Fresh vegetables with herb dressing.",
         category: "Salad"
-    }, {
+    },
+    {
         _id: "3",
         name: "Clover Salad",
         image: food_3,
         price: 16,
-        description: "Mixed greens, walnuts & creamy cheese with a tangy vinaigrette.",
+        description: "Greens, walnuts & cheese.",
         category: "Salad"
-    }, {
+    },
+    {
         _id: "4",
         name: "Chicken Salad",
         image: food_4,
         price: 24,
-        description: "Grilled chicken, fresh lettuce & colorful seasonal vegetables.",
+        description: "Grilled chicken with fresh veggies.",
         category: "Salad"
-    }, {
+    },
+    {
         _id: "5",
         name: "Lasagna Rolls",
         image: food_5,
         price: 14,
-        description: "Cheesy lasagna rolls baked with rich tomato sauce.",
+        description: "Cheesy rolls with tomato sauce.",
         category: "Rolls"
-    }, {
+    },
+    {
         _id: "6",
         name: "Peri Peri Rolls",
         image: food_6,
         price: 12,
-        description: "Spicy peri peri chicken wrapped in a soft tortilla.",
+        description: "Spicy chicken tortilla roll.",
         category: "Rolls"
-    }, {
+    },
+    {
         _id: "7",
         name: "Chicken Rolls",
         image: food_7,
         price: 20,
-        description: "Tender chicken, crunchy veggies & creamy mayo roll.",
+        description: "Chicken roll with veggies.",
         category: "Rolls"
-    }, {
+    },
+    {
         _id: "8",
         name: "Veg Rolls",
         image: food_8,
         price: 15,
-        description: "Fresh vegetables wrapped with flavorful sauces.",
+        description: "Fresh veggie wraps.",
         category: "Rolls"
-    }, {
+    },
+    {
         _id: "9",
         name: "Ripple Ice Cream",
         image: food_9,
         price: 14,
-        description: "Creamy ripple ice cream topped with rich chocolate swirls.",
+        description: "Creamy ice cream with swirls.",
         category: "Deserts"
-    }, {
+    },
+    {
         _id: "10",
         name: "Fruit Ice Cream",
         image: food_10,
         price: 22,
-        description: "Refreshing fruit-flavored ice cream with real fruit pieces.",
+        description: "Fruit ice cream with real fruit.",
         category: "Deserts"
-    }, {
+    },
+    {
         _id: "11",
         name: "Jar Ice Cream",
         image: food_11,
         price: 10,
-        description: "Delicious layered ice cream served in a dessert jar.",
+        description: "Layered ice cream in a jar.",
         category: "Deserts"
-    }, {
+    },
+    {
         _id: "12",
         name: "Vanilla Ice Cream",
         image: food_12,
         price: 12,
-        description: "Classic vanilla ice cream with a rich creamy texture.",
+        description: "Classic creamy vanilla ice cream.",
         category: "Deserts"
     },
     {
@@ -178,7 +188,7 @@ export const food_list = [
         name: "Chicken Sandwich",
         image: food_13,
         price: 12,
-        description: "Grilled chicken, fresh lettuce & creamy mayo sandwich.",
+        description: "Chicken sandwich with lettuce.",
         category: "Sandwich"
     },
     {
@@ -186,77 +196,87 @@ export const food_list = [
         name: "Vegan Sandwich",
         image: food_14,
         price: 18,
-        description: "Healthy vegan sandwich loaded with fresh vegetables.",
+        description: "Fresh vegan vegetable sandwich.",
         category: "Sandwich"
-    }, {
+    },
+    {
         _id: "15",
         name: "Grilled Sandwich",
         image: food_15,
         price: 16,
-        description: "Golden grilled sandwich with melted cheese & veggies.",
+        description: "Grilled cheese & veggie sandwich.",
         category: "Sandwich"
-    }, {
+    },
+    {
         _id: "16",
         name: "Bread Sandwich",
         image: food_16,
         price: 24,
-        description: "Soft bread layered with vegetables & creamy spread.",
+        description: "Soft bread with veggie filling.",
         category: "Sandwich"
-    }, {
+    },
+    {
         _id: "17",
         name: "Cup Cake",
         image: food_17,
         price: 14,
-        description: "Soft vanilla cupcake topped with creamy frosting.",
+        description: "Soft cupcake with frosting.",
         category: "Cake"
-    }, {
+    },
+    {
         _id: "18",
         name: "Vegan Cake",
         image: food_18,
         price: 12,
-        description: "Moist vegan cake made with natural ingredients.",
+        description: "Moist vegan cake.",
         category: "Cake"
-    }, {
+    },
+    {
         _id: "19",
         name: "Butterscotch Cake",
         image: food_19,
         price: 20,
-        description: "Rich butterscotch sponge layered with smooth cream.",
+        description: "Rich butterscotch cream cake.",
         category: "Cake"
-    }, {
+    },
+    {
         _id: "20",
         name: "Sliced Cake",
         image: food_20,
         price: 15,
-        description: "Freshly sliced cake with soft sponge and creamy layers.",
+        description: "Fresh creamy cake slice.",
         category: "Cake"
-    }, {
+    },
+    {
         _id: "21",
-        name: "Garlic Mushroom ",
+        name: "Garlic Mushroom",
         image: food_21,
         price: 14,
-        description: "Sauteed garlic mushrooms bursting with rich flavors.",
+        description: "Garlic sautéed mushrooms.",
         category: "Pure Veg"
-    }, {
+    },
+    {
         _id: "22",
         name: "Fried Cauliflower",
         image: food_22,
         price: 22,
-        description: "Golden crispy cauliflower served with spicy seasoning.",
+        description: "Crispy fried cauliflower.",
         category: "Pure Veg"
-    }, {
+    },
+    {
         _id: "23",
         name: "Mix Veg Pulao",
         image: food_23,
         price: 10,
-        description: "Aromatic rice cooked with fresh vegetables & spices.",
+        description: "Vegetable pulao with spices.",
         category: "Pure Veg"
-    }, {
+    },
+    {
         _id: "24",
         name: "Rice Zucchini",
         image: food_24,
         price: 12,
-        description: "Healthy zucchini rice packed with delicious flavors.",
+        description: "Flavorful zucchini rice.",
         category: "Pure Veg"
     },
     {
@@ -264,7 +284,7 @@ export const food_list = [
         name: "Cheese Pasta",
         image: food_25,
         price: 12,
-        description: "Creamy cheese pasta topped with parmesan & herbs.",
+        description: "Creamy cheese pasta.",
         category: "Pasta"
     },
     {
@@ -272,49 +292,55 @@ export const food_list = [
         name: "Tomato Pasta",
         image: food_26,
         price: 18,
-        description: "Classic tomato pasta in rich Italian-style sauce.",
+        description: "Pasta in tomato sauce.",
         category: "Pasta"
-    }, {
+    },
+    {
         _id: "27",
         name: "Creamy Pasta",
         image: food_27,
         price: 16,
-        description: "Rich creamy pasta with herbs and parmesan cheese.",
+        description: "Creamy herb pasta.",
         category: "Pasta"
-    }, {
+    },
+    {
         _id: "28",
         name: "Chicken Pasta",
         image: food_28,
         price: 24,
-        description: "Juicy chicken pasta tossed in creamy garlic sauce.",
+        description: "Chicken in garlic sauce.",
         category: "Pasta"
-    }, {
+    },
+    {
         _id: "29",
-        name: "Buttter Noodles",
+        name: "Butter Noodles",
         image: food_29,
         price: 14,
-        description: "Buttery stir-fried noodles with vegetables & herbs.",
+        description: "Buttery stir-fried noodles.",
         category: "Noodles"
-    }, {
+    },
+    {
         _id: "30",
         name: "Veg Noodles",
         image: food_30,
         price: 12,
-        description: "Classic veg noodles tossed in savory sauces.",
+        description: "Classic vegetable noodles.",
         category: "Noodles"
-    }, {
+    },
+    {
         _id: "31",
         name: "Somen Noodles",
         image: food_31,
         price: 20,
-        description: "Authentic Japanese somen noodles with fresh toppings.",
+        description: "Japanese somen noodles.",
         category: "Noodles"
-    }, {
+    },
+    {
         _id: "32",
         name: "Cooked Noodles",
         image: food_32,
         price: 15,
-        description: "Perfectly cooked noodles mixed with flavorful spices.",
+        description: "Spiced cooked noodles.",
         category: "Noodles"
     }
 ]

@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 import { Search, ShoppingCart, User } from "lucide-react";
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ setShowLogin }) => {
 
     const [menu, setMenu] = useState("home");
 
@@ -84,7 +84,7 @@ const Navbar = () => {
                     <button className='w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition cursor-pointer'>
                         <User className='w-5 h-5 text-[#E6D3A3]' />
                     </button>
-                    <button className="ml-2 w-20 h-10 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer">
+                    <button onClick={() => setShowLogin(true)} className="ml-2 w-20 h-10 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-semibold hover:scale-105 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer">
                         Sign In
                     </button>
                 </div>

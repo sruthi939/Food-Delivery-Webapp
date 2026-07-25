@@ -9,10 +9,13 @@ import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import PlaceOrder from './pages/PlaceOrder'
 import Loader from './components/Loader'
+import Footer from './components/Footer'
+import Login from './pages/Login'
 
 const App = () => {
     const [loading, setLoading] = useState(true);
     const location = useLocation();
+    const [showLogin, setShowLogin] = useState(false)
 
     useEffect(() => {
         setLoading(true);
@@ -37,19 +40,26 @@ const App = () => {
     }, []);
 
     return (
-        <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden'>
-            {loading && <Loader />}
-            <Navbar />
-            <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/menu' element={<Menu />} />
-                <Route path='/offers' element={<Offers />} />
-                <Route path='/restuarant' element={<Restuarant />} />
-                <Route path='/contact' element={<Contact />} />
-                <Route path='/cart' element={<Cart />} />
-                <Route path='/order' element={<PlaceOrder />} />
-            </Routes>
-        </div>
+        <>
+            {showLogin ? <Login setShowLogin={setShowLogin} /> : <></>}
+            <div className='w-full min-h-screen bg-black text-white relative overflow-x-hidden flex flex-col justify-between'>
+                {loading && <Loader />}
+                <Navbar setShowLogin={setShowLogin} />
+                <div className="flex-1">
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        <Route path='/menu' element={<Menu />} />
+                        <Route path='/offers' element={<Offers />} />
+                        <Route path='/restuarant' element={<Restuarant />} />
+                        <Route path='/contact' element={<Contact />} />
+                        <Route path='/cart' element={<Cart />} />
+                        <Route path='/order' element={<PlaceOrder />} />
+                        <Route path='/login' element={<Login />} />
+                    </Routes>
+                </div>
+                <Footer />
+            </div>
+        </>
     )
 }
 
