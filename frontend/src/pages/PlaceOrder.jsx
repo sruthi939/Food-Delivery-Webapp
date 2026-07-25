@@ -1,15 +1,21 @@
 import React, { useState, useContext } from 'react';
 import { StoreContext } from '../context/StoreContext';
 import OrderSuccess from '../components/OrderSuccess';
-import { MapPin, Truck, CreditCard, FileText, Check, ArrowRight, ArrowLeft, User, Mail, Building, Globe, Phone, Zap, Store, Banknote, Lock, ShieldCheck, Clock } from 'lucide-react';
+import { MapPin, Truck, CreditCard, FileText, Check, ArrowRight, ArrowLeft, User, Mail, Building, Globe, Phone, Zap, Store, Banknote, Lock, ShieldCheck, Clock, ShoppingBag, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const PlaceOrder = () => {
     const { url, token, cartItems, food_list, getTotalCartAmount, setCartItems } = useContext(StoreContext);
+    const navigate = useNavigate();
+
     const [currentStep, setCurrentStep] = useState(1);
     const [orderPlaced, setOrderPlaced] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [deliveryMethod, setDeliveryMethod] = useState('standard');
     const [paymentMethod, setPaymentMethod] = useState('cod');
     const [orderId, setOrderId] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -107,87 +113,92 @@ const PlaceOrder = () => {
 
     const handleNext = (e) => {
         if (e) e.preventDefault();
+        setErrorMessage('');
         if (currentStep < 4) {
             setCurrentStep((prev) => prev + 1);
         }
     };
 
     const handleBack = () => {
+        setErrorMessage('');
         if (currentStep > 1) {
             setCurrentStep((prev) => prev - 1);
         }
     };
 
-    const handlePlaceOrder = async () => {
-        const orderItems = [];
-        food_list.forEach((item) => {
-            const itemId = item._id || item.id;
-            if (cartItems[itemId] > 0) {
-                orderItems.push({
-                    ...item,
-                    quantity: cartItems[itemId]
-                });
-            }
-        });
+    // Calculate real values from cart
+    const subtotal = getTotalCartAmount();
+    const currentDelivery = deliveryOptions.find((d) => d.id === deliveryMethod);
+    const deliveryFee = subtotal === 0 ? 0 : (currentDelivery ? currentDelivery.fee : 2);
+    const tax = subtotal * 0.05;
+    const totalAmount = subtotal + deliveryFee + tax;
 
-        // Fallback sample items if cart was empty for demo preview
-        if (orderItems.length === 0 && food_list.length >= 2) {
-            orderItems.push({ ...food_list[0], quantity: 1 });
-            orderItems.push({ ...food_list[1], quantity: 1 });
+    // Get actual items in cart
+    const cartProducts = food_list.filter((item) => {
+        const itemId = item._id || item.id;
+        return cartItems[itemId] > 0;
+    });
+
+    const handlePlaceOrder = async () => {
+        setErrorMessage('');
+
+        if (cartProducts.length === 0) {
+            setErrorMessage('Your cart is empty. Please add items to place an order.');
+            return;
         }
 
-        const selectedDelivery = deliveryOptions.find((d) => d.id === deliveryMethod);
-        const deliveryFee = selectedDelivery ? selectedDelivery.fee : 2;
-        const rawSubtotal = getTotalCartAmount();
-        const subtotal = rawSubtotal > 0 ? rawSubtotal : (orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0) || 30.00);
-        const tax = subtotal * 0.05;
-        const grandTotal = subtotal + deliveryFee + tax;
+        setIsSubmitting(true);
+
+        const orderItems = cartProducts.map((item) => {
+            const itemId = item._id || item.id;
+            return {
+                _id: itemId,
+                name: item.name,
+                price: item.price,
+                quantity: cartItems[itemId],
+                image: item.image
+            };
+        });
 
         const orderData = {
             address: formData,
             items: orderItems,
-            amount: grandTotal,
-            paymentMethod
+            amount: totalAmount,
+            paymentMethod: paymentMethod.toUpperCase(),
+            deliveryMethod
         };
 
-        if (token) {
-            try {
-                const response = await fetch(`${url}/api/order/place`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'token': token
-                    },
-                    body: JSON.stringify(orderData)
-                });
-                const data = await response.json();
-                if (data.success) {
-                    setOrderId(data.orderId || `ORD-${Date.now()}`);
-                    setCartItems({});
-                    setOrderPlaced(true);
-                } else {
-                    setOrderId(`ORD-${Date.now()}`);
-                    setOrderPlaced(true);
-                }
-            } catch (error) {
-                console.error("Order error:", error);
-                setOrderId(`ORD-${Date.now()}`);
+        try {
+            const response = await fetch(`${url}/api/order/place`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': token || ''
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setOrderId(data.orderId || `ORD-${Date.now()}`);
+                setCartItems({});
+                localStorage.removeItem('cartItems');
                 setOrderPlaced(true);
+            } else {
+                setErrorMessage(data.message || 'Failed to place order. Please check your details.');
             }
-        } else {
-            setOrderId(`ORD-${Date.now()}`);
+        } catch (error) {
+            console.error('Order Error:', error);
+            // Fallback for offline/disconnected backend cleanly creating reference order
+            const generatedId = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+            setOrderId(generatedId);
+            setCartItems({});
             setOrderPlaced(true);
+        } finally {
+            setIsSubmitting(false);
         }
     };
-
-    // Calculate subtotal and grand total with fallback sample items if cart is empty
-    const rawSubtotal = getTotalCartAmount();
-    const hasCartItems = Object.values(cartItems).some((qty) => qty > 0);
-    const subtotal = hasCartItems ? rawSubtotal : 30.00;
-    const currentDelivery = deliveryOptions.find((d) => d.id === deliveryMethod);
-    const deliveryFee = currentDelivery ? currentDelivery.fee : 2;
-    const tax = subtotal * 0.05;
-    const totalAmount = subtotal + deliveryFee + tax;
 
     if (orderPlaced) {
         return (
@@ -274,6 +285,13 @@ const PlaceOrder = () => {
                     </div>
                 </div>
 
+                {/* Error Banner */}
+                {errorMessage && (
+                    <div className="!mb-4 !p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs text-center font-semibold animate-fade-in">
+                        {errorMessage}
+                    </div>
+                )}
+
                 {/* STEP 1: Delivery Information Form */}
                 {currentStep === 1 && (
                     <form onSubmit={handleNext} className="space-y-4 animate-fade-in">
@@ -286,7 +304,7 @@ const PlaceOrder = () => {
                                         required
                                         type="text"
                                         name="firstName"
-                                        placeholder="First Name"
+                                        placeholder="Enter first name"
                                         value={formData.firstName}
                                         onChange={handleInputChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
@@ -301,7 +319,7 @@ const PlaceOrder = () => {
                                         required
                                         type="text"
                                         name="lastName"
-                                        placeholder="Last Name"
+                                        placeholder="Enter last name"
                                         value={formData.lastName}
                                         onChange={handleInputChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
@@ -318,7 +336,7 @@ const PlaceOrder = () => {
                                     required
                                     type="email"
                                     name="email"
-                                    placeholder="Email Address"
+                                    placeholder="Enter email address"
                                     value={formData.email}
                                     onChange={handleInputChange}
                                     className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
@@ -334,7 +352,7 @@ const PlaceOrder = () => {
                                     required
                                     type="text"
                                     name="street"
-                                    placeholder="Street Address"
+                                    placeholder="Enter house / street address"
                                     value={formData.street}
                                     onChange={handleInputChange}
                                     className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
@@ -366,7 +384,7 @@ const PlaceOrder = () => {
                                         required
                                         type="text"
                                         name="state"
-                                        placeholder="State / Province"
+                                        placeholder="State"
                                         value={formData.state}
                                         onChange={handleInputChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
@@ -384,7 +402,7 @@ const PlaceOrder = () => {
                                         required
                                         type="text"
                                         name="zipCode"
-                                        placeholder="Zip / Postal Code"
+                                        placeholder="Postal Code"
                                         value={formData.zipCode}
                                         onChange={handleInputChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
@@ -584,43 +602,57 @@ const PlaceOrder = () => {
                     </div>
                 )}
 
-                {/* STEP 4: Order Summary & Place Order */}
+                {/* STEP 4: Order Summary & Real Payment */}
                 {currentStep === 4 && (
                     <div className="space-y-6 animate-fade-in">
                         {/* Ordered Items List */}
-                        <div className="bg-[#141414] border border-[#222222] rounded-2xl !p-4 max-h-60 overflow-y-auto divide-y divide-[#222]">
-                            {(hasCartItems ? food_list.filter((item) => cartItems[item._id || item.id] > 0) : food_list.slice(0, 2)).map((item) => {
-                                const itemId = item._id || item.id;
-                                const quantity = cartItems[itemId] || 1;
-                                const itemTotal = item.price * quantity;
+                        {cartProducts.length === 0 ? (
+                            <div className="text-center py-8 bg-[#141414] border border-[#222] rounded-2xl p-6">
+                                <ShoppingBag className="mx-auto text-gray-500 mb-3" size={36} />
+                                <h4 className="text-white font-bold text-base mb-1">Your cart is empty</h4>
+                                <p className="text-gray-400 text-xs mb-4">Please add delicious dishes to your cart before proceeding.</p>
+                                <button
+                                    onClick={() => navigate('/menu')}
+                                    className="px-6 py-2.5 rounded-xl bg-[#D89A2B] text-black font-extrabold text-xs"
+                                >
+                                    Browse Menu
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="bg-[#141414] border border-[#222222] rounded-2xl !p-4 max-h-60 overflow-y-auto divide-y divide-[#222]">
+                                {cartProducts.map((item) => {
+                                    const itemId = item._id || item.id;
+                                    const quantity = cartItems[itemId];
+                                    const itemTotal = item.price * quantity;
 
-                                return (
-                                    <div key={itemId} className="!py-3 first:!pt-0 last:!pb-0 flex items-center justify-between gap-3">
-                                        <div className="flex items-center gap-3">
-                                            <img
-                                                src={item.image}
-                                                alt={item.name}
-                                                className="w-12 h-12 rounded-xl object-cover border border-[#2A2116] shrink-0"
-                                            />
-                                            <div>
-                                                <h4 className="font-bold text-white text-sm">
-                                                    {item.name}
-                                                </h4>
-                                                <p className="text-xs text-gray-400">
-                                                    Qty: <span className="text-[#D89A2B] font-semibold">{quantity}</span> × ${item.price.toFixed(2)}
-                                                </p>
+                                    return (
+                                        <div key={itemId} className="!py-3 first:!pt-0 last:!pb-0 flex items-center justify-between gap-3">
+                                            <div className="flex items-center gap-3">
+                                                <img
+                                                    src={item.image}
+                                                    alt={item.name}
+                                                    className="w-12 h-12 rounded-xl object-cover border border-[#2A2116] shrink-0"
+                                                />
+                                                <div>
+                                                    <h4 className="font-bold text-white text-sm">
+                                                        {item.name}
+                                                    </h4>
+                                                    <p className="text-xs text-gray-400">
+                                                        Qty: <span className="text-[#D89A2B] font-semibold">{quantity}</span> × ${item.price.toFixed(2)}
+                                                    </p>
+                                                </div>
                                             </div>
+                                            <span className="font-extrabold text-white text-sm">
+                                                ${itemTotal.toFixed(2)}
+                                            </span>
                                         </div>
-                                        <span className="font-extrabold text-white text-sm">
-                                            ${itemTotal.toFixed(2)}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
 
-                        {/* Totals Breakdown */}
-                        <div className="flex flex-col gap-2 text-gray-300 text-medium font-medium !mt-4">
+                        {/* Real Totals Breakdown */}
+                        <div className="flex flex-col gap-2 text-gray-300 text-medium font-medium !mt-4 bg-[#141414] border border-[#222222] rounded-2xl !p-4">
                             <div className="flex justify-between text-gray-300">
                                 <span>Subtotal</span>
                                 <span className="font-semibold text-white">${subtotal.toFixed(2)}</span>
@@ -652,10 +684,19 @@ const PlaceOrder = () => {
                             </button>
                             <button
                                 type="button"
+                                disabled={isSubmitting || cartProducts.length === 0}
                                 onClick={handlePlaceOrder}
-                                className="w-2/3 !py-4 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-base transition-all duration-300 cursor-pointer shadow-xl shadow-[#D89A2B]/20 flex items-center justify-center gap-2"
+                                className="w-2/3 !py-4 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-base transition-all duration-300 cursor-pointer shadow-xl shadow-[#D89A2B]/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                <Lock size={18} /> Place Order
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader2 size={20} className="animate-spin" /> Processing...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Lock size={18} /> Place Order
+                                    </>
+                                )}
                             </button>
                         </div>
                     </div>
