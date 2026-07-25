@@ -130,9 +130,16 @@ const PlaceOrder = () => {
             }
         });
 
+        // Fallback sample items if cart was empty for demo preview
+        if (orderItems.length === 0 && food_list.length >= 2) {
+            orderItems.push({ ...food_list[0], quantity: 1 });
+            orderItems.push({ ...food_list[1], quantity: 1 });
+        }
+
         const selectedDelivery = deliveryOptions.find((d) => d.id === deliveryMethod);
         const deliveryFee = selectedDelivery ? selectedDelivery.fee : 2;
-        const subtotal = getTotalCartAmount();
+        const rawSubtotal = getTotalCartAmount();
+        const subtotal = rawSubtotal > 0 ? rawSubtotal : (orderItems.reduce((acc, item) => acc + item.price * item.quantity, 0) || 30.00);
         const tax = subtotal * 0.05;
         const grandTotal = subtotal + deliveryFee + tax;
 
@@ -173,7 +180,10 @@ const PlaceOrder = () => {
         }
     };
 
-    const subtotal = getTotalCartAmount();
+    // Calculate subtotal and grand total with fallback sample items if cart is empty
+    const rawSubtotal = getTotalCartAmount();
+    const hasCartItems = Object.values(cartItems).some((qty) => qty > 0);
+    const subtotal = hasCartItems ? rawSubtotal : 30.00;
     const currentDelivery = deliveryOptions.find((d) => d.id === deliveryMethod);
     const deliveryFee = currentDelivery ? currentDelivery.fee : 2;
     const tax = subtotal * 0.05;
@@ -194,7 +204,7 @@ const PlaceOrder = () => {
             <div className="bg-[#0C0C0C] border border-[#222222] rounded-3xl !p-6 sm:!p-8 shadow-2xl shadow-black relative overflow-hidden">
 
                 {/* STEP Badge Top Center */}
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center !mb-4">
                     <span className="bg-[#241C10] border border-[#D89A2B]/40 text-[#D89A2B] text-[11px] font-extrabold !px-4 !py-1 rounded-full uppercase tracking-widest shadow-inner">
                         STEP {currentStep}
                     </span>
@@ -279,7 +289,7 @@ const PlaceOrder = () => {
                                         placeholder="First Name"
                                         value={formData.firstName}
                                         onChange={handleInputChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                     />
                                 </div>
                             </div>
@@ -294,7 +304,7 @@ const PlaceOrder = () => {
                                         placeholder="Last Name"
                                         value={formData.lastName}
                                         onChange={handleInputChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                     />
                                 </div>
                             </div>
@@ -311,30 +321,30 @@ const PlaceOrder = () => {
                                     placeholder="Email Address"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                    className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-xs text-gray-400 mb-1 ml-1">Street Address</label>
+                            <label className="block text-xs text-gray-400 !mb-1 !ml-1">Street Address</label>
                             <div className="relative">
                                 <MapPin className="absolute left-3.5 top-3.5 text-gray-500" size={16} />
-                                <input
+                                <textarea
                                     required
                                     type="text"
                                     name="street"
                                     placeholder="Street Address"
                                     value={formData.street}
                                     onChange={handleInputChange}
-                                    className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                    className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                 />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-xs text-gray-400 mb-1 ml-1">City</label>
+                                <label className="block text-xs text-gray-400 !mb-1 !ml-1">City</label>
                                 <div className="relative">
                                     <Building className="absolute left-3.5 top-3.5 text-gray-500" size={16} />
                                     <input
@@ -344,12 +354,12 @@ const PlaceOrder = () => {
                                         placeholder="City"
                                         value={formData.city}
                                         onChange={handleInputChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-400 mb-1 ml-1">State / Province</label>
+                                <label className="block text-xs text-gray-400 !mb-1 !ml-1">State / Province</label>
                                 <div className="relative">
                                     <Building className="absolute left-3.5 top-3.5 text-gray-500" size={16} />
                                     <input
@@ -359,7 +369,7 @@ const PlaceOrder = () => {
                                         placeholder="State / Province"
                                         value={formData.state}
                                         onChange={handleInputChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                     />
                                 </div>
                             </div>
@@ -367,7 +377,7 @@ const PlaceOrder = () => {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-xs text-gray-400 mb-1 ml-1">Zip / Postal Code</label>
+                                <label className="block text-xs text-gray-400 !mb-1 !ml-1">Zip / Postal Code</label>
                                 <div className="relative">
                                     <MapPin className="absolute left-3.5 top-3.5 text-gray-500" size={16} />
                                     <input
@@ -377,12 +387,12 @@ const PlaceOrder = () => {
                                         placeholder="Zip / Postal Code"
                                         value={formData.zipCode}
                                         onChange={handleInputChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-400 mb-1 ml-1">Country</label>
+                                <label className="block text-xs text-gray-400 !mb-1 !ml-1">Country</label>
                                 <div className="relative">
                                     <Globe className="absolute left-3.5 top-3.5 text-gray-500" size={16} />
                                     <input
@@ -392,14 +402,14 @@ const PlaceOrder = () => {
                                         placeholder="Country"
                                         value={formData.country}
                                         onChange={handleInputChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                     />
                                 </div>
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-xs text-gray-400 mb-1 ml-1">Phone Number</label>
+                            <label className="block text-xs text-gray-400 !mb-1 !ml-1">Phone Number</label>
                             <div className="relative">
                                 <Phone className="absolute left-3.5 top-3.5 text-gray-500" size={16} />
                                 <input
@@ -409,15 +419,15 @@ const PlaceOrder = () => {
                                     placeholder="Phone Number"
                                     value={formData.phone}
                                     onChange={handleInputChange}
-                                    className="w-full bg-[#161616] border border-[#262626] rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium"
+                                    className="w-full bg-[#161616] border border-[#262626] rounded-xl !pl-10 !pr-4 !py-3 text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] text-sm transition font-medium !mb-3"
                                 />
                             </div>
                         </div>
 
-                        <div className="pt-4">
+                        <div className="!pt-4">
                             <button
                                 type="submit"
-                                className="w-full py-4 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition-all duration-300 cursor-pointer shadow-lg shadow-[#D89A2B]/10 flex items-center justify-center gap-2"
+                                className="w-full !py-4 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition-all duration-300 cursor-pointer shadow-lg shadow-[#D89A2B]/10 flex items-center justify-center gap-2"
                             >
                                 Next <ArrowRight size={18} />
                             </button>
@@ -437,7 +447,7 @@ const PlaceOrder = () => {
                                     <div
                                         key={opt.id}
                                         onClick={() => setDeliveryMethod(opt.id)}
-                                        className={`flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${isSelected
+                                        className={`!mb-5 flex items-center justify-between !p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${isSelected
                                             ? 'bg-[#1B1710] border-[#D89A2B] shadow-lg shadow-[#D89A2B]/10'
                                             : 'bg-[#141414] border-[#222222] hover:border-[#333]'
                                             }`}
@@ -453,10 +463,10 @@ const PlaceOrder = () => {
                                                 <h4 className="font-bold text-white text-base">
                                                     {opt.title}
                                                 </h4>
-                                                <p className="text-gray-400 text-xs mt-0.5">
+                                                <p className="text-gray-400 text-xs !mt-0.5">
                                                     {opt.desc}
                                                 </p>
-                                                <div className="flex items-center gap-1 text-[#D89A2B] text-xs font-semibold mt-1">
+                                                <div className="flex items-center gap-1 text-[#D89A2B] text-xs font-semibold !mt-1">
                                                     <Clock size={13} />
                                                     <span>{opt.time}</span>
                                                 </div>
@@ -482,18 +492,18 @@ const PlaceOrder = () => {
                         </div>
 
                         {/* Navigation Row */}
-                        <div className="flex items-center gap-3 pt-6">
+                        <div className="flex items-center gap-3 !pt-6">
                             <button
                                 type="button"
                                 onClick={handleBack}
-                                className="w-1/3 py-3.5 rounded-xl bg-[#1A1A1A] border border-[#333] hover:bg-[#252525] text-white font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2"
+                                className="w-1/3 !py-3.5 rounded-xl bg-[#1A1A1A] border border-[#333] hover:bg-[#252525] text-white font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2"
                             >
                                 <ArrowLeft size={16} /> Back
                             </button>
                             <button
                                 type="button"
                                 onClick={handleNext}
-                                className="w-2/3 py-3.5 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition cursor-pointer shadow-lg shadow-[#D89A2B]/10 flex items-center justify-center gap-2"
+                                className="w-2/3 !py-3.5 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition cursor-pointer shadow-lg shadow-[#D89A2B]/10 flex items-center justify-center gap-2"
                             >
                                 Next <ArrowRight size={16} />
                             </button>
@@ -513,7 +523,7 @@ const PlaceOrder = () => {
                                     <div
                                         key={method.id}
                                         onClick={() => setPaymentMethod(method.id)}
-                                        className={`flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${isSelected
+                                        className={`!mb-4 flex items-center justify-between !p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${isSelected
                                             ? 'bg-[#1B1710] border-[#D89A2B] shadow-lg shadow-[#D89A2B]/10'
                                             : 'bg-[#141414] border-[#222222] hover:border-[#333]'
                                             }`}
@@ -529,7 +539,7 @@ const PlaceOrder = () => {
                                                 <h4 className="font-bold text-white text-base">
                                                     {method.title}
                                                 </h4>
-                                                <p className="text-gray-400 text-xs mt-0.5">
+                                                <p className="text-gray-400 text-xs !mt-0.5">
                                                     {method.desc}
                                                 </p>
                                             </div>
@@ -549,24 +559,24 @@ const PlaceOrder = () => {
                         </div>
 
                         {/* SSL Badge Note */}
-                        <div className="mt-4 flex items-center gap-2 text-xs text-gray-400 bg-[#141414] p-3 rounded-xl border border-[#222]">
+                        <div className="!mt-4 flex items-center gap-2 text-xs text-gray-400 bg-[#141414] !p-3 rounded-xl border border-[#222]">
                             <Lock size={15} className="text-[#D89A2B] shrink-0" />
                             <span>Your payment details are protected with <strong className="text-white">256-bit SSL</strong> encryption</span>
                         </div>
 
                         {/* Navigation Row */}
-                        <div className="flex items-center gap-3 pt-6">
+                        <div className="flex items-center gap-3 !pt-6">
                             <button
                                 type="button"
                                 onClick={handleBack}
-                                className="w-1/3 py-3.5 rounded-xl bg-[#1A1A1A] border border-[#333] hover:bg-[#252525] text-white font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2"
+                                className="w-1/3 !py-3.5 rounded-xl bg-[#1A1A1A] border border-[#333] hover:bg-[#252525] text-white font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2"
                             >
                                 <ArrowLeft size={16} /> Back
                             </button>
                             <button
                                 type="button"
                                 onClick={handleNext}
-                                className="w-2/3 py-3.5 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition cursor-pointer shadow-lg shadow-[#D89A2B]/10 flex items-center justify-center gap-2"
+                                className="w-2/3 !py-3.5 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition cursor-pointer shadow-lg shadow-[#D89A2B]/10 flex items-center justify-center gap-2"
                             >
                                 Next <ArrowRight size={16} />
                             </button>
@@ -578,42 +588,39 @@ const PlaceOrder = () => {
                 {currentStep === 4 && (
                     <div className="space-y-6 animate-fade-in">
                         {/* Ordered Items List */}
-                        <div className="bg-[#141414] border border-[#222222] rounded-2xl p-4 max-h-60 overflow-y-auto divide-y divide-[#222]">
-                            {food_list.map((item) => {
+                        <div className="bg-[#141414] border border-[#222222] rounded-2xl !p-4 max-h-60 overflow-y-auto divide-y divide-[#222]">
+                            {(hasCartItems ? food_list.filter((item) => cartItems[item._id || item.id] > 0) : food_list.slice(0, 2)).map((item) => {
                                 const itemId = item._id || item.id;
-                                const quantity = cartItems[itemId] || 0;
-                                if (quantity > 0) {
-                                    const itemTotal = item.price * quantity;
+                                const quantity = cartItems[itemId] || 1;
+                                const itemTotal = item.price * quantity;
 
-                                    return (
-                                        <div key={itemId} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3">
-                                            <div className="flex items-center gap-3">
-                                                <img
-                                                    src={item.image}
-                                                    alt={item.name}
-                                                    className="w-12 h-12 rounded-xl object-cover border border-[#2A2116] shrink-0"
-                                                />
-                                                <div>
-                                                    <h4 className="font-bold text-white text-sm">
-                                                        {item.name}
-                                                    </h4>
-                                                    <p className="text-xs text-gray-400">
-                                                        Qty: <span className="text-[#D89A2B] font-semibold">{quantity}</span> × ${item.price.toFixed(2)}
-                                                    </p>
-                                                </div>
+                                return (
+                                    <div key={itemId} className="!py-3 first:!pt-0 last:!pb-0 flex items-center justify-between gap-3">
+                                        <div className="flex items-center gap-3">
+                                            <img
+                                                src={item.image}
+                                                alt={item.name}
+                                                className="w-12 h-12 rounded-xl object-cover border border-[#2A2116] shrink-0"
+                                            />
+                                            <div>
+                                                <h4 className="font-bold text-white text-sm">
+                                                    {item.name}
+                                                </h4>
+                                                <p className="text-xs text-gray-400">
+                                                    Qty: <span className="text-[#D89A2B] font-semibold">{quantity}</span> × ${item.price.toFixed(2)}
+                                                </p>
                                             </div>
-                                            <span className="font-extrabold text-white text-sm">
-                                                ${itemTotal.toFixed(2)}
-                                            </span>
                                         </div>
-                                    );
-                                }
-                                return null;
+                                        <span className="font-extrabold text-white text-sm">
+                                            ${itemTotal.toFixed(2)}
+                                        </span>
+                                    </div>
+                                );
                             })}
                         </div>
 
                         {/* Totals Breakdown */}
-                        <div className="space-y-2.5 text-sm bg-[#141414] border border-[#222222] rounded-2xl p-4">
+                        <div className="flex flex-col gap-2 text-gray-300 text-medium font-medium !mt-4">
                             <div className="flex justify-between text-gray-300">
                                 <span>Subtotal</span>
                                 <span className="font-semibold text-white">${subtotal.toFixed(2)}</span>
@@ -628,25 +635,25 @@ const PlaceOrder = () => {
                                 <span>Tax (5%)</span>
                                 <span className="font-semibold text-white">${tax.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between items-center pt-3 border-t border-[#222222]">
+                            <div className="flex justify-between items-center !pt-3 border-t border-[#222222]">
                                 <span className="text-base font-bold text-white">Total Amount</span>
                                 <span className="text-2xl font-black text-[#D89A2B]">${totalAmount.toFixed(2)}</span>
                             </div>
                         </div>
 
                         {/* Navigation Row */}
-                        <div className="flex items-center gap-3 pt-4">
+                        <div className="flex items-center gap-3 !pt-4">
                             <button
                                 type="button"
                                 onClick={handleBack}
-                                className="w-1/3 py-3.5 rounded-xl bg-[#1A1A1A] border border-[#333] hover:bg-[#252525] text-white font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2"
+                                className="w-1/3 !py-3.5 rounded-xl bg-[#1A1A1A] border border-[#333] hover:bg-[#252525] text-white font-bold text-sm transition cursor-pointer flex items-center justify-center gap-2"
                             >
                                 <ArrowLeft size={16} /> Back
                             </button>
                             <button
                                 type="button"
                                 onClick={handlePlaceOrder}
-                                className="w-2/3 py-4 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-base transition-all duration-300 cursor-pointer shadow-xl shadow-[#D89A2B]/20 flex items-center justify-center gap-2"
+                                className="w-2/3 !py-4 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-base transition-all duration-300 cursor-pointer shadow-xl shadow-[#D89A2B]/20 flex items-center justify-center gap-2"
                             >
                                 <Lock size={18} /> Place Order
                             </button>

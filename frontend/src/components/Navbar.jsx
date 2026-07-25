@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { assets } from '../assets/assets';
-import { Search, ShoppingCart, User, LogOut, Package } from "lucide-react";
+import { Search, ShoppingCart, User, LogOut, Package, Heart } from "lucide-react";
 import { Link, useNavigate } from 'react-router-dom';
 import { StoreContext } from '../context/StoreContext';
 
 const Navbar = ({ setShowLogin }) => {
     const [menu, setMenu] = useState("home");
     const [profileOpen, setProfileOpen] = useState(false);
-    const { token, logout, cartItems } = useContext(StoreContext);
+    const { token, logout, cartItems, getWishlistCount } = useContext(StoreContext);
     const navigate = useNavigate();
 
     const getTotalCartCount = () => {
@@ -86,6 +86,18 @@ const Navbar = ({ setShowLogin }) => {
                     <button className="w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition cursor-pointer">
                         <Search className="w-5 h-5 text-[#E6D3A3]" />
                     </button>
+
+                    <Link to="/wishlist" className="relative">
+                        <button className="w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition cursor-pointer">
+                            <Heart className='w-5 h-5 text-[#E6D3A3]' />
+                        </button>
+                        {getWishlistCount && getWishlistCount() > 0 && (
+                            <span className="absolute -top-1 -right-1 min-w-[20px] h-[20px] px-1 bg-red-500 text-white font-extrabold text-[10px] rounded-full flex items-center justify-center shadow-md">
+                                {getWishlistCount()}
+                            </span>
+                        )}
+                    </Link>
+
                     <Link to="/cart" className="relative">
                         <button className="w-11 h-11 rounded-full bg-[#161616] border border-[#333] flex items-center justify-center hover:border-[#D89A2B] transition cursor-pointer">
                             <ShoppingCart className='w-5 h-5 text-[#E6D3A3]' />
@@ -115,6 +127,15 @@ const Navbar = ({ setShowLogin }) => {
 
                             {profileOpen && (
                                 <div className="absolute right-0 mt-3 w-48 bg-[#111111] border border-[#222222] rounded-2xl shadow-2xl p-2 z-50 animate-slide-down text-white">
+                                    <button
+                                        onClick={() => {
+                                            setProfileOpen(false);
+                                            navigate('/wishlist');
+                                        }}
+                                        className="w-full text-left px-4 py-2.5 rounded-xl hover:bg-[#1C1C1C] hover:text-[#D89A2B] text-xs font-semibold flex items-center gap-2 transition cursor-pointer"
+                                    >
+                                        <Heart size={16} /> My Wishlist
+                                    </button>
                                     <button
                                         onClick={() => {
                                             setProfileOpen(false);
