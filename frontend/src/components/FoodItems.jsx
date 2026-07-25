@@ -27,7 +27,7 @@ const FoodItems = ({ id, name, price, description, image, index }) => {
                 >
                     <Heart
                         size={20}
-                        className={`transition-colors duration-300 ${isLiked ? "fill-red-500 text-red-500" : "text-white/80 hover:text-white"}`}
+                        className={`transition-colors duration-300 ${isLiked ? "fill-[#D89A2B] text-[#D89A2B]" : "text-white/80 hover:text-white"}`}
                     />
                 </button>
             </div>

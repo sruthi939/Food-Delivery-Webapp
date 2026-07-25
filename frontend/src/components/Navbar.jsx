@@ -100,7 +100,7 @@ const Navbar = ({ setShowLogin }) => {
                     {!token ? (
                         <button
                             onClick={() => setShowLogin(true)}
-                            className="ml-2 px-6 h-10 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-extrabold text-sm hover:scale-105 active:scale-95 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer"
+                            className="ml-2 !px-6 h-10 rounded-full bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-extrabold text-sm hover:scale-105 active:scale-95 transition duration-300 shadow-lg shadow-[#D89A2B]/20 cursor-pointer"
                         >
                             Sign In
                         </button>
