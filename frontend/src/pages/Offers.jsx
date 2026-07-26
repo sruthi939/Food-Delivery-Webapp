@@ -1,20 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Sparkles,
-    ArrowRight,
-    Tag,
-    Copy,
-    Check,
-    Clock,
-    Gift,
-    Send,
-    ChevronRight,
-    Percent,
-    Truck,
-    UserCheck,
-    CreditCard,
-    Utensils
-} from 'lucide-react';
+import { Sparkles, ArrowRight, Tag, Copy, Check, Clock, Gift, Send, ChevronRight, Percent, Truck, UserCheck, CreditCard, Utensils } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Offers = () => {
@@ -42,12 +27,36 @@ const Offers = () => {
     };
 
     const filterCategories = [
-        { id: 'All', label: 'All Offers', icon: Tag },
-        { id: 'Combo', label: 'Combo Offers', icon: Utensils },
-        { id: 'Discounts', label: 'Flat Discounts', icon: Percent },
-        { id: 'Delivery', label: 'Free Delivery', icon: Truck },
-        { id: 'NewUser', label: 'New User', icon: UserCheck },
-        { id: 'Bank', label: 'Bank Offers', icon: CreditCard }
+        {
+            id: 'All',
+            label: 'All Offers',
+            icon: Tag
+        },
+        {
+            id: 'Combo',
+            label: 'Combo Offers',
+            icon: Utensils
+        },
+        {
+            id: 'Discounts',
+            label: 'Flat Discounts',
+            icon: Percent
+        },
+        {
+            id: 'Delivery',
+            label: 'Free Delivery',
+            icon: Truck
+        },
+        {
+            id: 'NewUser',
+            label: 'New User',
+            icon: UserCheck
+        },
+        {
+            id: 'Bank',
+            label: 'Bank Offers',
+            icon: CreditCard
+        }
     ];
 
     const offerCards = [
@@ -103,11 +112,11 @@ const Offers = () => {
         : offerCards.filter((item) => item.category === selectedCategory);
 
     return (
-        <div className="w-full min-h-screen bg-black text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto space-y-12 animate-fade-in">
-            
+        <div className="w-full min-h-screen bg-black text-white !pt-32 !pb-24 !px-4 sm:!px-6 md:!px-8 max-w-7xl mx-auto space-y-12 animate-fade-in">
+
             {/* 1. HERO BANNER ROW */}
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-                
+
                 {/* Left Header Info */}
                 <div className="flex-1 space-y-4">
                     <div className="flex items-center gap-2 text-[#D89A2B] text-xs font-bold uppercase tracking-widest">
@@ -118,7 +127,7 @@ const Offers = () => {
 
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif leading-tight">
                         <span className="font-light text-white block">Delicious Deals</span>
-                        <span className="font-extrabold text-[#D89A2B] block mt-1">Just for You!</span>
+                        <span className="font-extrabold text-[#D89A2B] block !mt-1">Just for You!</span>
                     </h1>
 
                     <p className="text-gray-400 text-sm leading-relaxed max-w-sm font-light">
@@ -127,14 +136,14 @@ const Offers = () => {
 
                     <button
                         onClick={() => navigate('/menu')}
-                        className="px-6 py-3 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition cursor-pointer shadow-lg shadow-[#D89A2B]/20 flex items-center gap-2 mt-4"
+                        className="!px-6 !py-3 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-sm transition cursor-pointer shadow-lg shadow-[#D89A2B]/20 flex items-center gap-2 !mt-4"
                     >
                         Explore Offers <ArrowRight size={16} />
                     </button>
                 </div>
 
                 {/* Right Hero Promo Card */}
-                <div className="w-full lg:w-3/5 bg-gradient-to-br from-[#18140E] via-[#0E0C09] to-[#0A0907] border border-[#D89A2B]/40 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
+                <div className="w-full lg:w-3/5 bg-gradient-to-br from-[#18140E] via-[#0E0C09] to-[#0A0907] border border-[#D89A2B]/40 rounded-3xl !p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
                     {/* Glowing Backdrop */}
                     <div className="absolute top-0 right-0 w-80 h-80 bg-[#D89A2B]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -147,19 +156,19 @@ const Offers = () => {
                             <h2 className="text-4xl sm:text-5xl font-black font-serif text-[#D89A2B] tracking-tight">
                                 FLAT 30% OFF
                             </h2>
-                            <p className="text-xs sm:text-sm font-bold text-white tracking-wide mt-1">
+                            <p className="text-xs sm:text-sm font-bold text-white tracking-wide !mt-1">
                                 ON ALL ORDERS ABOVE <span className="text-[#D89A2B]">$25</span>
                             </p>
                         </div>
 
                         {/* Coupon Code Pill */}
-                        <div className="pt-2">
-                            <div className="inline-flex items-center gap-3 bg-[#17140D] border border-[#D89A2B]/60 px-4 py-2 rounded-xl text-xs">
+                        <div className="!pt-2">
+                            <div className="inline-flex items-center gap-3 bg-[#17140D] border border-[#D89A2B]/60 !px-4 !py-2 rounded-xl text-xs">
                                 <span className="text-gray-400 font-medium">USE CODE:</span>
                                 <span className="text-[#D89A2B] font-extrabold tracking-wider text-sm">GOLDFORK30</span>
                                 <button
                                     onClick={() => handleCopyCode('GOLDFORK30')}
-                                    className="p-1 text-gray-400 hover:text-white transition cursor-pointer ml-1"
+                                    className="!p-1 text-gray-400 hover:text-white transition cursor-pointer !ml-1"
                                     title="Copy Code"
                                 >
                                     {copiedCode ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
@@ -181,7 +190,7 @@ const Offers = () => {
             </div>
 
             {/* 2. CATEGORY FILTER TABS ROW */}
-            <div className="flex items-center gap-3 overflow-x-auto pb-3 pt-2 scrollbar-none">
+            <div className="!mt-7 flex items-center gap-3 overflow-x-auto !pb-3 !pt-2 scrollbar-none">
                 {filterCategories.map((cat) => {
                     const Icon = cat.icon;
                     const isActive = selectedCategory === cat.id;
@@ -190,11 +199,10 @@ const Offers = () => {
                         <button
                             key={cat.id}
                             onClick={() => setSelectedCategory(cat.id)}
-                            className={`px-5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 whitespace-nowrap transition-all duration-300 cursor-pointer ${
-                                isActive
-                                    ? "bg-[#1C170E] border border-[#D89A2B] text-[#D89A2B] shadow-md shadow-[#D89A2B]/10"
-                                    : "bg-[#121212] border border-[#222222] text-gray-300 hover:text-white hover:border-[#D89A2B]/40"
-                            }`}
+                            className={`!px-5 !py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-2 whitespace-nowrap transition-all duration-300 cursor-pointer ${isActive
+                                ? "bg-[#1C170E] border border-[#D89A2B] text-[#D89A2B] shadow-md shadow-[#D89A2B]/10"
+                                : "bg-[#121212] border border-[#222222] text-gray-300 hover:text-white hover:border-[#D89A2B]/40"
+                                }`}
                         >
                             <Icon size={14} className={isActive ? "text-[#D89A2B]" : "text-gray-400"} />
                             <span>{cat.label}</span>
@@ -206,8 +214,8 @@ const Offers = () => {
             {/* 3. BEST OFFERS FOR YOU GRID */}
             <div className="space-y-6">
                 {/* Header Row */}
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-white flex items-center gap-2">
+                <div className="!mt-5 flex items-center justify-between">
+                    <h2 className="!mb-5 text-xl sm:text-2xl font-serif font-bold text-white flex items-center gap-2">
                         <Sparkles size={18} className="text-[#D89A2B] fill-[#D89A2B]" /> Best Offers for You
                     </h2>
                     <button
@@ -227,7 +235,7 @@ const Offers = () => {
                         >
                             {/* Top Ribbon Badge */}
                             <div className="absolute top-0 left-0 z-10">
-                                <span className="bg-[#D89A2B] text-black font-black text-[10px] uppercase px-3 py-1 rounded-br-xl shadow-md tracking-wider block">
+                                <span className="bg-[#D89A2B] text-black font-black text-[10px] uppercase !px-3 !py-1 rounded-br-xl shadow-md tracking-wider block">
                                     {offer.badge}
                                 </span>
                             </div>
@@ -243,25 +251,25 @@ const Offers = () => {
                             </div>
 
                             {/* Offer Card Body */}
-                            <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
+                            <div className="!p-4 space-y-2 flex-1 flex flex-col justify-between">
                                 <div>
                                     <h3 className="font-bold text-white text-base group-hover:text-[#D89A2B] transition-colors">
                                         {offer.title}
                                     </h3>
-                                    <p className="text-xs text-gray-400 line-clamp-2 mt-1 leading-relaxed font-light">
+                                    <p className="text-xs text-gray-400 line-clamp-2 !mt-1 leading-relaxed font-light">
                                         {offer.desc}
                                     </p>
                                 </div>
 
                                 {/* Card Footer Row */}
-                                <div className="pt-3 border-t border-[#1C1C1C] flex items-center justify-between gap-1 mt-auto">
+                                <div className="!pt-3 border-t border-[#1C1C1C] flex items-center justify-between gap-1 !mt-auto">
                                     <div className="flex items-center gap-1 text-[10px] text-gray-400 font-medium">
                                         <Clock size={12} className="text-[#D89A2B]" />
                                         <span>Valid till {offer.validTill}</span>
                                     </div>
                                     <button
                                         onClick={() => navigate('/menu')}
-                                        className="px-3 py-1.5 rounded-lg bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-[11px] transition cursor-pointer shadow-md"
+                                        className="!px-3 !py-1.5 rounded-lg bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-[11px] transition cursor-pointer shadow-md"
                                     >
                                         Order Now
                                     </button>
@@ -273,7 +281,7 @@ const Offers = () => {
             </div>
 
             {/* 4. UNLOCK MORE SAVINGS NEWSLETTER BANNER */}
-            <div className="bg-[#0F0E0B] border border-[#26221A] rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+            <div className="!mt-5 bg-[#0F0E0B] border border-[#26221A] rounded-2xl !p-6 sm:!p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-[#1A160F] border border-[#D89A2B]/40 text-[#D89A2B] flex items-center justify-center shrink-0 shadow-md">
                         <Gift size={24} />
@@ -282,24 +290,24 @@ const Offers = () => {
                         <h3 className="text-lg font-extrabold text-white font-serif">
                             Unlock More Savings!
                         </h3>
-                        <p className="text-xs text-gray-400 font-light mt-0.5">
+                        <p className="text-xs text-gray-400 font-light !mt-0.5">
                             Subscribe to our newsletter and get exclusive offers straight to your inbox.
                         </p>
                     </div>
                 </div>
 
-                <form onSubmit={handleSubscribe} className="flex items-center gap-2 w-full md:w-auto">
+                <form onSubmit={handleSubscribe} className="flex items-center gap-4 w-full md:w-auto">
                     <input
                         required
                         type="email"
                         placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="bg-[#161616] border border-[#333] rounded-xl px-4 py-3 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition w-full sm:w-64 font-medium"
+                        className="bg-[#161616] border border-[#333] rounded-xl !px-4 !py-3 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition w-full sm:w-64 font-medium"
                     />
                     <button
                         type="submit"
-                        className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-extrabold text-xs hover:scale-105 active:scale-95 transition cursor-pointer shadow-lg shadow-[#D89A2B]/20 whitespace-nowrap flex items-center gap-2"
+                        className="!px-6 !py-3 rounded-xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-extrabold text-xs hover:scale-105 active:scale-95 transition cursor-pointer shadow-lg shadow-[#D89A2B]/20 whitespace-nowrap flex items-center gap-2"
                     >
                         {subscribed ? (
                             <>
