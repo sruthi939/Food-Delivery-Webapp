@@ -8,6 +8,7 @@ import {
     Users,
     FolderKanban,
     Star,
+    MessageSquare,
     Settings,
     LogOut
 } from 'lucide-react';
@@ -19,6 +20,7 @@ const Sidebar = ({ logout }) => {
         { path: '/foods', label: 'Food Menu List', icon: UtensilsCrossed },
         { path: '/orders', label: 'Orders List', icon: ShoppingBag },
         { path: '/users', label: 'User Accounts', icon: Users },
+        { path: '/messages', label: 'Messages', icon: MessageSquare },
         { path: '/categories', label: 'Categories', icon: FolderKanban },
         { path: '/reviews', label: 'Customer Reviews', icon: Star },
         { path: '/settings', label: 'Settings', icon: Settings },

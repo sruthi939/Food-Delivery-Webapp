@@ -9,6 +9,7 @@ import FoodList from '../pages/FoodList';
 import EditFood from '../pages/EditFood';
 import Orders from '../pages/Orders';
 import Users from '../pages/Users';
+import Messages from '../pages/Messages';
 import Categories from '../pages/Categories';
 import Reviews from '../pages/Reviews';
 import Settings from '../pages/Settings';
@@ -73,6 +74,16 @@ const AdminRoutes = () => {
                     <ProtectedRoute>
                         <AdminLayout>
                             <Users />
+                        </AdminLayout>
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/messages"
+                element={
+                    <ProtectedRoute>
+                        <AdminLayout>
+                            <Messages />
                         </AdminLayout>
                     </ProtectedRoute>
                 }

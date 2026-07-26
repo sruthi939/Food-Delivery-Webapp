@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Store,
-    ChefHat,
-    UtensilsCrossed,
-    Smile,
-    Star,
-    Leaf,
-    Heart,
-    Award,
-    Clock,
-    Truck,
-    ChevronRight
-} from 'lucide-react';
+import { Store, ChefHat, UtensilsCrossed, Smile, Star, Leaf, Heart, Award, Clock, Truck, ChevronRight } from 'lucide-react';
 
 const Restuarant = () => {
     const [likedRestaurants, setLikedRestaurants] = useState({});
@@ -24,11 +12,31 @@ const Restuarant = () => {
     };
 
     const stats = [
-        { icon: Store, number: "25+", label: "Restaurants" },
-        { icon: ChefHat, number: "150+", label: "Expert Chefs" },
-        { icon: UtensilsCrossed, number: "500+", label: "Delicious Dishes" },
-        { icon: Smile, number: "50K+", label: "Happy Customers" },
-        { icon: Star, number: "4.8", label: "Average Rating" }
+        {
+            icon: Store,
+            number: "25+",
+            label: "Restaurants"
+        },
+        {
+            icon: ChefHat,
+            number: "150+",
+            label: "Expert Chefs"
+        },
+        {
+            icon: UtensilsCrossed,
+            number: "500+",
+            label: "Delicious Dishes"
+        },
+        {
+            icon: Smile,
+            number: "50K+",
+            label: "Happy Customers"
+        },
+        {
+            icon: Star,
+            number: "4.8",
+            label: "Average Rating"
+        }
     ];
 
     const storyFeatures = [
@@ -108,8 +116,8 @@ const Restuarant = () => {
     ];
 
     return (
-        <div className="w-full min-h-screen bg-black text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto space-y-16 animate-fade-in">
-            
+        <div className="w-full min-h-screen bg-black text-white !pt-32 !pb-24 !px-4 sm:!px-6 md:!px-8 max-w-7xl mx-auto space-y-16 animate-fade-in">
+
             {/* 1. HERO HEADER SECTION */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-10">
                 {/* Left Text */}
@@ -121,9 +129,9 @@ const Restuarant = () => {
                         <span className="font-light text-white block">Exceptional Food,</span>
                         <span className="font-extrabold text-[#D89A2B] block mt-1">Extraordinary Experience</span>
                     </h1>
-                    
+
                     {/* Decorative Line */}
-                    <div className="w-20 h-[2px] bg-gradient-to-r from-[#D89A2B] to-transparent my-4" />
+                    <div className="w-20 h-[2px] bg-gradient-to-r from-[#D89A2B] to-transparent !my-4" />
 
                     <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg font-light">
                         Discover our network of premium restaurants where passion meets flavor. Each dish is crafted with the finest ingredients and a touch of love.
@@ -142,53 +150,48 @@ const Restuarant = () => {
             </div>
 
             {/* 2. STATS BAR CARD */}
-            <div className="bg-[#0D0D0D] border border-[#222222] rounded-3xl p-6 sm:p-8 shadow-2xl">
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 divide-y md:divide-y-0 md:divide-x divide-[#222222]">
-                    {stats.map((stat, idx) => {
-                        const Icon = stat.icon;
-                        return (
-                            <div key={idx} className={`flex flex-col items-center text-center ${idx !== 0 ? 'pt-4 md:pt-0' : ''}`}>
-                                <div className="w-12 h-12 rounded-full border border-[#D89A2B]/40 bg-[#1A1610] text-[#D89A2B] flex items-center justify-center mb-3 shadow-md">
-                                    <Icon size={22} />
-                                </div>
-                                <span className="text-2xl sm:text-3xl font-extrabold text-[#D89A2B] tracking-tight">
-                                    {stat.number}
-                                </span>
-                                <span className="text-xs text-gray-400 font-medium mt-1">
-                                    {stat.label}
-                                </span>
+            <div className="flex items-center justify-center gap-25 overflow-x-auto">
+                {stats.map((stat, idx) => {
+                    const Icon = stat.icon;
+                    return (
+                        <div key={idx} className={`!mt-8 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-1 shadow-lg ${idx !== 0 ? '!pt-4 md:!pt-0' : ''}`}>
+                            <div className="w-12 h-12 rounded-full border border-[#D89A2B]/40 bg-[#1A1610] text-[#D89A2B] flex items-center justify-center !mb-3 shadow-md">
+                                <Icon size={25} />
                             </div>
-                        );
-                    })}
-                </div>
+                            <span className="text-2xl sm:text-3xl font-extrabold text-[#D89A2B] tracking-tight">
+                                {stat.number}
+                            </span>
+                            <span className="text-xs text-gray-400 font-medium !mt-1">
+                                {stat.label}
+                            </span>
+                        </div>
+                    );
+                })}
             </div>
 
             {/* 3. OUR STORY SECTION */}
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-10">
-                {/* Left Story Text */}
-                <div className="lg:w-1/3 space-y-3">
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#D89A2B] block">
-                        OUR STORY
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold leading-snug">
-                        Crafting Moments, <br />
-                        <span className="text-[#D89A2B]">Creating Memories</span>
-                    </h2>
-                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed font-light pt-2">
-                        At GoldFork, we believe food is more than just a meal—it's an experience to be shared. Our restaurants bring together the finest flavors, warm hospitality, and a cozy ambiance to make every moment special.
-                    </p>
-                </div>
+            <div className="w-4/5 mx-auto !pt-20 !pb-18 flex flex-col items-center animate-fade-in-up delay-100">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center animate-fade-in-up">
+                    OUR{" "}
+                    <span className="text-[#D89A2B]">STORY</span>
+                </h1>
+                <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold leading-snug !mt-3">
+                    Crafting Moments Creating Memories
+                </h2>
+                <p className="text-center text-gray-400 text-base md:text-xl leading-8 max-w-2xl !mt-7 animate-fade-in-up delay-100 line-clamp-4">
+                    At GoldFork, we believe food is more than just a meal—it's an experience to be shared. Our restaurants bring together the finest flavors, warm hospitality, and a cozy ambiance to make every moment special.
+                </p>
 
                 {/* Right Feature Cards (4 Cards Grid) */}
-                <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+                <div className="!mt-5 lg:w-4/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
                     {storyFeatures.map((feat, idx) => {
                         const Icon = feat.icon;
                         return (
                             <div
                                 key={idx}
-                                className="bg-[#0D0D0D] border border-[#222222] hover:border-[#D89A2B]/40 rounded-2xl p-5 text-center flex flex-col items-center justify-between gap-3 transition-all duration-300 hover:-translate-y-1 shadow-lg"
+                                className="bg-[#0D0D0D] border border-[#222222] hover:border-[#D89A2B]/40 rounded-2xl !p-5 text-center flex flex-col items-center justify-between gap-3 transition-all duration-300 hover:-translate-y-1 shadow-lg"
                             >
-                                <div className="text-[#D89A2B] p-2 rounded-xl bg-[#1A1610] border border-[#D89A2B]/20">
+                                <div className="text-[#D89A2B] !p-2 rounded-xl bg-[#1A1610] border border-[#D89A2B]/20">
                                     <Icon size={24} />
                                 </div>
                                 <h4 className="font-bold text-white text-sm">
@@ -206,12 +209,14 @@ const Restuarant = () => {
             {/* 4. TOP RESTAURANTS GRID SECTION */}
             <div className="space-y-6">
                 {/* Header Row */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between !mb-5">
                     <h2 className="text-2xl sm:text-3xl font-bold text-white font-serif">
                         Top Restaurants
                     </h2>
                     <button className="text-xs font-bold text-[#D89A2B] hover:underline flex items-center gap-1 cursor-pointer transition">
-                        View All Restaurants <ChevronRight size={14} />
+                        View All Restaurants
+                        <ChevronRight size={14}
+                        />
                     </button>
                 </div>
 
@@ -232,9 +237,9 @@ const Restuarant = () => {
                                         alt={resto.name}
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
-                                    
+
                                     {/* Category Pill Badge */}
-                                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white text-[10px] font-semibold">
+                                    <span className="absolute top-3 left-3 !px-2.5 !py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white text-[10px] font-semibold">
                                         {resto.category}
                                     </span>
 
@@ -245,13 +250,13 @@ const Restuarant = () => {
                                     >
                                         <Heart
                                             size={15}
-                                            className={isLiked ? "fill-red-500 text-red-500" : "text-white/80 hover:text-white"}
+                                            className={isLiked ? "fill-red-500 text-[#D89A2B]" : "text-[#D89A2B] hover:text-white"}
                                         />
                                     </button>
                                 </div>
 
                                 {/* Card Body */}
-                                <div className="p-4 space-y-2 flex-1 flex flex-col justify-between">
+                                <div className="!p-4 space-y-2 flex-1 flex flex-col justify-between">
                                     <div>
                                         <div className="flex items-center justify-between gap-1">
                                             <h3 className="font-bold text-white text-base line-clamp-1 group-hover:text-[#D89A2B] transition-colors">
@@ -263,13 +268,13 @@ const Restuarant = () => {
                                             </div>
                                         </div>
 
-                                        <p className="text-xs text-gray-400 line-clamp-1 mt-1 font-light">
+                                        <p className="text-xs text-gray-400 line-clamp-1 !mt-1 font-light">
                                             {resto.cuisine}
                                         </p>
                                     </div>
 
                                     {/* Card Footer Info */}
-                                    <div className="pt-3 border-t border-[#1C1C1C] flex items-center justify-between text-[11px] text-gray-400 font-medium">
+                                    <div className="!pt-3 border-t border-[#1C1C1C] flex items-center justify-between text-[11px] text-gray-400 font-medium">
                                         <div className="flex items-center gap-1">
                                             <Clock size={12} className="text-[#D89A2B]" />
                                             <span>{resto.time}</span>

@@ -57,6 +57,7 @@ import addressRoutes from './routes/addressRoutes.js'
 import notificationRoutes from './routes/notificationRoutes.js'
 import dashboardRoutes from './routes/dashboardRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import contactRoutes from './routes/contactRoutes.js'
 
 // Mount Project API Routes
 app.use('/api/auth', authRoutes)
@@ -80,6 +81,7 @@ app.use('/api/notification', notificationRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/analytics', dashboardRoutes)
 app.use('/api/upload', uploadRoutes)
+app.use('/api/contact', contactRoutes)
 
 // 404 Route Handler
 app.use('*', (req, res) => {
