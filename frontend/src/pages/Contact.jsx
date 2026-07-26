@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
-import {
-    MapPin,
-    Phone,
-    Mail,
-    Clock,
-    Send,
-    CheckCircle2,
-    ChefHat,
-    UtensilsCrossed,
-    Smile,
-    Award,
-    Utensils
-} from 'lucide-react';
+import React, { useState, useContext } from 'react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, ChefHat, UtensilsCrossed, Smile, Award, Utensils, MessageSquare, Loader2 } from 'lucide-react';
+import { StoreContext } from '../context/StoreContext';
+import { toast } from 'react-toastify';
 
 const Contact = () => {
+    const { url } = useContext(StoreContext);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         subject: '',
         message: ''
     });
+
+    const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (e) => {
@@ -27,13 +22,64 @@ const Contact = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const validateForm = () => {
+        if (!formData.name.trim()) {
+            toast.error('Please enter your name');
+            return false;
+        }
+        if (!formData.email.trim()) {
+            toast.error('Please enter your email');
+            return false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            toast.error('Please enter a valid email address');
+            return false;
+        }
+        if (!formData.subject.trim()) {
+            toast.error('Please enter a subject');
+            return false;
+        }
+        if (!formData.message.trim()) {
+            toast.error('Please enter your message');
+            return false;
+        }
+        if (formData.message.length < 10) {
+            toast.error('Message must be at least 10 characters');
+            return false;
+        }
+        return true;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitted(true);
-        setTimeout(() => {
-            setSubmitted(false);
-            setFormData({ name: '', email: '', subject: '', message: '' });
-        }, 3500);
+
+        if (!validateForm()) return;
+
+        setLoading(true);
+        try {
+            const apiUrl = url || 'http://localhost:4000';
+            const response = await fetch(`${apiUrl}/api/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                setSubmitted(true);
+                setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+                toast.success(data.message || 'Message saved to database successfully!');
+                setTimeout(() => setSubmitted(false), 4000);
+            } else {
+                toast.error(data.message || 'Failed to submit message to server.');
+            }
+        } catch (error) {
+            console.error('Contact database submit error:', error);
+            toast.error('Server connection error. Please ensure the backend server is running.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const contactDetails = [
@@ -117,8 +163,8 @@ const Contact = () => {
                 <div className="lg:col-span-4 bg-[#0D0D0D] border border-[#222222] rounded-3xl p-6 shadow-2xl flex flex-col justify-between relative overflow-hidden">
                     <div>
                         <div className="text-center mb-6">
-                            <h3 className="text-base font-extrabold text-[#D89A2B] font-serif tracking-wide">
-                                Send Us a Message
+                            <h3 className="text-base font-extrabold text-[#D89A2B] font-serif tracking-wide flex items-center justify-center gap-2">
+                                <MessageSquare size={18} /> Send Us a Message
                             </h3>
                             <div className="w-12 h-[1px] bg-[#D89A2B]/40 mx-auto mt-2" />
                         </div>
@@ -130,7 +176,7 @@ const Contact = () => {
                                 </div>
                                 <h4 className="text-white font-bold text-base">Message Sent!</h4>
                                 <p className="text-gray-400 text-xs max-w-xs">
-                                    Thank you for reaching out. Our team will get back to you shortly.
+                                    Thank you for reaching out. Your inquiry has been saved to our database.
                                 </p>
                             </div>
                         ) : (
@@ -140,7 +186,7 @@ const Contact = () => {
                                         required
                                         type="text"
                                         name="name"
-                                        placeholder="Your Name"
+                                        placeholder="Your Name *"
                                         value={formData.name}
                                         onChange={handleChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition font-medium"
@@ -151,8 +197,18 @@ const Contact = () => {
                                         required
                                         type="email"
                                         name="email"
-                                        placeholder="Your Email"
+                                        placeholder="Your Email *"
                                         value={formData.email}
+                                        onChange={handleChange}
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition font-medium"
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        placeholder="Phone Number"
+                                        value={formData.phone}
                                         onChange={handleChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition font-medium"
                                     />
@@ -162,10 +218,10 @@ const Contact = () => {
                                         required
                                         type="text"
                                         name="subject"
-                                        placeholder="Subject"
+                                        placeholder="Subject *"
                                         value={formData.subject}
                                         onChange={handleChange}
-                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#D89A2B] transition font-medium"
+                                        className="w-full bg-[#161616] border border-[#262626] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition font-medium"
                                     />
                                 </div>
                                 <div>
@@ -173,7 +229,7 @@ const Contact = () => {
                                         required
                                         rows={3}
                                         name="message"
-                                        placeholder="Your Message"
+                                        placeholder="Your Message *"
                                         value={formData.message}
                                         onChange={handleChange}
                                         className="w-full bg-[#161616] border border-[#262626] rounded-xl px-4 py-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D89A2B] transition font-medium resize-none"
@@ -182,9 +238,14 @@ const Contact = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-extrabold text-xs transition-all duration-300 cursor-pointer shadow-lg shadow-[#D89A2B]/20 flex items-center justify-center gap-2 mt-4 hover:scale-[1.02] active:scale-95"
+                                    disabled={loading}
+                                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D89A2B] to-[#B8791D] text-black font-extrabold text-xs transition-all duration-300 cursor-pointer shadow-lg shadow-[#D89A2B]/20 flex items-center justify-center gap-2 mt-4 hover:scale-[1.02] active:scale-95 disabled:opacity-50"
                                 >
-                                    Send Message <Send size={14} />
+                                    {loading ? (
+                                        <Loader2 size={16} className="animate-spin text-black" />
+                                    ) : (
+                                        <>Send Message <Send size={14} /></>
+                                    )}
                                 </button>
                             </form>
                         )}
