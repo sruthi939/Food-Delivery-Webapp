@@ -61,54 +61,62 @@ const Orders = () => {
                 <Loader />
             ) : (
                 <Table headers={['Order ID', 'Customer & Address', 'Items Ordered', 'Total', 'Order Date', 'Update Status']}>
-                    {filteredOrders.map((order) => {
-                        const address = order.address || {};
-                        const customerName = `${address.firstName || 'Guest'} ${address.lastName || ''}`;
-                        const fullAddress = `${address.street || ''}, ${address.city || ''}, ${address.state || ''} ${address.zipcode || ''}`;
+                    {filteredOrders.length === 0 ? (
+                        <tr>
+                            <td colSpan={6} className="px-6 py-8 text-center text-gray-500 font-light">
+                                No customer orders recorded in database yet.
+                            </td>
+                        </tr>
+                    ) : (
+                        filteredOrders.map((order) => {
+                            const address = order.address || {};
+                            const customerName = `${address.firstName || 'Guest'} ${address.lastName || ''}`;
+                            const fullAddress = `${address.street || ''}, ${address.city || ''}, ${address.state || ''} ${address.zipcode || ''}`;
 
-                        return (
-                            <tr key={order._id} className="hover:bg-[#141414] transition">
-                                <td className="px-6 py-4 font-mono text-[#D89A2B] font-bold">
-                                    #{order._id?.substring(0, 8)}
-                                </td>
-                                <td className="px-6 py-4 space-y-1">
-                                    <h4 className="font-bold text-white text-xs">{customerName}</h4>
-                                    <p className="text-[11px] text-gray-400 font-light line-clamp-1">{fullAddress}</p>
-                                    <p className="text-[10px] text-gray-500">{address.phone || 'No phone'}</p>
-                                </td>
-                                <td className="px-6 py-4 max-w-xs">
-                                    <div className="flex items-center gap-2">
-                                        <Package size={14} className="text-[#D89A2B] shrink-0" />
-                                        <span className="text-xs text-gray-300 font-medium line-clamp-2">
-                                            {order.items?.map(i => `${i.name} (x${i.quantity})`).join(', ') || 'Food items'}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 font-extrabold text-[#D89A2B]">
-                                    {formatPrice(order.amount)}
-                                </td>
-                                <td className="px-6 py-4 text-gray-400 text-[11px]">
-                                    <div className="flex items-center gap-1">
-                                        <Clock size={12} className="text-[#D89A2B]" />
-                                        <span>{formatDateTime(order.date)}</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <select
-                                        disabled={updatingId === order._id}
-                                        value={order.status}
-                                        onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                                        className="bg-[#161616] border border-[#2B2B2B] focus:border-[#D89A2B] text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none transition cursor-pointer"
-                                    >
-                                        <option value="Food Processing">Food Processing</option>
-                                        <option value="Out for Delivery">Out for Delivery</option>
-                                        <option value="Delivered">Delivered</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        );
-                    })}
+                            return (
+                                <tr key={order._id} className="hover:bg-[#141414] transition">
+                                    <td className="px-6 py-4 font-mono text-[#D89A2B] font-bold">
+                                        #{order._id?.substring(0, 8)}
+                                    </td>
+                                    <td className="px-6 py-4 space-y-1">
+                                        <h4 className="font-bold text-white text-xs">{customerName}</h4>
+                                        <p className="text-[11px] text-gray-400 font-light line-clamp-1">{fullAddress}</p>
+                                        <p className="text-[10px] text-gray-500">{address.phone || 'No phone'}</p>
+                                    </td>
+                                    <td className="px-6 py-4 max-w-xs">
+                                        <div className="flex items-center gap-2">
+                                            <Package size={14} className="text-[#D89A2B] shrink-0" />
+                                            <span className="text-xs text-gray-300 font-medium line-clamp-2">
+                                                {order.items?.map(i => `${i.name} (x${i.quantity})`).join(', ') || 'Food items'}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 font-extrabold text-[#D89A2B]">
+                                        {formatPrice(order.amount)}
+                                    </td>
+                                    <td className="px-6 py-4 text-gray-400 text-[11px]">
+                                        <div className="flex items-center gap-1">
+                                            <Clock size={12} className="text-[#D89A2B]" />
+                                            <span>{formatDateTime(order.date)}</span>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <select
+                                            disabled={updatingId === order._id}
+                                            value={order.status}
+                                            onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                                            className="bg-[#161616] border border-[#2B2B2B] focus:border-[#D89A2B] text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none transition cursor-pointer"
+                                        >
+                                            <option value="Food Processing">Food Processing</option>
+                                            <option value="Out for Delivery">Out for Delivery</option>
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            );
+                        })
+                    )}
                 </Table>
             )}
         </div>

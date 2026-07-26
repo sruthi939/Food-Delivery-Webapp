@@ -1,36 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Table from '../components/Table';
 import Loader from '../components/Loader';
 import SearchBar from '../components/SearchBar';
 import { Mail, User, Clock, Phone, MessageSquare } from 'lucide-react';
-import axios from 'axios';
 import { AdminContext } from '../context/AdminContext';
 import { formatDateTime } from '../utils/dateFormatter';
 
 const Messages = () => {
-    const { url } = useContext(AdminContext);
-    const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { messagesList, loading } = useContext(AdminContext);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const response = await axios.get(`${url}/api/contact/list`);
-                if (response.data.success) {
-                    setMessages(response.data.data);
-                }
-            } catch (error) {
-                console.error('Error fetching contact messages:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchMessages();
-    }, [url]);
-
-    const filteredMessages = messages.filter((msg) =>
+    const filteredMessages = (messagesList || []).filter((msg) =>
         msg.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         msg.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         msg.subject?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -56,9 +36,7 @@ const Messages = () => {
                 />
             </div>
 
-            {loading ? (
-                <Loader />
-            ) : filteredMessages.length === 0 ? (
+            {filteredMessages.length === 0 ? (
                 <div className="bg-[#0D0D0D] border border-[#222222] rounded-3xl p-12 text-center space-y-2">
                     <MessageSquare size={32} className="text-[#D89A2B] mx-auto mb-2 opacity-50" />
                     <p className="text-sm font-semibold text-white">No contact messages received yet.</p>
@@ -67,7 +45,7 @@ const Messages = () => {
             ) : (
                 <Table headers={['Customer Name', 'Email & Phone', 'Subject', 'Message Body', 'Submitted Date']}>
                     {filteredMessages.map((msg) => (
-                        <tr key={msg._id} className="hover:bg-[#141414] transition">
+                        <tr key={msg._id || Math.random()} className="hover:bg-[#141414] transition">
                             <td className="px-6 py-4 flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full bg-[#1A1610] border border-[#D89A2B]/40 text-[#D89A2B] flex items-center justify-center font-bold">
                                     <User size={14} />

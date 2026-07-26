@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { listFood } from '../services/foodService';
 import { listOrders } from '../services/orderService';
 import { listUsers } from '../services/userService';
+import axios from 'axios';
 
 export const AdminContext = createContext();
 
@@ -11,6 +12,7 @@ export const AdminContextProvider = ({ children }) => {
     const [foodList, setFoodList] = useState([]);
     const [orders, setOrders] = useState([]);
     const [usersList, setUsersList] = useState([]);
+    const [messagesList, setMessagesList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const logout = () => {
@@ -20,20 +22,16 @@ export const AdminContextProvider = ({ children }) => {
 
     const fetchFoodList = async () => {
         try {
-            setLoading(true);
             const res = await listFood();
             if (res.success) {
                 setFoodList(res.data);
             }
         } catch (error) {
             console.error('Error fetching food list:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
     const fetchOrdersList = async () => {
-        if (!token) return;
         try {
             const res = await listOrders(token);
             if (res.success) {
@@ -45,7 +43,6 @@ export const AdminContextProvider = ({ children }) => {
     };
 
     const fetchUsersList = async () => {
-        if (!token) return;
         try {
             const res = await listUsers(token);
             if (res.success) {
@@ -56,15 +53,42 @@ export const AdminContextProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        if (token) {
-            localStorage.setItem('adminToken', token);
-            fetchOrdersList();
-            fetchUsersList();
-        } else {
-            localStorage.removeItem('adminToken');
+    const fetchMessagesList = async () => {
+        try {
+            const res = await axios.get(`${url}/api/contact/list`);
+            if (res.data.success) {
+                setMessagesList(res.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching messages:', error);
         }
-        fetchFoodList();
+    };
+
+    // Initial fetch and continuous live sync polling (every 4 seconds)
+    useEffect(() => {
+        let isMounted = true;
+
+        const refreshAllData = async () => {
+            if (!isMounted) return;
+            await Promise.all([
+                fetchFoodList(),
+                token ? fetchOrdersList() : null,
+                token ? fetchUsersList() : null,
+                fetchMessagesList()
+            ]);
+        };
+
+        refreshAllData();
+
+        // Auto polling timer to sync live activity from Frontend to Admin
+        const intervalId = setInterval(() => {
+            refreshAllData();
+        }, 4000);
+
+        return () => {
+            isMounted = false;
+            clearInterval(intervalId);
+        };
     }, [token]);
 
     const contextValue = {
@@ -78,6 +102,8 @@ export const AdminContextProvider = ({ children }) => {
         fetchOrdersList,
         usersList,
         fetchUsersList,
+        messagesList,
+        fetchMessagesList,
         loading
     };
 

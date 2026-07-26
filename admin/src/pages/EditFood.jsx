@@ -2,15 +2,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AdminContext } from '../context/AdminContext';
 import { updateFood } from '../services/foodService';
-import { Save, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
+import { getImageUrl } from '../utils/imageHelper';
+import { assets } from '../assets/assets';
+import { Save, ArrowLeft, Loader2, CheckCircle2, Upload } from 'lucide-react';
 
 const EditFood = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { foodList, token, fetchFoodList } = useContext(AdminContext);
+    const { foodList, token, fetchFoodList, url } = useContext(AdminContext);
 
     const targetFood = foodList.find(f => f._id === id);
 
+    const [image, setImage] = useState(false);
     const [data, setData] = useState({
         name: '',
         description: '',
@@ -50,6 +53,9 @@ const EditFood = () => {
         formData.append('price', Number(data.price));
         formData.append('category', data.category);
         formData.append('isVeg', data.isVeg);
+        if (image) {
+            formData.append('image', image);
+        }
 
         try {
             const res = await updateFood(id, formData, token);
@@ -66,6 +72,10 @@ const EditFood = () => {
             setLoading(false);
         }
     };
+
+    const currentImageSrc = image
+        ? URL.createObjectURL(image)
+        : getImageUrl(targetFood?.image, url);
 
     return (
         <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
@@ -102,6 +112,35 @@ const EditFood = () => {
             {/* Form */}
             <form onSubmit={onSubmitHandler} className="bg-[#0D0D0D] border border-[#222222] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
                 
+                {/* Upload Image Field */}
+                <div>
+                    <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+                        Dish Image Preview (Click to update)
+                    </label>
+                    <label htmlFor="image" className="w-full h-44 border-2 border-dashed border-[#333] hover:border-[#D89A2B] rounded-2xl flex flex-col items-center justify-center cursor-pointer overflow-hidden relative group transition bg-[#121212]">
+                        <img
+                            src={currentImageSrc}
+                            alt="Dish Preview"
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = assets.food_1;
+                            }}
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition">
+                            <Upload size={24} className="text-[#D89A2B] mb-1" />
+                            <span className="text-xs font-bold">Change Image</span>
+                        </div>
+                    </label>
+                    <input
+                        onChange={(e) => setImage(e.target.files[0])}
+                        type="file"
+                        id="image"
+                        hidden
+                        accept="image/*"
+                    />
+                </div>
+
                 {/* Name */}
                 <div>
                     <label className="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
