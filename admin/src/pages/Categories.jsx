@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Table from '../components/Table';
 import Loader from '../components/Loader';
-import { Plus, CheckCircle2 } from 'lucide-react';
+import { Plus, CheckCircle2, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import { AdminContext } from '../context/AdminContext';
 
@@ -14,9 +14,8 @@ const Categories = () => {
 
     const fetchCategories = async () => {
         try {
-            setLoading(true);
             const response = await axios.get(`${url}/api/category/list`);
-            if (response.data.success) {
+            if (response.data && response.data.data) {
                 setCategories(response.data.data);
             }
         } catch (error) {
@@ -28,13 +27,13 @@ const Categories = () => {
 
     useEffect(() => {
         fetchCategories();
-    }, []);
+    }, [url]);
 
     const handleAddCategory = async (e) => {
         e.preventDefault();
         if (newCatName.trim()) {
             try {
-                const response = await axios.post(`${url}/api/category/add`, { name: newCatName.trim() });
+                const response = await axios.post(`${url}/api/category/add`, { name: newCatName.trim(), icon: '🍽️' });
                 if (response.data.success) {
                     setFeedback('New category created in database!');
                     setNewCatName('');
@@ -42,14 +41,28 @@ const Categories = () => {
                     setTimeout(() => setFeedback(''), 3000);
                 }
             } catch (error) {
-                alert('Failed to add category to backend database');
+                alert('Failed to add category');
             }
         }
     };
 
-    // Calculate real item count for each category from live foodList
+    const handleRemoveCategory = async (id) => {
+        if (window.confirm('Delete this category from database?')) {
+            try {
+                const response = await axios.post(`${url}/api/category/remove`, { id });
+                if (response.data.success) {
+                    setFeedback('Category removed from database');
+                    fetchCategories();
+                    setTimeout(() => setFeedback(''), 3000);
+                }
+            } catch (error) {
+                alert('Failed to remove category');
+            }
+        }
+    };
+
     const getItemCount = (categoryName) => {
-        return foodList.filter(f => f.category?.toLowerCase() === categoryName?.toLowerCase()).length;
+        return (foodList || []).filter(f => f.category?.toLowerCase() === categoryName?.toLowerCase()).length;
     };
 
     return (
@@ -94,25 +107,44 @@ const Categories = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <Table headers={['Icon', 'Category Name', 'Live Dishes Count', 'Status']}>
-                    {categories.map((cat, idx) => (
-                        <tr key={cat._id || idx} className="hover:bg-[#141414] transition">
-                            <td className="px-6 py-4 text-xl">
-                                {cat.icon || '🍽️'}
-                            </td>
-                            <td className="px-6 py-4 font-bold text-white text-xs">
-                                {cat.name || cat.menu_name}
-                            </td>
-                            <td className="px-6 py-4 text-gray-300 font-bold text-xs">
-                                {getItemCount(cat.name || cat.menu_name)} Dishes
-                            </td>
-                            <td className="px-6 py-4">
-                                <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                                    Active
-                                </span>
+                <Table headers={['Icon', 'Category Name', 'Live Dishes Count', 'Status', 'Actions']}>
+                    {categories.length === 0 ? (
+                        <tr>
+                            <td colSpan={5} className="px-6 py-8 text-center text-gray-500 font-light">
+                                No menu categories found in database.
                             </td>
                         </tr>
-                    ))}
+                    ) : (
+                        categories.map((cat, idx) => (
+                            <tr key={cat._id || idx} className="hover:bg-[#141414] transition">
+                                <td className="px-6 py-4 text-xl">
+                                    {cat.icon || '🍽️'}
+                                </td>
+                                <td className="px-6 py-4 font-bold text-white text-xs">
+                                    {cat.name || cat.menu_name}
+                                </td>
+                                <td className="px-6 py-4 text-gray-300 font-bold text-xs">
+                                    {getItemCount(cat.name || cat.menu_name)} Dishes
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                                        Active
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    {cat._id && (
+                                        <button
+                                            onClick={() => handleRemoveCategory(cat._id)}
+                                            className="p-2 rounded-lg bg-[#1C1C1C] text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                                            title="Remove Category"
+                                        >
+                                            <Trash2 size={14} />
+                                        </button>
+                                    )}
+                                </td>
+                            </tr>
+                        ))
+                    )}
                 </Table>
             )}
         </div>

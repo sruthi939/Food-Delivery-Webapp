@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AdminContext } from '../context/AdminContext';
-import { listUsers } from '../services/userService';
 import Table from '../components/Table';
 import SearchBar from '../components/SearchBar';
 import Loader from '../components/Loader';
@@ -8,32 +7,13 @@ import { User, Shield } from 'lucide-react';
 import { formatDate } from '../utils/dateFormatter';
 
 const Users = () => {
-    const { token } = useContext(AdminContext);
-    const [usersList, setUsersList] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { usersList, loading } = useContext(AdminContext);
     const [searchQuery, setSearchQuery] = useState('');
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const res = await listUsers(token);
-                if (res.success) {
-                    setUsersList(res.data);
-                }
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (token) fetchUsers();
-        else setLoading(false);
-    }, [token]);
 
     const filteredUsers = usersList.filter(u =>
         u.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        u.email?.toLowerCase().includes(searchQuery.toLowerCase())
+        u.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        u.role?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -52,7 +32,7 @@ const Users = () => {
                 <SearchBar
                     value={searchQuery}
                     onChange={setSearchQuery}
-                    placeholder="Search by user name, email..."
+                    placeholder="Search by user name, email, role..."
                 />
             </div>
 
@@ -61,31 +41,39 @@ const Users = () => {
                 <Loader />
             ) : (
                 <Table headers={['User', 'Email', 'Role', 'Registered Date']}>
-                    {filteredUsers.map((user) => (
-                        <tr key={user._id} className="hover:bg-[#141414] transition">
-                            <td className="px-6 py-4 flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-full bg-[#1A1610] border border-[#D89A2B]/40 text-[#D89A2B] flex items-center justify-center font-bold">
-                                    <User size={16} />
-                                </div>
-                                <span className="font-bold text-white text-xs">{user.name || 'User'}</span>
-                            </td>
-                            <td className="px-6 py-4 text-gray-300 text-xs">
-                                {user.email}
-                            </td>
-                            <td className="px-6 py-4">
-                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${
-                                    user.role === 'admin'
-                                        ? 'bg-[#D89A2B]/10 text-[#D89A2B] border border-[#D89A2B]/30'
-                                        : 'bg-gray-800 text-gray-300 border border-gray-700'
-                                }`}>
-                                    {user.role || 'Customer'}
-                                </span>
-                            </td>
-                            <td className="px-6 py-4 text-gray-400 text-xs">
-                                {formatDate(user.createdAt)}
+                    {filteredUsers.length === 0 ? (
+                        <tr>
+                            <td colSpan={4} className="px-6 py-8 text-center text-gray-500 font-light">
+                                No registered user accounts found in database.
                             </td>
                         </tr>
-                    ))}
+                    ) : (
+                        filteredUsers.map((user) => (
+                            <tr key={user._id || user.id} className="hover:bg-[#141414] transition">
+                                <td className="px-6 py-4 flex items-center gap-3">
+                                    <div className="w-9 h-9 rounded-full bg-[#1A1610] border border-[#D89A2B]/40 text-[#D89A2B] flex items-center justify-center font-bold">
+                                        <User size={16} />
+                                    </div>
+                                    <span className="font-bold text-white text-xs">{user.name || 'User'}</span>
+                                </td>
+                                <td className="px-6 py-4 text-gray-300 text-xs">
+                                    {user.email}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${
+                                        user.role === 'admin'
+                                            ? 'bg-[#D89A2B]/10 text-[#D89A2B] border border-[#D89A2B]/30'
+                                            : 'bg-gray-800 text-gray-300 border border-gray-700'
+                                    }`}>
+                                        {user.role || 'Customer'}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 text-gray-400 text-xs">
+                                    {formatDate(user.createdAt)}
+                                </td>
+                            </tr>
+                        ))
+                    )}
                 </Table>
             )}
         </div>

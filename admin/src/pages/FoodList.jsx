@@ -6,6 +6,8 @@ import SearchBar from '../components/SearchBar';
 import Loader from '../components/Loader';
 import { Trash2, Edit, Plus, CheckCircle2 } from 'lucide-react';
 import { formatPrice } from '../utils/formatPrice';
+import { getImageUrl } from '../utils/imageHelper';
+import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
 
 const FoodList = () => {
@@ -75,60 +77,70 @@ const FoodList = () => {
                 <Loader />
             ) : (
                 <Table headers={['Image', 'Name', 'Category', 'Price', 'Type', 'Actions']}>
-                    {filteredFood.map((item) => {
-                        const isVeg = item.isVeg !== undefined ? item.isVeg : true;
-                        const imageUrl = item.image?.startsWith('http')
-                            ? item.image
-                            : `${url}/images/${item.image}`;
+                    {filteredFood.length === 0 ? (
+                        <tr>
+                            <td colSpan={6} className="px-6 py-8 text-center text-gray-500 font-light">
+                                No food items found in catalog.
+                            </td>
+                        </tr>
+                    ) : (
+                        filteredFood.map((item) => {
+                            const isVeg = item.isVeg !== undefined ? item.isVeg : true;
+                            const imageSrc = getImageUrl(item.image, url);
 
-                        return (
-                            <tr key={item._id} className="hover:bg-[#141414] transition">
-                                <td className="px-6 py-3">
-                                    <img
-                                        src={imageUrl}
-                                        alt={item.name}
-                                        className="w-12 h-12 rounded-xl object-cover border border-[#222222]"
-                                    />
-                                </td>
-                                <td className="px-6 py-4 font-bold text-white">
-                                    {item.name}
-                                </td>
-                                <td className="px-6 py-4 text-gray-400">
-                                    {item.category}
-                                </td>
-                                <td className="px-6 py-4 font-bold text-[#D89A2B]">
-                                    {formatPrice(item.price)}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${
-                                        isVeg
-                                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                                            : 'bg-red-500/10 text-red-400 border border-red-500/30'
-                                    }`}>
-                                        {isVeg ? 'Veg' : 'Non-Veg'}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-2">
-                                        <button
-                                            onClick={() => navigate(`/edit/${item._id}`)}
-                                            className="p-2 rounded-lg bg-[#1C1C1C] text-gray-300 hover:text-[#D89A2B] hover:bg-[#252525] transition cursor-pointer"
-                                            title="Edit Item"
-                                        >
-                                            <Edit size={14} />
-                                        </button>
-                                        <button
-                                            onClick={() => handleRemoveFood(item._id)}
-                                            className="p-2 rounded-lg bg-[#1C1C1C] text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
-                                            title="Delete Item"
-                                        >
-                                            <Trash2 size={14} />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        );
-                    })}
+                            return (
+                                <tr key={item._id} className="hover:bg-[#141414] transition">
+                                    <td className="px-6 py-3">
+                                        <img
+                                            src={imageSrc}
+                                            alt={item.name}
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = assets.food_1;
+                                            }}
+                                            className="w-12 h-12 rounded-xl object-cover border border-[#222222] bg-[#1A1A1A]"
+                                        />
+                                    </td>
+                                    <td className="px-6 py-4 font-bold text-white">
+                                        {item.name}
+                                    </td>
+                                    <td className="px-6 py-4 text-gray-400">
+                                        {item.category}
+                                    </td>
+                                    <td className="px-6 py-4 font-bold text-[#D89A2B]">
+                                        {formatPrice(item.price)}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase ${
+                                            isVeg
+                                                ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                                                : 'bg-red-500/10 text-red-400 border border-red-500/30'
+                                        }`}>
+                                            {isVeg ? 'Veg' : 'Non-Veg'}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => navigate(`/edit/${item._id}`)}
+                                                className="p-2 rounded-lg bg-[#1C1C1C] text-gray-300 hover:text-[#D89A2B] hover:bg-[#252525] transition cursor-pointer"
+                                                title="Edit Item"
+                                            >
+                                                <Edit size={14} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleRemoveFood(item._id)}
+                                                className="p-2 rounded-lg bg-[#1C1C1C] text-gray-300 hover:text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                                                title="Delete Item"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })
+                    )}
                 </Table>
             )}
         </div>
