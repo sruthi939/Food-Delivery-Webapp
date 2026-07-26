@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { listFood } from '../services/foodService';
 import { listOrders } from '../services/orderService';
+import { listUsers } from '../services/userService';
 
 export const AdminContext = createContext();
 
@@ -9,6 +10,7 @@ export const AdminContextProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('adminToken') || '');
     const [foodList, setFoodList] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [usersList, setUsersList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const logout = () => {
@@ -42,10 +44,23 @@ export const AdminContextProvider = ({ children }) => {
         }
     };
 
+    const fetchUsersList = async () => {
+        if (!token) return;
+        try {
+            const res = await listUsers(token);
+            if (res.success) {
+                setUsersList(res.data);
+            }
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
     useEffect(() => {
         if (token) {
             localStorage.setItem('adminToken', token);
             fetchOrdersList();
+            fetchUsersList();
         } else {
             localStorage.removeItem('adminToken');
         }
@@ -61,6 +76,8 @@ export const AdminContextProvider = ({ children }) => {
         fetchFoodList,
         orders,
         fetchOrdersList,
+        usersList,
+        fetchUsersList,
         loading
     };
 

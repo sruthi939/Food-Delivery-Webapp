@@ -4,14 +4,38 @@ import { assets } from '../assets/assets';
 import { Plus, Minus, Heart, ChevronDown, Sparkles, Pizza, Sandwich, Soup, IceCreamCone, CupSoda, Salad, Popcorn } from 'lucide-react';
 
 export const menuCategories = [
-    { menu_name: "All", icon: Sparkles },
-    { menu_name: "Pizza", icon: Pizza },
-    { menu_name: "Burger", icon: Sandwich },
-    { menu_name: "Pasta", icon: Soup },
-    { menu_name: "Dessert", icon: IceCreamCone },
-    { menu_name: "Drinks", icon: CupSoda },
-    { menu_name: "Salad", icon: Salad },
-    { menu_name: "Sides", icon: Popcorn },
+    {
+        menu_name: "All",
+        icon: Sparkles
+    },
+    {
+        menu_name: "Pizza",
+        icon: Pizza
+    },
+    {
+        menu_name: "Burger",
+        icon: Sandwich
+    },
+    {
+        menu_name: "Pasta",
+        icon: Soup
+    },
+    {
+        menu_name: "Dessert",
+        icon: IceCreamCone
+    },
+    {
+        menu_name: "Drinks",
+        icon: CupSoda
+    },
+    {
+        menu_name: "Salad",
+        icon: Salad
+    },
+    {
+        menu_name: "Sides",
+        icon: Popcorn
+    },
 ];
 
 // Dedicated Menu Page Featured Dishes sourced directly from local assets
@@ -94,8 +118,6 @@ const Menu = () => {
     const { food_list, cartItems, addToCart, removeFromCart, wishlist, toggleWishlist } = useContext(StoreContext);
     const [category, setCategory] = useState("All");
     const [displayLimit, setDisplayLimit] = useState(8);
-
-    // Combine custom menu dishes with store food_list for a rich catalog
     const allMenuDishes = [...customMenuDishes, ...(food_list || [])];
 
     // Filter by selected category
@@ -107,42 +129,48 @@ const Menu = () => {
         <div className="w-full min-h-screen bg-black text-white !pt-28 !pb-20 animate-fade-in">
             <div className="max-w-7xl mx-auto !px-4 sm:!px-6 md:!px-8 space-y-10">
 
-                {/* 1. HERO BANNER HEADER */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 !pb-4">
+                {/* Top Hero Row */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-8 !mb-4 min-h-[350px]">
 
-                    {/* Left: Title + Vertical Line + Description */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8 flex-1">
+                    {/* Left Title */}
+                    <div className="flex items-center gap-8 flex-1 lg:pl-[100px]">
+
                         <div>
-                            <span className="text-2xl sm:text-3xl font-light text-white block">
+                            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-white whitespace-nowrap">
                                 Our Delicious
-                            </span>
-                            <h1 className="text-5xl sm:text-6xl font-extrabold text-[#D89A2B] font-serif leading-tight !mt-0.5">
+                            </h1>
+
+                            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#D89A2B] font-serif leading-tight !mt-1">
                                 Menu
                             </h1>
                         </div>
 
-                        {/* Vertical Line Divider */}
-                        <div className="h-16 w-[1px] bg-[#2A241C] hidden sm:block shrink-0" />
+                        {/* Vertical Divider */}
+                        <div className="h-30 w-[1px] bg-[#2A241C] hidden lg:block shrink-0" />
+                    </div>
 
-                        {/* Subtitle Description */}
-                        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-xs font-light">
-                            Explore a wide range of mouth-watering dishes made with the finest ingredients and a touch of love.
+                    {/* Paragraph */}
+                    <div className="hidden lg:block max-w-xs !mr-6 shrink-0">
+                        <p className="text-gray-400 text-sm lg:text-base leading-8 font-light">
+                            Explore a wide range of mouth-watering dishes made with the finest
+                            ingredients and a touch of love.
                         </p>
                     </div>
 
-                    {/* Right Floating Gourmet Bowl Image */}
-                    <div className="relative shrink-0">
+                    {/* Right Hero Image */}
+                    <div className="relative w-full md:w-1/2 lg:w-3/5 h-72 sm:h-96 md:h-[420px] flex items-center justify-end overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent z-10 pointer-events-none" />
                         <div className="absolute inset-0 bg-[#D89A2B]/10 rounded-full blur-3xl pointer-events-none" />
                         <img
                             src={assets.menu_header}
-                            alt="Delicious Dishes"
-                            className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)] relative z-10 hover:scale-105 transition-transform duration-500"
+                            alt="Delicious Noodles Dish"
+                            className="w-full h-full object-cover md:object-right mix-blend-lighten [mask-image:linear-gradient(to_right,transparent_0%,black_20%,black_80%,transparent_100%)] relative z-0 hover:scale-105 transition-transform duration-700"
                         />
                     </div>
                 </div>
 
                 {/* 2. CATEGORY FILTER TABS ROW */}
-                <div className="flex items-center gap-3.5 overflow-x-auto pb-4 pt-2 scrollbar-none scroll-smooth">
+                <div className="flex items-center gap-3.5 overflow-x-auto !pb-4 !pt-2 scrollbar-none scroll-smooth">
                     {menuCategories.map((item, index) => {
                         const IconComponent = item.icon;
                         const isActive = category === item.menu_name;
@@ -151,7 +179,7 @@ const Menu = () => {
                             <button
                                 key={index}
                                 onClick={() => setCategory(item.menu_name === "All" ? "All" : (category === item.menu_name ? "All" : item.menu_name))}
-                                className={`px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-3 whitespace-nowrap transition-all duration-300 cursor-pointer ${isActive
+                                className={`!px-6 !py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-3 whitespace-nowrap transition-all duration-300 cursor-pointer ${isActive
                                     ? "bg-[#D89A2B] text-black shadow-lg shadow-[#D89A2B]/20 font-extrabold"
                                     : "bg-[#111111] border border-[#222222] text-gray-300 hover:text-white hover:border-[#D89A2B]/40"
                                     }`}
@@ -164,7 +192,7 @@ const Menu = () => {
                 </div>
 
                 {/* 3. SECTION ORNAMENT DIVIDER */}
-                <div className="flex items-center justify-center gap-4 my-8">
+                <div className="flex items-center justify-center gap-4 !my-8">
                     <div className="h-[1px] w-16 sm:w-28 bg-gradient-to-r from-transparent to-[#D89A2B]/50" />
                     <span className="text-[#D89A2B] font-serif text-sm sm:text-base font-bold tracking-widest flex items-center gap-2">
                         ❖ All Dishes ❖
@@ -183,7 +211,7 @@ const Menu = () => {
                         return (
                             <div
                                 key={dishId || index}
-                                className="group bg-[#0D0D0D] border border-[#222222] hover:border-[#D89A2B]/40 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#D89A2B]/10 flex items-center gap-4 relative overflow-hidden"
+                                className="group bg-[#0D0D0D] border border-[#222222] hover:border-[#D89A2B]/40 rounded-2xl !p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#D89A2B]/10 flex items-center gap-4 relative overflow-hidden"
                             >
                                 {/* Left Image Thumbnail */}
                                 <div className="relative shrink-0 overflow-hidden rounded-xl border border-[#222222]">
@@ -210,7 +238,7 @@ const Menu = () => {
                                 </div>
 
                                 {/* Right Content Section */}
-                                <div className="flex flex-col justify-between flex-1 min-w-0 h-full py-0.5">
+                                <div className="flex flex-col justify-between flex-1 min-w-0 h-full !py-0.5">
                                     <div>
                                         <div className="flex items-start justify-between gap-2">
                                             <h3 className="font-bold text-white text-base sm:text-lg line-clamp-1 group-hover:text-[#D89A2B] transition-colors">
@@ -219,7 +247,7 @@ const Menu = () => {
 
                                             {/* Veg / Non-Veg Indicator Dot */}
                                             <div
-                                                className={`w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 mt-1 ${isVeg ? "border-emerald-500" : "border-red-500"
+                                                className={`w-4 h-4 rounded-sm border flex items-center justify-center shrink-0 !mt-1 ${isVeg ? "border-emerald-500" : "border-red-500"
                                                     }`}
                                                 title={isVeg ? "Vegetarian" : "Non-Vegetarian"}
                                             >
@@ -272,10 +300,10 @@ const Menu = () => {
 
                 {/* 5. LOAD MORE BUTTON */}
                 {displayLimit < filteredDishes.length && (
-                    <div className="flex justify-center pt-6">
+                    <div className="flex justify-center !pt-6">
                         <button
                             onClick={() => setDisplayLimit((prev) => prev + 4)}
-                            className="px-8 py-3 rounded-xl bg-[#111111] border border-[#D89A2B]/40 text-[#D89A2B] hover:bg-[#1A1A1A] hover:border-[#D89A2B] font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-black"
+                            className="!px-8 !py-3 rounded-xl bg-[#111111] border border-[#D89A2B]/40 text-[#D89A2B] hover:bg-[#1A1A1A] hover:border-[#D89A2B] font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-black"
                         >
                             Load More <ChevronDown size={16} />
                         </button>
