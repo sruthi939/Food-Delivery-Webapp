@@ -44,8 +44,8 @@ const Navbar = ({ setShowLogin }) => {
                         <Link
                             to="/"
                             className={`cursor-pointer transition duration-300 ${location.pathname === "/"
-                                    ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
-                                    : "hover:text-[#D89A2B]"
+                                ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
+                                : "hover:text-[#D89A2B]"
                                 }`}
                         >
                             Home
@@ -54,8 +54,8 @@ const Navbar = ({ setShowLogin }) => {
                         <Link
                             to="/menu"
                             className={`cursor-pointer transition duration-300 ${location.pathname === "/menu"
-                                    ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
-                                    : "hover:text-[#D89A2B]"
+                                ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
+                                : "hover:text-[#D89A2B]"
                                 }`}
                         >
                             Menu
@@ -64,8 +64,8 @@ const Navbar = ({ setShowLogin }) => {
                         <Link
                             to="/restaurant"
                             className={`cursor-pointer transition duration-300 ${location.pathname === "/restaurant"
-                                    ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
-                                    : "hover:text-[#D89A2B]"
+                                ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
+                                : "hover:text-[#D89A2B]"
                                 }`}
                         >
                             Restaurant
@@ -74,8 +74,8 @@ const Navbar = ({ setShowLogin }) => {
                         <Link
                             to="/offers"
                             className={`cursor-pointer transition duration-300 ${location.pathname === "/offers"
-                                    ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
-                                    : "hover:text-[#D89A2B]"
+                                ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
+                                : "hover:text-[#D89A2B]"
                                 }`}
                         >
                             Offers
@@ -84,8 +84,8 @@ const Navbar = ({ setShowLogin }) => {
                         <Link
                             to="/contact"
                             className={`cursor-pointer transition duration-300 ${location.pathname === "/contact"
-                                    ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
-                                    : "hover:text-[#D89A2B]"
+                                ? "text-[#D89A2B] border-b-2 border-[#D89A2B] pb-1 font-bold"
+                                : "hover:text-[#D89A2B]"
                                 }`}
                         >
                             Contact
@@ -186,8 +186,8 @@ const Navbar = ({ setShowLogin }) => {
 
             {/* SEARCH MODAL OVERLAY */}
             {showSearch && (
-                <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center pt-24 px-4 animate-fade-in">
-                    <div className="w-full max-w-2xl bg-[#0F0E0D] border border-[#2A241C] rounded-3xl p-6 shadow-2xl space-y-6 relative overflow-hidden">
+                <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center !pt-24 !px-4 animate-fade-in">
+                    <div className="w-full max-w-2xl bg-[#0F0E0D] border border-[#2A241C] rounded-3xl !p-6 shadow-2xl space-y-6 relative overflow-hidden">
 
                         {/* Close Button */}
                         <button
@@ -201,7 +201,7 @@ const Navbar = ({ setShowLogin }) => {
                         </button>
 
                         {/* Modal Header Title */}
-                        <div className="flex items-center gap-2 text-[#D89A2B] font-bold text-xs uppercase tracking-widest">
+                        <div className="!mb-5 flex items-center gap-2 text-[#D89A2B] font-bold text-xs uppercase tracking-widest">
                             <Sparkles size={14} /> Search Menu & Dishes
                         </div>
 
@@ -214,7 +214,7 @@ const Navbar = ({ setShowLogin }) => {
                                 placeholder="Search dishes, salad, pasta, pizza, cake..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-[#1A1815] border border-[#3A3226] focus:border-[#D89A2B] rounded-2xl pl-12 pr-10 py-3.5 text-white placeholder-gray-500 text-sm focus:outline-none transition shadow-inner font-medium"
+                                className="w-full bg-[#1A1815] border border-[#3A3226] focus:border-[#D89A2B] rounded-2xl !pl-12 !pr-10 !py-3.5 text-white placeholder-gray-500 text-sm focus:outline-none transition shadow-inner font-medium"
                             />
                             {searchQuery && (
                                 <button
@@ -228,14 +228,14 @@ const Navbar = ({ setShowLogin }) => {
 
                         {/* Quick Category Tags */}
                         {searchQuery === '' && (
-                            <div className="space-y-2 pt-2">
+                            <div className="space-y-2 !pt-2">
                                 <span className="text-xs text-gray-400 font-medium">Popular Searches:</span>
                                 <div className="flex flex-wrap gap-2">
                                     {['Salad', 'Pasta', 'Rolls', 'Sandwich', 'Cake', 'Noodles'].map((tag) => (
                                         <button
                                             key={tag}
                                             onClick={() => setSearchQuery(tag)}
-                                            className="px-3.5 py-1.5 rounded-xl bg-[#1A1815] border border-[#2A241C] text-xs font-semibold text-gray-300 hover:text-[#D89A2B] hover:border-[#D89A2B]/40 transition cursor-pointer"
+                                            className="!px-3.5 !py-1.5 rounded-xl bg-[#1A1815] border border-[#2A241C] text-xs font-semibold text-gray-300 hover:text-[#D89A2B] hover:border-[#D89A2B]/40 transition cursor-pointer"
                                         >
                                             {tag}
                                         </button>
@@ -246,16 +246,16 @@ const Navbar = ({ setShowLogin }) => {
 
                         {/* Search Results List */}
                         {searchQuery && (
-                            <div className="max-h-80 overflow-y-auto space-y-3 pr-1 scrollbar-thin">
+                            <div className="max-h-80 overflow-y-auto space-y-3 !pr-1 scrollbar-thin">
                                 {searchResults.length === 0 ? (
-                                    <div className="text-center py-8 text-gray-400 text-sm font-light">
+                                    <div className="text-center !py-8 text-gray-400 text-sm font-light">
                                         No dishes found matching "<span className="text-white font-bold">{searchQuery}</span>"
                                     </div>
                                 ) : (
                                     searchResults.map((item) => (
                                         <div
                                             key={item._id}
-                                            className="bg-[#171512] border border-[#26211A] hover:border-[#D89A2B]/40 rounded-2xl p-3 flex items-center justify-between gap-4 transition group"
+                                            className="bg-[#171512] border border-[#26211A] hover:border-[#D89A2B]/40 rounded-2xl !p-3 flex items-center justify-between gap-4 transition group"
                                         >
                                             <div className="flex items-center gap-3">
                                                 <img
@@ -279,7 +279,7 @@ const Navbar = ({ setShowLogin }) => {
                                                     setShowSearch(false);
                                                     setSearchQuery('');
                                                 }}
-                                                className="px-3 py-1.5 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-xs flex items-center gap-1 cursor-pointer transition shadow-md"
+                                                className="!px-3 !py-1.5 rounded-xl bg-[#D89A2B] hover:bg-[#c48922] text-black font-extrabold text-xs flex items-center gap-1 cursor-pointer transition shadow-md"
                                             >
                                                 <Plus size={14} /> Add
                                             </button>
